@@ -41,7 +41,7 @@
     .hero .txt { position: absolute; left: 18px; right: 18px; bottom: 46px; z-index: 2; color: #fff; }
     .hero h1 { font-size: 42px; line-height: 1; margin: 0; white-space: nowrap; }
 
-    main { padding: 0 16px 24px; }
+    main { padding: 0 16px; background: #f5f1ff; }
 
     /* member card: flips to check-in QR */
     .flip-wrap { perspective: 1200px; position: relative; z-index: 2; margin-top: -36px; }
@@ -72,9 +72,9 @@
     .back .hint { color: var(--purple); margin: 0; }
 
     /* sections: alternating bands with sticky headers so you always know where you are */
-    .sec { margin: 0 -16px; padding: 0 16px 22px; position: relative; }
+    .sec { margin: 0 -16px; padding: 0 16px 24px; position: relative; }
     .sec.tint { background: #f5f1ff; }
-    .flip-wrap + .sec { margin-top: 22px; border-radius: 26px 26px 0 0; }
+    .flip-wrap + .sec { margin-top: 8px; }
     .sec + .sec { border-top: 1px solid var(--line); }
     .sec-head { position: sticky; top: 0; z-index: 6; display: flex; align-items: center; gap: 10px; margin: 0 -16px 12px; padding: 16px 16px 12px; background: inherit; }
     .sec.tint .sec-head { background: rgba(245,241,255,.94); backdrop-filter: blur(10px); }
@@ -172,7 +172,6 @@
     .post .add input:focus { border-color: var(--purple); }
     .post .add button { font-size: 12px; font-weight: 700; color: var(--purple); }
     .post .chrow { display: flex; align-items: center; gap: 10px; }
-    .post .chrow .members { margin-left: auto; }
     .post .main { display: flex; gap: 12px; align-items: flex-start; }
     .post .main + .react, .post .main + .pbar, .post .main + .chrow { margin-top: 2px; }
     .post .members { font-size: 11px; color: var(--muted); }
