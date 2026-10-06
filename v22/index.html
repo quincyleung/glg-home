@@ -50,19 +50,19 @@
     .flip.on { transform: rotateY(180deg); }
     .face { -webkit-backface-visibility: hidden; backface-visibility: hidden; border-radius: 22px; padding: 16px; }
     .front { color: var(--ink); background: #fff; box-shadow: 0 0 0 1px var(--line), 0 14px 34px rgba(74,31,184,.14); }
-    .front .row { display: flex; justify-content: space-between; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
-    .front .name { font-size: 28px; line-height: 1; margin: 12px 0 12px; display: block; color: var(--deep); }
-    .streak { display: flex; align-items: center; gap: 14px; }
-    .ring { width: 62px; height: 62px; border-radius: 50%; flex: none; display: grid; place-items: center; background: conic-gradient(var(--purple) 0 75%, var(--lav) 75% 100%); }
-    .ring b { width: 48px; height: 48px; border-radius: 50%; background: #fff; display: grid; place-items: center; font: 700 15px/1 var(--display); text-transform: uppercase; text-align: center; color: var(--purple); }
-    .week { flex: 1; display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; text-align: center; font: 700 10px var(--display); text-transform: uppercase; color: var(--muted); }
-    .week i { display: grid; place-items: center; aspect-ratio: 1; border-radius: 8px; background: var(--lav); margin-bottom: 3px; font-style: normal; font-size: 11px; color: var(--purple); }
+    .top-row { display: flex; align-items: baseline; justify-content: space-between; }
+    .top-row .title { font-size: 22px; color: var(--purple); }
+    .top-row small { color: var(--muted); font-size: 12px; }
+    .week { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; margin: 12px 0; text-align: center; font: 700 11px var(--display); text-transform: uppercase; color: var(--muted); }
+    .week i { display: grid; place-items: center; height: 34px; border-radius: 10px; background: var(--lav); margin-bottom: 4px; font-style: normal; font-size: 12px; color: var(--purple); }
     .week i.done { background: var(--purple); color: #fff; }
-    .week i.plan { background: #fff; box-shadow: inset 0 0 0 1.5px var(--purple); }
-    .week i.today { box-shadow: inset 0 0 0 2px var(--pink); }
-    .nums { display: flex; align-items: flex-end; gap: 22px; margin-top: 14px; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
-    .nums b { display: block; font: 700 22px var(--display); color: var(--deep); letter-spacing: 0; text-transform: none; }
-    .hint { margin-left: auto; font: 700 11px var(--display); text-transform: uppercase; letter-spacing: .08em; color: var(--purple); }
+    .week i.plan { background: #fff; border: 2px dashed var(--purple); }
+    .week i.today { box-shadow: inset 0 0 0 2px var(--ink); }
+    .nums { display: flex; align-items: center; gap: 22px; border-top: 1px solid var(--line); padding-top: 12px; font-size: 12px; color: var(--muted); }
+    .nums b { display: block; font: 700 20px var(--display); color: var(--ink); }
+    .checkin { margin-left: auto; display: inline-flex; align-items: center; gap: 6px; background: var(--purple); color: #fff; font: 700 13px var(--display); text-transform: uppercase; letter-spacing: .06em; padding: 8px 12px; border-radius: 99px; }
+    .checkin svg { width: 16px; height: 16px; fill: none; stroke: #fff; stroke-width: 2; }
+    .hint { font: 700 11px var(--display); text-transform: uppercase; letter-spacing: .08em; color: var(--purple); }
     .back { position: absolute; inset: 0; transform: rotateY(180deg); background: #fff; display: flex; align-items: center; gap: 14px; box-shadow: 0 0 0 2px var(--purple), 0 14px 34px rgba(40,10,90,.2); }
     .qr { width: 136px; height: 136px; flex: none; padding: 6px; }
     .qr svg { display: block; width: 100%; height: 100%; }
@@ -187,17 +187,13 @@
 
     <main>
       <div class="flip-wrap">
-        <div class="flip" id="flip" role="button" tabindex="0" aria-pressed="false" aria-label="Member card. Tap to show your check-in QR code">
+        <div class="flip" id="flip" role="button" tabindex="0" aria-pressed="false" aria-label="Your streak and stats. Tap to show your check-in QR code">
           <div class="face front">
-            <div class="row"><span>Girls Lift Girls · Hong Kong</span><span>#0412</span></div>
-            <span class="d name">Jasmine Tran</span>
-            <div class="streak">
-              <div class="ring"><b>3<br>wks</b></div>
-              <div class="week" aria-label="This week: Monday done, Wednesday and Sunday planned">
-                <div><i class="done">✓</i>M</div><div><i class="today"></i>T</div><div><i class="plan">5K</i>W</div><div><i></i>T</div><div><i></i>F</div><div><i></i>S</div><div><i class="plan">⛰</i>S</div>
-              </div>
+            <div class="top-row"><span class="d title">🔥 3 weeks strong</span><small>This week: 2 planned</small></div>
+            <div class="week" aria-label="This week: Monday done, Wednesday and Sunday planned">
+              <div><i class="done">✓</i>M</div><div><i class="today"></i>T</div><div><i class="plan">5K</i>W</div><div><i></i>T</div><div><i></i>F</div><div><i></i>S</div><div><i class="plan">⛰</i>S</div>
             </div>
-            <div class="nums"><div><b>27</b>sessions</div><div><b>34h</b>total time</div><span class="hint">Tap for check-in ↻</span></div>
+            <div class="nums"><div><b>27</b>sessions</div><div><b>34h</b>total time</div><span class="checkin"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M14 14h3v3h-3zM18 18h3v3h-3zM14 20h1M20 14h1"/></svg>Check in</span></div>
           </div>
           <div class="face back" aria-hidden="true">
             <div class="qr" id="qr"></div>
