@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GLG Home — 25 Prototypes</title>
+  <style>
+    :root {
+      --bg: #faf8f5;
+      --ink: #1c1b1a;
+      --muted: #6b6762;
+      --line: #e3ded7;
+      --accent: #c2185b;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font: 16px/1.55 system-ui, -apple-system, "Segoe UI", sans-serif;
+    }
+    main { max-width: 1100px; margin: 0 auto; padding: 32px 16px 64px; }
+    header { max-width: 640px; }
+    .kicker { font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin: 0; }
+    h1 { font-size: clamp(28px, 6vw, 44px); line-height: 1.1; margin: 8px 0 16px; }
+    h2 { font-size: 20px; margin: 48px 0 16px; padding-top: 16px; border-top: 1px solid var(--line); }
+    p { margin: 0 0 12px; }
+    .muted { color: var(--muted); }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 16px;
+    }
+    .card {
+      display: block;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #fff;
+      padding: 14px;
+      color: inherit;
+      text-decoration: none;
+    }
+    .card:hover { border-color: var(--ink); }
+    .card.final { border: 2px solid var(--accent); }
+    .card .num { font-weight: 700; }
+    .card .note { font-size: 14px; color: var(--muted); margin: 4px 0 0; }
+    .empty {
+      border: 1px dashed var(--line);
+      border-radius: 10px;
+      padding: 24px;
+      text-align: center;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <p class="kicker">MPCS 51238 · Assignment 1</p>
+      <h1>GLG Home: 25 prototypes</h1>
+      <p>Girls Lift Girls is a women's fitness community, "Strength in Community", with chapters in Hong Kong, Dubai, Sydney, Brisbane, Gold Coast, Heidelberg and Shanghai.</p>
+      <p>This is the home screen a member sees when she opens the app on her phone. In a few seconds she should know what's coming up in her city, how to book a spot, and the latest news from her chapter.</p>
+      <p class="muted">Every version uses the same fictional content: Sofie, a Hong Kong member, with five upcoming events, two chapter announcements and one global update. The early versions try very different directions. The later ones combine what worked and narrow down to a final pick at v25.</p>
+    </header>
+
+    <h2>The versions</h2>
+    <section class="grid" id="versions">
+      <!-- Each version: <a class="card" href="v01/"><span class="num">v01</span><p class="note">One line on what changed.</p></a> -->
+      <div class="empty">No versions yet.</div>
+    </section>
+
+    <h2>Final pick</h2>
+    <p class="muted">Not chosen yet. The final pick will be highlighted here, with a short note on why it won.</p>
+  </main>
+</body>
+</html>
