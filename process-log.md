@@ -248,3 +248,8 @@
 - **Asked for:** in v24, the "3 weeks strong" card should only pop up when you tap the centre avatar (the user).
 - **Made:** Jasmine's centre avatar is now a button with a "🔥 3" badge, and the hint reads "Tap a friend to join her · tap yourself for your streak and check-in". The streak card (with Check in → QR) is hidden until then and slides open below the orbit, and tapping again folds it away. While hidden it's inert, so it can't be reached by keyboard.
 - **Fix (v22–v24):** section headers could draw over the tab bar, so the tab bar now sits on top.
+
+## v22–v24: tab bar always visible
+- **Asked for:** when scrolling, the tab bar sometimes disappears and isn't constant.
+- **Cause:** it was a sticky element at the end of the app container. Browsers can drop or repaint sticky elements mid-scroll, especially under the frosted sticky section headers.
+- **Made:** the tab bar is now pinned to the bottom of the viewport at the app's width, on its own layer above everything, with a spacer at the end of the page so the last cards aren't hidden behind it. On desktop it floats as a rounded bar 16px above the edge, matching the framed phone. Checked by script at five scroll positions per version on phone and desktop widths: always 0px (phone) or 16px (desktop) from the bottom.
