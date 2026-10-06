@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>v22 · Stronger Together — GLG Home</title>
+  <title>v24 · Orbit, Converged — GLG Home</title>
   <style>
     :root {
       --purple: #4a1fb8;
@@ -29,22 +29,41 @@
     .ava { display: block; border-radius: 50%; overflow: hidden; flex: none; }
     .ava svg { display: block; width: 100%; height: 100%; }
 
-    /* top bar over the hero */
-    .bar { position: absolute; top: 0; left: 0; right: 0; z-index: 3; display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; color: #fff; }
-    .bar a { color: #fff; text-decoration: none; font-size: 13px; font-weight: 700; background: rgba(0,0,0,.25); padding: 5px 10px; border-radius: 99px; }
-    .bar .logo { font-size: 17px; letter-spacing: .04em; }
-    .me { width: 36px; height: 36px; border-radius: 50%; background: #fff; color: var(--purple); display: grid; place-items: center; font-weight: 700; font-size: 12px; }
-
-    /* hero */
-    .hero { height: 232px; }
-    .hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(36,16,79,.35) 0%, transparent 30%, transparent 45%, rgba(36,16,79,.88) 100%); }
-    .hero .txt { position: absolute; left: 18px; right: 18px; bottom: 46px; z-index: 2; color: #fff; }
-    .hero h1 { font-size: 42px; line-height: 1; margin: 0; white-space: nowrap; }
+    /* v20 header + orbit */
+    .bar { display: flex; justify-content: space-between; align-items: center; padding: 14px 16px 0; background: #f5f1ff; }
+    .bar a { color: var(--muted); text-decoration: none; font-size: 13px; font-weight: 700; }
+    .bar .logo { font-size: 15px; letter-spacing: .06em; color: var(--purple); }
+    .me { width: 36px; height: 36px; border-radius: 50%; background: var(--purple); color: #fff; display: grid; place-items: center; font-weight: 700; font-size: 12px; }
+    .greet { margin: 0 -16px; padding: 16px 16px 0; text-align: center; }
+    .greet h1 { font-size: 40px; line-height: 1; margin: 0; color: var(--purple); white-space: nowrap; }
+    .orbit { position: relative; width: 100%; aspect-ratio: 1; max-width: 320px; margin: 4px auto 0; }
+    .ring-line { position: absolute; border-radius: 50%; border: 1.5px dashed var(--lav2); }
+    .ring-line.inner { inset: 16%; } .ring-line.outer { inset: 3%; border-color: #e6defa; }
+    .outer-spin { position: absolute; inset: 0; animation: spin 120s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @media (prefers-reduced-motion: reduce) { .outer-spin { animation: none; } }
+    .sat { position: absolute; transform: translate(-50%, -50%); }
+    .sat.far .ava { width: 24px; height: 24px; opacity: .6; }
+    .sat.near { z-index: 2; }
+    .sat.near .ava { width: 50px; height: 50px; box-shadow: 0 0 0 3px #fff, 0 4px 12px rgba(40,10,90,.15); transition: transform .2s; }
+    .sat.near.active .ava { transform: scale(1.15); box-shadow: 0 0 0 3px var(--purple), 0 4px 12px rgba(40,10,90,.25); }
+    .sat.near .dot { position: absolute; top: 0; right: 0; width: 13px; height: 13px; border-radius: 50%; background: var(--pink); border: 2px solid #fff; }
+    .sat.near .nm { position: absolute; left: 50%; top: 100%; transform: translateX(-50%); margin-top: 5px; font: 700 11px var(--display); text-transform: uppercase; letter-spacing: .06em; color: var(--muted); white-space: nowrap; }
+    .center { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 32%; aspect-ratio: 1; border-radius: 50%; padding: 5px; background: conic-gradient(var(--purple) 0 75%, #fff 75% 100%); z-index: 3; }
+    .center .ava { width: 100%; height: 100%; border: 4px solid #f5f1ff; }
+    .orbit-hint { text-align: center; font-size: 12px; color: var(--muted); margin: 2px 0 12px; }
+    .spot { display: none; margin: 0 0 14px; background: #fff; border-radius: 18px; padding: 12px 14px; gap: 12px; align-items: flex-start; box-shadow: 0 0 0 1px #e6defa; }
+    .spot.on { display: flex; }
+    .spot .ava { width: 40px; height: 40px; flex: none; }
+    .spot .k { font: 700 12px var(--display); text-transform: uppercase; letter-spacing: .08em; color: var(--purple); }
+    .spot p { margin: 2px 0 8px; font-size: 14px; }
+    .spot button { background: var(--purple); color: #fff; font: 700 13px var(--display); text-transform: uppercase; letter-spacing: .06em; padding: 6px 12px; border-radius: 99px; }
+    .spot button.done { background: var(--lav); color: var(--purple); }
 
     main { padding: 0 16px; background: #f5f1ff; }
 
     /* member card: flips to check-in QR */
-    .flip-wrap { perspective: 1200px; position: relative; z-index: 2; margin-top: -36px; }
+    .flip-wrap { perspective: 1200px; position: relative; z-index: 2; }
     .flip { position: relative; transform-style: preserve-3d; transition: transform .7s cubic-bezier(.2,.75,.25,1); cursor: pointer; border-radius: 22px; outline: none; }
     .flip:focus-visible { box-shadow: 0 0 0 3px var(--pink); }
     .flip.on { transform: rotateY(180deg); }
@@ -120,6 +139,16 @@
     .join:active { transform: scale(.96); }
     .join.done { background: var(--lav); color: var(--purple); }
 
+    /* seat grid in the image slot (v20): filled seats are people going, dashed seats are open */
+    .seatbox { position: relative; height: 118px; padding: 48px 12px 10px; background: linear-gradient(135deg, #efe9ff, #ffe8f1); overflow: hidden; }
+    .ticket .seatbox { background: linear-gradient(135deg, #e6dcff, #f5ecff); }
+    .seats { display: flex; flex-wrap: wrap; gap: 4px; }
+    .seat { width: 24px; height: 24px; border-radius: 50%; flex: none; }
+    .seat .ava { width: 100%; height: 100%; box-shadow: 0 0 0 1.5px #fff; }
+    .seat.me .ava { box-shadow: 0 0 0 2px var(--pink); }
+    .seat.empty { border: 2px dashed var(--lav2); background: rgba(255,255,255,.6); color: var(--purple); font-weight: 700; font-size: 14px; line-height: 18px; text-align: center; padding: 0; }
+    .seat.empty:hover { background: #fff; }
+    .seat.more { background: var(--purple); color: #fff; font: 700 10px/24px var(--display); text-align: center; }
     /* psst */
     .psst { margin-top: 22px; background: var(--lav); border-radius: 20px; padding: 16px; border-left: 5px solid var(--pink); transition: opacity .35s, transform .35s, max-height .45s .2s, margin .45s .2s, padding .45s .2s; max-height: 400px; overflow: hidden; }
     .psst.gone { opacity: 0; transform: translateY(-6px); max-height: 0; margin-top: 0; padding-top: 0; padding-bottom: 0; }
@@ -192,12 +221,17 @@
 </head>
 <body>
   <div class="app">
-    <header class="photo hero" data-scene="harbour" data-people="9" data-seed="14" data-duo="#1e0a52,#f3ecff" data-alt="GLG Hong Kong members together at the harbour">
-      <div class="txt"><h1 class="d">Morning, Jasmine.</h1></div>
-    </header>
-    <div class="bar"><a href="../index.html">← Gallery</a><span class="d logo">Girls Lift Girls</span><span class="me" aria-label="Jasmine's profile">JT</span></div>
+    <div class="bar"><a href="../index.html">← Gallery</a><span class="d logo">Girls Lift Girls · HK</span><span class="me" aria-label="Jasmine's profile">JT</span></div>
 
     <main>
+      <div class="greet"><h1 class="d">Morning, Jasmine.</h1></div>
+      <div class="orbit" id="orbit" aria-label="You and your crew. Tap someone to catch up.">
+        <div class="ring-line outer"></div><div class="ring-line inner"></div>
+        <div class="outer-spin" id="far"></div>
+        <div class="center" title="3-week streak"><span class="ava" data-who="jasmine"></span></div>
+      </div>
+      <p class="orbit-hint">Your crew this week · pink dot = something new</p>
+      <div class="spot" id="spot" aria-live="polite"></div>
       <div class="flip-wrap">
         <div class="flip" id="flip" role="button" tabindex="0" aria-pressed="false" aria-label="Your streak and stats. Tap to show your check-in QR code">
           <div class="face front">
@@ -218,12 +252,12 @@
         <h2 class="sec-head" id="h-going"><span class="ic"><svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/><path d="m9 15 2 2 4-4"/></svg></span><span class="d">You're going</span><span class="count">2</span><a href="#">Calendar</a></h2>
   <div class="rail">
           <div class="ticket">
-          <div class="photo" data-scene="trail" data-people="6" data-seed="31" data-tone="color" data-alt="Members hiking Dragon's Back"><span class="tag">In 5 days</span><button class="info" aria-expanded="false" aria-label="Instructor details: Hana"><span class="ava" data-who="hana"></span></button><div class="details">Led by Hana Okafor. 8.5 km, easy to moderate. Bring water and a headlamp. Coffee at Shek O after.</div></div>
+          <div class="seatbox" data-crew="jasmine,priya,hana,s11,s12,s13,s14,s15,s16,s17,s18,s19,s20,s21" data-more="+9"><span class="tag">In 5 days</span><button class="info" aria-expanded="false" aria-label="Instructor details: Hana"><span class="ava" data-who="hana"></span></button><div class="details">Led by Hana Okafor. 8.5 km, easy to moderate. Bring water and a headlamp. Coffee at Shek O after.</div></div>
           <div class="body"><span class="d ttl">Dragon's Back Sunrise Hike</span><p class="meta">Sun 11 Oct · 6:15am · To Tei Wan</p>
             <div class="row"><div class="people"><span class="avs"><span class="ava" data-who="jasmine"></span><span class="ava" data-who="priya"></span><span class="ava" data-who="hana"></span></span><span class="who">You, Priya + 21</span></div><span class="going">Going ✓</span></div></div>
         </div>
         <div class="ticket">
-          <div class="photo" data-scene="harbour" data-people="7" data-seed="8" data-tone="color" data-alt="Run club at the harbour"><span class="tag">In 8 days</span><button class="info" aria-expanded="false" aria-label="Instructor details: Hana"><span class="ava" data-who="hana"></span></button><div class="details">Hosted by Hana Okafor. New start: Star Ferry clock tower (look for the pink flag). 6:30 and 5:30/km pace groups. Bag drop available.</div></div>
+          <div class="seatbox" data-crew="jasmine,aisha,s21,s22,s23,s24,s25,s26,s27,s28,s29,s30,s31,s32" data-more="+17"><span class="tag">In 8 days</span><button class="info" aria-expanded="false" aria-label="Instructor details: Hana"><span class="ava" data-who="hana"></span></button><div class="details">Hosted by Hana Okafor. New start: Star Ferry clock tower (look for the pink flag). 6:30 and 5:30/km pace groups. Bag drop available.</div></div>
           <div class="body"><span class="d ttl">Harbourfront 5K Run Club</span><p class="meta">Wed 14 Oct · 7:30pm · Tsim Sha Tsui</p>
             <div class="row"><div class="people"><span class="avs"><span class="ava" data-who="jasmine"></span><span class="ava" data-who="aisha"></span><span class="ava" data-seed="24"></span></span><span class="who">You, Aisha + 29</span></div><span class="going">Going ✓</span></div></div>
         </div>
@@ -243,17 +277,17 @@
         </div>
 
         <div class="ev" id="ev-barbell">
-          <div class="photo" data-scene="gym" data-people="6" data-seed="3" data-tone="color" data-alt="Barbell session at Iron Harbour"><span class="tag hot">Only 2 spots left</span><button class="info" aria-expanded="false" aria-label="Instructor details: Mei-Ling"><span class="ava" data-who="meiling"></span></button><div class="details">Squat and deadlift with Coach Mei-Ling Ho: set-up, bracing and safe bailing. No experience needed.</div></div>
+          <div class="seatbox" data-crew="chloe,kiko,s33,s34,s35,s36,s37,s38,s39,s40,s41,s42,s43,s44" data-total="16"><span class="tag hot">Only 2 spots left</span><button class="info" aria-expanded="false" aria-label="Instructor details: Mei-Ling"><span class="ava" data-who="meiling"></span></button><div class="details">Squat and deadlift with Coach Mei-Ling Ho: set-up, bracing and safe bailing. No experience needed.</div></div>
           <div class="body"><span class="d ttl">Barbell Basics</span><p class="meta">Sat 10 Oct · 8:00am · Kwun Tong</p>
             <div class="row"><div class="people"><span class="avs"><span class="ava" data-who="chloe"></span><span class="ava" data-who="kiko"></span><span class="ava" data-seed="33"></span></span><span class="who">Chloe, Kiko + 12</span></div><span class="price">HK$180</span><button class="join">Join</button></div></div>
         </div>
         <div class="ev">
-          <div class="photo" data-scene="studio" data-people="5" data-seed="9" data-tone="color" data-alt="Boxing workshop in the studio"><span class="tag">3 first-timers</span><button class="info" aria-expanded="false" aria-label="Instructor details: Jess"><span class="ava" data-who="jess"></span></button><div class="details">With Coach Jess Albano at Left Hook Studio. Stance, jab-cross, footwork and pad work. Gloves and wraps provided.</div></div>
+          <div class="seatbox" data-crew="mandy,s52,s54,s55,s56,s57,s58,s59,s60" data-total="20"><span class="tag">3 first-timers</span><button class="info" aria-expanded="false" aria-label="Instructor details: Jess"><span class="ava" data-who="jess"></span></button><div class="details">With Coach Jess Albano at Left Hook Studio. Stance, jab-cross, footwork and pad work. Gloves and wraps provided.</div></div>
           <div class="body"><span class="d ttl">Boxing Fundamentals</span><p class="meta">Sat 17 Oct · 10:00am · Sheung Wan</p>
             <div class="row"><div class="people"><span class="avs"><span class="ava" data-who="mandy"></span><span class="ava" data-seed="52"></span><span class="ava" data-seed="54"></span></span><span class="who">Mandy + 8</span></div><span class="price">HK$250</span><button class="join">Join</button></div></div>
         </div>
         <div class="ev">
-          <div class="photo" data-scene="beach" data-people="6" data-seed="5" data-tone="color" data-alt="Paddleboarding at Sai Kung"><span class="tag">Brunch included</span><button class="info" aria-expanded="false" aria-label="Instructor details: Tash"><span class="ava" data-seed="47"></span></button><div class="details">With instructor Tash Wong. Two hours on the water with an instructor, then brunch by the harbour. Board hire included. You must be able to swim.</div></div>
+          <div class="seatbox" data-crew="sara,s62,s64,s65,s66,s67" data-total="12"><span class="tag">Brunch included</span><button class="info" aria-expanded="false" aria-label="Instructor details: Tash"><span class="ava" data-seed="47"></span></button><div class="details">With instructor Tash Wong. Two hours on the water with an instructor, then brunch by the harbour. Board hire included. You must be able to swim.</div></div>
           <div class="body"><span class="d ttl">Paddle &amp; Brunch</span><p class="meta">Sun 25 Oct · 9:00am · Sai Kung</p>
             <div class="row"><div class="people"><span class="avs"><span class="ava" data-who="sara"></span><span class="ava" data-seed="62"></span><span class="ava" data-seed="64"></span></span><span class="who">Sara + 5</span></div><span class="price">HK$420</span><button class="join">Join</button></div></div>
         </div>
@@ -407,6 +441,55 @@
     })();
     Avatar.drawAll();
 
+    // Orbit (v20): the crew around Jasmine; tap someone for their news.
+    const ava = who => /^s\d+$/.test(who) ? `<span class="ava" data-seed="${who.slice(1)}"></span>` : `<span class="ava" data-who="${who}"></span>`;
+    const crew = [
+      { who: "chloe", name: "Chloe", k: "Saturday", t: "Pulled a 100 kg deadlift. Two years ago I couldn't lift the empty bar.", a: "💜 Lift her up", done: "Lifted 💜", news: true },
+      { who: "priya", name: "Priya", k: "Chapter chat", t: "Splitting a taxi to To Tei Wan on Sunday, 5:40am from Quarry Bay. You're on this hike too.", a: "Join the taxi", done: "In the taxi 🚕", news: true },
+      { who: "hana", name: "Hana", k: "Chapter lead", t: "Run club now starts at the Star Ferry clock tower. Same time, 7:30pm.", a: "Got it", done: "See you Wednesday", news: true },
+      { who: "kiko", name: "Kiko", k: "New this week", t: "Just joined. Barbell Basics on Saturday is her first session.", a: "👋 Wave", done: "Waved 👋", news: true },
+      { who: "aisha", name: "Aisha", k: "Last Wednesday", t: "Ran her first ever 5K at run club. She'll be there again on Wednesday.", a: "Run with her", done: "She'll look out for you", news: false },
+      { who: "meiling", name: "Mei-Ling", k: "Coach", t: "Two seats left at Barbell Basics on Saturday. No experience needed.", a: "See seats", done: "Scroll down ↓", news: false }
+    ];
+    const orbit = document.getElementById("orbit"), spot = document.getElementById("spot");
+    crew.forEach((c, i) => {
+      const ang = -Math.PI / 2 + i * 2 * Math.PI / crew.length, r = 34;
+      const b = document.createElement("button");
+      b.className = "sat near"; b.style.left = 50 + r * Math.cos(ang) + "%"; b.style.top = 50 + r * Math.sin(ang) + "%";
+      b.innerHTML = ava(c.who) + (c.news ? '<span class="dot"></span>' : "") + `<span class="nm">${c.name}</span>`;
+      b.setAttribute("aria-label", c.name);
+      b.addEventListener("click", () => show(i));
+      orbit.appendChild(b);
+    });
+    const far = document.getElementById("far");
+    for (let i = 0; i < 14; i++) {
+      const ang = i * 2 * Math.PI / 14 + .2, r = 47;
+      far.insertAdjacentHTML("beforeend", `<span class="sat far" style="left:${50 + r * Math.cos(ang)}%;top:${50 + r * Math.sin(ang)}%">${ava("s" + (70 + i))}</span>`);
+    }
+    function show(i) {
+      const c = crew[i];
+      document.querySelectorAll(".sat.near").forEach((el, j) => el.classList.toggle("active", j === i));
+      document.querySelectorAll(".sat.near")[i].querySelector(".dot")?.remove();
+      spot.classList.add("on");
+      spot.innerHTML = `${ava(c.who)}<div><span class="k">${c.name} · ${c.k}</span><p>${c.t}</p><button>${c.a}</button></div>`;
+      Avatar.drawAll(spot);
+      spot.querySelector("button").addEventListener("click", e => {
+        e.currentTarget.textContent = c.done; e.currentTarget.classList.add("done");
+        if (c.who === "meiling") document.getElementById("ev-barbell").scrollIntoView({ behavior: "smooth", block: "center" });
+      });
+    }
+
+    // Seats (v20): people going fill seats; dashed seats are open and tapping one joins.
+    document.querySelectorAll(".seatbox").forEach(box => {
+      const people = box.dataset.crew.split(","), total = +box.dataset.total || people.length;
+      let html = people.map(p => `<span class="seat${p === "jasmine" ? " me" : ""}">${ava(p)}</span>`).join("");
+      for (let i = people.length; i < total; i++) html += '<button class="seat empty" aria-label="Take an open seat">+</button>';
+      if (box.dataset.more) html += `<span class="seat more">${box.dataset.more}</span>`;
+      box.insertAdjacentHTML("afterbegin", `<div class="seats">${html}</div>`);
+    });
+    document.querySelectorAll(".seat.empty").forEach(b => b.addEventListener("click", () => b.closest(".ev").querySelector(".join:not([disabled])")?.click()));
+    Avatar.drawAll(orbit); Avatar.drawAll();
+
     // Member card flips to a check-in QR code (decorative pattern for the prototype, not a real code).
     (function qr() {
       const N = 25, r = (seed => () => (seed = (seed * 16807) % 2147483647) / 2147483647)(412);
@@ -447,6 +530,12 @@
         avs.insertAdjacentHTML("afterbegin", '<span class="ava" data-who="jasmine"></span>');
         Avatar.drawAll(avs);
         const who = ppl.querySelector(".who"); who.textContent = "You, " + who.textContent;
+      }
+      const seat = b.closest(".ev")?.querySelector(".seat.empty");
+      if (seat) {
+        seat.outerHTML = '<span class="seat me"><span class="ava" data-who="jasmine"></span></span>';
+        Avatar.drawAll(b.closest(".ev"));
+        b.closest(".ev").querySelectorAll(".seat.empty").forEach(e => e.disabled = true);
       }
     }
     document.getElementById("psst-yes").addEventListener("click", e => {
