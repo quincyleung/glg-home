@@ -94,14 +94,57 @@
     .tabs a.on { color: var(--coral); }
     .toast { position: fixed; left: 50%; bottom: 90px; transform: translate(-50%, 20px); background: var(--ink); color: #fff; padding: 12px 18px; border-radius: 14px; font-size: 14px; opacity: 0; pointer-events: none; transition: .3s; max-width: 90vw; z-index: 10; }
     .toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+    /* ---- Warm restyle: sisterly, handwritten, cosy ---- */
+    :root {
+      --bg: #f8f0e3;
+      --ink: #3b2a20;
+      --muted: #8c7563;
+      --line: #ead9c4;
+      --coral: #c4572e;
+      --peach: #f3c9a0;
+      --soft: #f6e3d0;
+      --green: #6b7d3a;
+      --shadow: 0 1px 0 #e6d3bb;
+      --serif: "Hoefler Text", Baskerville, "Baskerville Old Face", Georgia, serif;
+      --hand: "Bradley Hand", "Segoe Print", "Comic Sans MS", cursive;
+    }
+    body { background: #ead9c2; font-family: var(--serif); }
+    .app { background-color: var(--bg); background-image: repeating-linear-gradient(transparent 0 31px, rgba(196,87,46,.07) 31px 32px); }
+    .hi { font: 20px var(--hand); color: var(--coral); margin-top: 22px; }
+    h1 { font: italic 400 38px/1.05 var(--serif); letter-spacing: -.01em; }
+    h2 { font: italic 400 22px var(--serif); }
+    h2 a { font: 15px var(--hand); }
+    .crew { background: #fffaf2; color: var(--ink); border: 1.5px dashed var(--peach); transform: rotate(-.6deg); }
+    .crew .av { border-color: #fffaf2; }
+    .crew b { font: italic 18px var(--serif); }
+    .crew small { color: var(--muted); }
+    .crew .row + .row { border-top-color: var(--line); }
+    .stats div b { font: 26px var(--hand); color: var(--coral); }
+    .match { position: relative; border: 0; background: #fffdf8; transform: rotate(.8deg); box-shadow: 0 6px 18px rgba(120,70,30,.12); }
+    .match::before { content: ""; position: absolute; top: -10px; left: 42%; width: 70px; height: 20px; background: rgba(243,201,160,.8); transform: rotate(-3deg); }
+    .match .tag { font: 16px var(--hand); letter-spacing: 0; text-transform: none; background: none; padding: 0; }
+    .match h3 { font: italic 22px/1.2 var(--serif); }
+    .btn { font: 700 14px "Avenir Next", Avenir, system-ui, sans-serif; }
+    .btn.ghost { border-color: var(--line); }
+    .card { box-shadow: none; border: 1px solid var(--line); background: #fffaf2; }
+    .card .info b { font: italic 17px var(--serif); }
+    .date { background: none; border: 1.5px solid var(--peach); color: var(--coral); font-family: var(--hand); }
+    .date b { font-family: var(--serif); }
+    .with span { font: 16px var(--hand); color: var(--ink); }
+    .mini, .book, .badge, .cheer, .going { font-family: "Avenir Next", Avenir, system-ui, sans-serif; }
+    .book { background: var(--coral); }
+    .feed { background: #fffaf2; box-shadow: none; border: 1px solid var(--line); }
+    .tabs { background: #fffaf2; box-shadow: 0 6px 20px rgba(120,70,30,.12); }
+    .tabs a { font: italic 14px var(--serif); }
   </style>
 </head>
 <body>
   <div class="app">
     <main>
       <div class="top"><a class="back" href="../index.html">← Gallery</a><span class="avatar" aria-label="Jasmine's profile">JT</span></div>
-      <p class="hi">Morning, Jasmine</p>
-      <h1>Never lift alone.</h1>
+      <p class="hi">Morning, Jasmine ♡</p>
+      <h1>You never have to<br>lift alone.</h1>
 
       <section class="crew" aria-label="Your crew">
         <div class="row">
@@ -116,14 +159,14 @@
       </section>
 
       <div class="match">
-        <span class="tag">Buddy match</span>
+        <span class="tag">psst, a buddy match →</span>
         <h3>Chloe is going to Barbell Basics solo too.</h3>
         <p>Saturday 8am at Iron Harbour, Kwun Tong. Only 2 spots left, and it's beginner-friendly.</p>
         <div class="pair"><span class="av" style="background:var(--ink)">JT</span><span class="plus">+</span><span class="av" style="background:#6f4ad8">CN</span><span style="font-size:13px;color:var(--muted)">You've trained together 5×</span></div>
         <div class="actions"><button class="btn" id="pair">Pair up · HK$180</button><button class="btn ghost" id="solo">Just book</button></div>
       </div>
 
-      <h2>Your plans <a href="#">Calendar</a></h2>
+      <h2>Your plans <a href="#">calendar</a></h2>
       <div class="card">
         <div class="head"><div class="date">SUN<b>11</b></div><div class="info"><b>Dragon's Back Sunrise Hike</b><small>6:15am · To Tei Wan · in 5 days</small></div><span class="going">✓</span></div>
         <div class="with"><div class="stack"><span class="av" style="background:#2a9d8f">PR</span><span class="av" style="background:#e8664a">HO</span><span class="av" style="background:#c2a14a">+21</span></div><span>Priya's splitting a taxi from Quarry Bay, 5:40am</span><button class="mini" data-msg="You've joined Priya's taxi 🚕">Join taxi</button></div>
@@ -133,11 +176,11 @@
         <div class="with"><div class="stack"><span class="av" style="background:#d6336c">AL</span><span class="av" style="background:#1d4e89">+30</span></div><span>Aisha's coming back after her first 5K</span><button class="mini" data-msg="We'll let Aisha know you're running with her 💪">Run with her</button></div>
       </div>
 
-      <h2>Try something new <a href="#">All events</a></h2>
+      <h2>Try something new <a href="#">see all</a></h2>
       <div class="card"><div class="head"><div class="date">SAT<b>17</b></div><div class="info"><b>Boxing Fundamentals</b><small>10am · Sheung Wan · HK$250</small><br><span class="badge">3 first-timers going</span></div><button class="book">Book</button></div></div>
       <div class="card"><div class="head"><div class="date">SUN<b>25</b></div><div class="info"><b>Paddle &amp; Brunch</b><small>9am · Sai Kung · HK$420</small><br><span class="badge">Bring a friend welcome</span></div><button class="book">Book</button></div></div>
 
-      <h2>Cheer them on</h2>
+      <h2>Cheer your girls on</h2>
       <div class="feed">
         <div class="post"><span class="av" style="background:#d6336c">AL</span><div>Aisha Lam finished her first ever 5K at run club.<small>Last Wednesday</small><button class="cheer" aria-pressed="false" data-n="21">👏 Cheer · 21</button></div></div>
         <div class="post"><span class="av" style="background:#6f4ad8">CN</span><div>Chloe Ng hit a 100 kg deadlift PR at Iron Harbour.<small>Saturday</small><button class="cheer" aria-pressed="false" data-n="34">👏 Cheer · 34</button></div></div>

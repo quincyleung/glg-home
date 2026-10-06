@@ -78,3 +78,6 @@
 
 ## v08 restyled: hype
 - **Made:** a dark, loud sports-brand mood: black with volt yellow and an orange-to-violet gradient, condensed Impact caps for headings, square-cornered buttons and hype copy ("Let's go, Jasmine.", "Locked in", "The squad", "3 weeks straight. Don't break it."). The story viewer and swipe deck still work.
+
+## v10 restyled: warm and sisterly
+- **Made:** cream lined paper with terracotta, italic Hoefler/Baskerville headings and Bradley Hand notes ("Morning, Jasmine ♡", "psst, a buddy match →"). The crew card is dashed and slightly tilted, and the buddy match is a taped-on note. The copy is softer ("You never have to lift alone.", "Cheer your girls on").
