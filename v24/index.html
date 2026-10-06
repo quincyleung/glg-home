@@ -52,6 +52,14 @@
     .sat.near .nm { position: absolute; left: 50%; top: 100%; transform: translateX(-50%); margin-top: 5px; font: 700 11px var(--display); text-transform: uppercase; letter-spacing: .06em; color: var(--muted); white-space: nowrap; }
     .center { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 32%; aspect-ratio: 1; border-radius: 50%; padding: 5px; background: conic-gradient(var(--purple) 0 75%, #fff 75% 100%); z-index: 3; }
     .center .ava { width: 100%; height: 100%; border: 4px solid #fff; }
+    .center { cursor: pointer; padding: 5px; border: 0; transition: transform .2s; }
+    .center:hover { transform: translate(-50%, -50%) scale(1.04); }
+    .center[aria-expanded="true"] { box-shadow: 0 0 0 4px rgba(74,31,184,.18); }
+    .streak-badge { position: absolute; left: 50%; bottom: -8px; transform: translateX(-50%); background: var(--purple); color: #fff; font: 700 12px var(--display); letter-spacing: .04em; padding: 3px 9px; border-radius: 99px; white-space: nowrap; box-shadow: 0 0 0 3px #fff; }
+    .card-pop { display: grid; grid-template-rows: 0fr; opacity: 0; transition: grid-template-rows .4s ease, opacity .3s ease, margin .4s ease; margin-bottom: 0; }
+    .card-pop > .flip-wrap { min-height: 0; overflow: visible; }
+    .card-pop:not(.open) > .flip-wrap { overflow: hidden; }
+    .card-pop.open { grid-template-rows: 1fr; opacity: 1; margin-bottom: 4px; }
     .orbit-hint { text-align: center; font-size: 12px; color: var(--muted); margin: 2px 0 12px; }
     .spot { display: none; margin: 0 0 14px; background: #fff; border-radius: 18px; padding: 12px 14px; gap: 12px; align-items: flex-start; box-shadow: 0 0 0 1px #e6defa; }
     .spot.on { display: flex; }
@@ -209,7 +217,7 @@
     .post .chrow .act { background: var(--purple); color: #fff; }
     .post .chrow .act.done { background: var(--lav); color: var(--purple); }
 
-    .tabs { position: sticky; bottom: 0; z-index: 5; display: grid; grid-template-columns: repeat(4, 1fr); background: rgba(255,255,255,.96); backdrop-filter: blur(12px); border-top: 1px solid var(--line); padding: 8px 8px calc(14px + env(safe-area-inset-bottom)); box-shadow: 0 -6px 20px rgba(40,10,90,.06); }
+    .tabs { position: sticky; bottom: 0; z-index: 9; display: grid; grid-template-columns: repeat(4, 1fr); background: rgba(255,255,255,.96); backdrop-filter: blur(12px); border-top: 1px solid var(--line); padding: 8px 8px calc(14px + env(safe-area-inset-bottom)); box-shadow: 0 -6px 20px rgba(40,10,90,.06); }
     .tabs a { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 6px 0 2px; color: var(--muted); text-decoration: none; font: 700 11px var(--display); text-transform: uppercase; letter-spacing: .08em; }
     .tabs .ic { display: grid; place-items: center; width: 52px; height: 32px; border-radius: 99px; transition: background .2s; }
     .tabs svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
@@ -231,10 +239,11 @@
       <div class="orbit" id="orbit" aria-label="You and your crew. Tap someone to catch up.">
         <div class="ring-line outer"></div><div class="ring-line inner"></div>
         <div class="outer-spin" id="far"></div>
-        <div class="center" title="3-week streak"><span class="ava" data-who="jasmine"></span></div>
+        <button class="center" id="me-center" aria-expanded="false" aria-controls="card-pop" aria-label="You: show your streak and check-in"><span class="ava" data-who="jasmine"></span><span class="streak-badge">🔥 3</span></button>
       </div>
-      <p class="orbit-hint">Who you could train with this week · pink ring = you're not booked yet</p>
+      <p class="orbit-hint">Tap a friend to join her · tap yourself for your streak and check-in</p>
       <div class="spot" id="spot" aria-live="polite"></div>
+      <div class="card-pop" id="card-pop">
       <div class="flip-wrap">
         <div class="flip" id="flip" role="button" tabindex="0" aria-pressed="false" aria-label="Your streak and stats. Tap to show your check-in QR code">
           <div class="face front">
@@ -249,6 +258,7 @@
             <div><span class="k">Check-in pass</span><span class="d">Jasmine Tran</span><span class="k">Member #0412 · Hong Kong</span><p>Show this at the door to sign in to any GLG session.</p><span class="hint">Tap to flip back ↻</span></div>
           </div>
         </div>
+      </div>
       </div>
 
       <section class="sec tint" aria-labelledby="h-going">
@@ -508,6 +518,15 @@
     document.addEventListener("click", e => { if (e.target.closest(".join, #psst-yes, .seat.empty")) setTimeout(paintDots, 0); });
     Avatar.drawAll(orbit); Avatar.drawAll(); paintDots();
 
+    // Tap yourself (centre of the orbit) to show or hide the streak card.
+    const meCenter = document.getElementById("me-center"), cardPop = document.getElementById("card-pop");
+    cardPop.inert = true;
+    meCenter.addEventListener("click", () => {
+      const open = !cardPop.classList.contains("open");
+      cardPop.classList.toggle("open", open); cardPop.inert = !open;
+      meCenter.setAttribute("aria-expanded", open);
+      if (open) setTimeout(() => cardPop.scrollIntoView({ behavior: "smooth", block: "nearest" }), 150);
+    });
     // Member card flips to a check-in QR code (decorative pattern for the prototype, not a real code).
     (function qr() {
       const N = 25, r = (seed => () => (seed = (seed * 16807) % 2147483647) / 2147483647)(412);

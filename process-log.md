@@ -243,3 +243,8 @@
 ## v22–v24: everything in carousels, one soft background
 - **Asked for:** in v22, v23 and v24, put all 3 sections in carousel format, and make the background prettier ("potentially one color is fine since it's shorter now").
 - **Made:** "You're going", "Join a session" and "From the community" are now snap-scrolling rows in all three versions (84% cards with the next peeking; comments still open inside post cards). Replaced the lavender/white/lavender bands with one soft page background: a pale lavender base with gentle lilac, pink and blue glows. Cards are crisp white on top. Sticky section headers are now frosted glass, so they still mark where you are. The pages are much shorter.
+
+## v24: streak card on tap
+- **Asked for:** in v24, the "3 weeks strong" card should only pop up when you tap the centre avatar (the user).
+- **Made:** Jasmine's centre avatar is now a button with a "🔥 3" badge, and the hint reads "Tap a friend to join her · tap yourself for your streak and check-in". The streak card (with Check in → QR) is hidden until then and slides open below the orbit, and tapping again folds it away. While hidden it's inert, so it can't be reached by keyboard.
+- **Fix (v22–v24):** section headers could draw over the tab bar, so the tab bar now sits on top.
