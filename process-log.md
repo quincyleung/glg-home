@@ -34,3 +34,8 @@
 - **Asked for:** Order Sheet as the second version.
 - **Made:** a cream and red 點心紙 (dim sum order sheet). Events are grouped as Strength / Outdoors, with tick boxes and prices. Booked events carry a red 已訂 BOOKED stamp. A sticky button keeps a running total ("Book 2 events · HK$430") and stamps everything at once. News sits in a "Today's notes" box.
 - **Pushback:** none yet.
+
+## v03: Tape Shelf
+- **Asked for:** Tape Shelf as the third version, a direction you liked from round 1.
+- **Made:** the polished round 2 take. A purple night gradient with a "GLG GET PHYSICAL!" header. The next bookable event is a cassette (handwritten label, "Only 2 spots left") whose reels start spinning when you book. Other events are tapes on a swipeable shelf. News is "Liner notes" as numbered tracks.
+- **Pushback:** none yet.

@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>v03 · Tape Shelf — GLG Home</title>
+  <style>
+    :root {
+      --night: #1a0633;
+      --plum: #2a0f4a;
+      --pink: #ff3cac;
+      --cyan: #2bd2ff;
+      --yellow: #ffe14f;
+      --lime: #7cff6b;
+      --orange: #ff9f45;
+      --soft: #c9b6e4;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #0d0219; color: #fff; font: 15px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; }
+    button { font: inherit; cursor: pointer; border: 0; }
+    .app { max-width: 430px; margin: 0 auto; min-height: 100vh; background: radial-gradient(circle at 15% 0%, #5b1a8a, var(--night) 55%); position: relative; }
+    @media (min-width: 600px) { .app { margin: 24px auto; min-height: 0; border-radius: 28px; overflow: clip; box-shadow: 0 20px 60px rgba(0,0,0,.6); } }
+    main { padding: 16px 18px 24px; }
+
+    .top { display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--soft); }
+    .top a { color: var(--soft); text-decoration: none; font-weight: 600; }
+    .eyebrow { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; font-weight: 700; color: var(--soft); margin: 0; }
+    h1 { font: italic 900 30px/1 "Arial Black", Impact, system-ui, sans-serif; margin: 18px 0 4px; color: var(--pink); text-shadow: 3px 3px 0 var(--cyan); letter-spacing: -.01em; }
+    .hello { margin: 0 0 18px; color: var(--soft); }
+    h2 { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--soft); margin: 26px 0 10px; display: flex; justify-content: space-between; }
+    h2 span { color: var(--cyan); letter-spacing: 0; text-transform: none; font-size: 13px; }
+
+    /* hero cassette */
+    .cassette { background: linear-gradient(135deg, var(--pink), #784ba0 60%, #2b86c5); border-radius: 22px; padding: 16px; box-shadow: 0 14px 40px rgba(255,60,172,.25); }
+    .label { background: #fff6e8; color: #2a1640; border-radius: 10px; padding: 10px 12px; position: relative; }
+    .label .side { position: absolute; top: 8px; right: 10px; font: 900 12px "Arial Black", sans-serif; color: var(--pink); }
+    .label b { display: block; font: 700 20px "Marker Felt", "Bradley Hand", "Segoe Print", cursive; }
+    .label small { color: #6b5a80; font-size: 13px; }
+    .window { display: flex; justify-content: space-between; align-items: center; background: rgba(20,4,40,.6); border-radius: 30px; padding: 10px 26px; margin: 12px 18px; }
+    .reel { width: 38px; height: 38px; border-radius: 50%; border: 4px dotted #fff; position: relative; animation: spin 6s linear infinite paused; }
+    .reel::after { content: ""; position: absolute; inset: 9px; border-radius: 50%; background: #fff; }
+    .tape-strip { flex: 1; height: 16px; margin: 0 10px; background: #3a1f2a; border-radius: 4px; }
+    .cassette.playing .reel { animation-play-state: running; animation-duration: 1.2s; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .row { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+    .left { background: var(--yellow); color: #2a1640; font-weight: 800; font-size: 12px; padding: 4px 10px; border-radius: 99px; }
+    .play { background: #fff; color: var(--night); font-weight: 800; padding: 11px 18px; border-radius: 99px; font-size: 14px; transition: transform .15s; }
+    .play:active { transform: scale(.95); }
+
+    /* shelf */
+    .shelf { display: flex; gap: 10px; overflow-x: auto; scroll-snap-type: x mandatory; margin: 0 -18px; padding: 2px 18px 8px; scrollbar-width: none; }
+    .shelf::-webkit-scrollbar { display: none; }
+    .tape { scroll-snap-align: start; flex: 0 0 62%; background: var(--plum); border-radius: 16px; padding: 14px; border-top: 6px solid; display: flex; flex-direction: column; gap: 4px; min-height: 150px; }
+    .tape b { font-size: 16px; }
+    .tape small { color: var(--soft); font-size: 13px; }
+    .tape .row { margin-top: auto; }
+    .mini { background: rgba(255,255,255,.12); color: #fff; font-weight: 700; font-size: 13px; padding: 7px 12px; border-radius: 99px; }
+    .going { color: var(--lime); font-weight: 800; font-size: 13px; }
+    .price { font-size: 13px; color: var(--soft); }
+
+    /* liner notes */
+    .notes { background: rgba(255,255,255,.07); border-radius: 18px; padding: 4px 14px; }
+    .note { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,.08); font-size: 14px; }
+    .note:last-child { border-bottom: 0; }
+    .track { font: 900 12px "Arial Black", sans-serif; color: var(--pink); width: 22px; flex: none; padding-top: 2px; }
+    .note small { display: block; color: var(--soft); font-size: 12px; margin-top: 2px; }
+
+    .tabs { position: sticky; bottom: 0; margin: 0 14px 14px; display: flex; justify-content: space-around; background: rgba(42,15,74,.85); backdrop-filter: blur(10px); border-radius: 99px; padding: 12px 6px; }
+    .tabs a { color: var(--soft); text-decoration: none; font-size: 12px; font-weight: 700; }
+    .tabs a.on { color: var(--cyan); }
+    .toast { position: fixed; left: 50%; bottom: 90px; transform: translate(-50%, 20px); background: var(--yellow); color: var(--night); font-weight: 800; padding: 12px 18px; border-radius: 14px; font-size: 14px; opacity: 0; pointer-events: none; transition: .3s; max-width: 90vw; }
+    .toast.show { opacity: 1; transform: translate(-50%, 0); }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <main>
+      <div class="top"><a href="../">← Gallery</a><span>Tue 6 Oct · Hong Kong</span></div>
+      <h1>GLG GET<br>PHYSICAL!</h1>
+      <p class="hello">Hi Jasmine. Here's this week's mixtape.</p>
+
+      <p class="eyebrow">Next up · Side A</p>
+      <div class="cassette" id="hero" style="margin-top:8px">
+        <div class="label">
+          <span class="side">A</span>
+          <b>Barbell Basics</b>
+          <small>Sat 10 Oct · 8:00am · Iron Harbour, Kwun Tong · with Coach Mei-Ling</small>
+        </div>
+        <div class="window"><span class="reel"></span><span class="tape-strip"></span><span class="reel"></span></div>
+        <div class="row"><span class="left">Only 2 spots left</span><button class="play" data-hero>▶ Book · HK$180</button></div>
+      </div>
+
+      <h2>On the shelf <span>Swipe →</span></h2>
+      <div class="shelf">
+        <div class="tape" style="border-color:var(--cyan)"><b>Dragon's Back Sunrise Hike</b><small>Sun 11 · 6:15am · To Tei Wan</small><div class="row"><span class="going">You're going ✓</span><span class="price">Free</span></div></div>
+        <div class="tape" style="border-color:var(--yellow)"><b>Harbourfront 5K</b><small>Wed 14 · 7:30pm · Star Ferry clock tower</small><div class="row"><span class="going">You're going ✓</span><span class="price">Free</span></div></div>
+        <div class="tape" style="border-color:var(--lime)"><b>Boxing Fundamentals</b><small>Sat 17 · 10:00am · Sheung Wan · 9/20</small><div class="row"><button class="mini">▶ Book</button><span class="price">HK$250</span></div></div>
+        <div class="tape" style="border-color:var(--orange)"><b>Paddle &amp; Brunch</b><small>Sun 25 · 9:00am · Sai Kung · 6/12</small><div class="row"><button class="mini">▶ Book</button><span class="price">HK$420</span></div></div>
+      </div>
+
+      <h2>Liner notes</h2>
+      <div class="notes">
+        <div class="note"><span class="track">01</span><div>Run club now starts at the Star Ferry clock tower. Look for the pink flag!<small>Hana Okafor, Chapter Lead · 2 days ago</small></div></div>
+        <div class="note"><span class="track">02</span><div>Lift a Million: 412,000 / 1,000,000 kg. If we hit it, HK$5,000 goes to a local women's shelter.<small>Mei-Ling Ho · 5 days ago</small></div></div>
+        <div class="note"><span class="track">03</span><div>Global Lift Day, Sat 7 Nov: all seven chapters lift at the same hour. HK is at 5pm.<small>GLG HQ · yesterday</small></div></div>
+      </div>
+    </main>
+
+    <nav class="tabs"><a class="on" href="#">Home</a><a href="#">Events</a><a href="#">Community</a><a href="#">Profile</a></nav>
+  </div>
+  <div class="toast" id="toast" role="status"></div>
+
+  <script>
+    const toast = document.getElementById("toast");
+    function say(msg) { toast.textContent = msg; toast.classList.add("show"); clearTimeout(say.t); say.t = setTimeout(() => toast.classList.remove("show"), 2400); }
+    document.querySelector("[data-hero]").addEventListener("click", e => {
+      document.getElementById("hero").classList.add("playing");
+      e.currentTarget.outerHTML = '<span class="play" style="background:var(--lime)">Now playing ✓</span>';
+      say("You're in! We've saved your spot. See you there 💪");
+    });
+    document.querySelectorAll(".mini").forEach(b => b.addEventListener("click", () => {
+      b.outerHTML = '<span class="going">You\'re going ✓</span>';
+      say("You're in! We've saved your spot. See you there 💪");
+    }));
+  </script>
+</body>
+</html>
