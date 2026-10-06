@@ -36,7 +36,7 @@
     .me { width: 36px; height: 36px; border-radius: 50%; background: var(--purple); color: #fff; display: grid; place-items: center; font-weight: 700; font-size: 12px; }
     .greet { margin: 0 -16px; padding: 16px 16px 0; text-align: center; }
     .greet h1 { font-size: 40px; line-height: 1; margin: 0; color: var(--purple); white-space: nowrap; }
-    .orbit { position: relative; width: 100%; aspect-ratio: 1; max-width: 320px; margin: 4px auto 0; }
+    .orbit { position: relative; width: 100%; aspect-ratio: 1; max-width: 320px; margin: 4px auto 14px; }
     .ring-line { position: absolute; border-radius: 50%; border: 1.5px dashed var(--lav2); }
     .ring-line.inner { inset: 16%; } .ring-line.outer { inset: 3%; border-color: #e6defa; }
     .outer-spin { position: absolute; inset: 0; animation: spin 120s linear infinite; }
@@ -60,7 +60,7 @@
     .card-pop > .flip-wrap { min-height: 0; overflow: visible; }
     .card-pop:not(.open) > .flip-wrap { overflow: hidden; }
     .card-pop.open { grid-template-rows: 1fr; opacity: 1; margin-bottom: 4px; }
-    .orbit-hint { text-align: center; font-size: 12px; color: var(--muted); margin: 2px 0 12px; }
+    .orbit-hint { display: none; }
     .spot { display: none; margin: 0 0 14px; background: #fff; border-radius: 18px; padding: 12px 14px; gap: 12px; align-items: flex-start; box-shadow: 0 0 0 1px #e6defa; }
     .spot.on { display: flex; }
     .spot .ava { width: 40px; height: 40px; flex: none; }
@@ -239,12 +239,11 @@
 
     <main>
       <div class="greet"><h1 class="d">Morning, Jasmine.</h1></div>
-      <div class="orbit" id="orbit" aria-label="You and your crew. Tap someone to catch up.">
+      <div class="orbit" id="orbit" aria-label="Your friends this week. Tap a friend to see her next session and join her; tap yourself for your streak and check-in.">
         <div class="ring-line outer"></div><div class="ring-line inner"></div>
         <div class="outer-spin" id="far"></div>
         <button class="center" id="me-center" aria-expanded="false" aria-controls="card-pop" aria-label="You: show your streak and check-in"><span class="ava" data-who="jasmine"></span><span class="streak-badge">🔥 3</span></button>
       </div>
-      <p class="orbit-hint">Tap a friend to join her · tap yourself for your streak and check-in</p>
       <div class="spot" id="spot" aria-live="polite"></div>
       <div class="card-pop" id="card-pop">
       <div class="flip-wrap">
@@ -497,6 +496,7 @@
       }
       document.querySelectorAll(".sat.near").forEach(el => el.setAttribute("aria-expanded", "false"));
       tapped.setAttribute("aria-expanded", "true");
+      closeCard();
       const c = crew[i], booked = isBooked(c);
       document.querySelectorAll(".sat.near").forEach((el, j) => el.classList.toggle("active", j === i));
       spot.classList.add("on");
@@ -531,8 +531,11 @@
     // Tap yourself (centre of the orbit) to show or hide the streak card.
     const meCenter = document.getElementById("me-center"), cardPop = document.getElementById("card-pop");
     cardPop.inert = true;
+    function closeCard() { cardPop.classList.remove("open"); cardPop.inert = true; meCenter.setAttribute("aria-expanded", "false"); }
+    function closeSpot() { spot.classList.remove("on"); document.querySelectorAll(".sat.near").forEach(el => { el.classList.remove("active"); el.setAttribute("aria-expanded", "false"); }); }
     meCenter.addEventListener("click", () => {
       const open = !cardPop.classList.contains("open");
+      if (open) closeSpot();
       cardPop.classList.toggle("open", open); cardPop.inert = !open;
       meCenter.setAttribute("aria-expanded", open);
       if (open) setTimeout(() => cardPop.scrollIntoView({ behavior: "smooth", block: "nearest" }), 150);

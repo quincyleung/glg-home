@@ -119,6 +119,17 @@
     .join:active { transform: scale(.96); }
     .join.done { background: var(--lav); color: var(--purple); }
 
+    /* psst stack: one card per friend nudge, the next ones peeking underneath */
+    .psst-stack { margin: 0 0 14px; max-height: 520px; transition: opacity .35s, max-height .45s .2s, margin .45s .2s; }
+    .psst-stack.gone { opacity: 0; max-height: 0; margin: 0; overflow: hidden; }
+    .psst-head { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+    .psst-head .kick { font-size: 15px; color: var(--purple); }
+    .pcount { font: 700 12px var(--display); background: var(--pink); color: #fff; padding: 2px 8px; border-radius: 99px; }
+    .pdeck { display: grid; padding-bottom: 24px; }
+    .sec .psst.pcard { grid-area: 1 / 1; margin: 0; max-height: none; transform-origin: 50% 0; transition: transform .35s ease, opacity .35s ease, filter .35s; box-shadow: 0 8px 18px -8px rgba(40,10,90,.25); }
+    .pcard .row2 { margin-top: 0; }
+    .pcard.behind { filter: saturate(.85) brightness(.985); }
+    .pcard.out { transform: translateX(-115%) rotate(-7deg) !important; opacity: 0; }
     /* psst */
     .psst { margin-top: 22px; background: var(--lav); border-radius: 20px; padding: 16px; border-left: 5px solid var(--pink); transition: opacity .35s, transform .35s, max-height .45s .2s, margin .45s .2s, padding .45s .2s; max-height: 400px; overflow: hidden; }
     .psst.gone { opacity: 0; transform: translateY(-6px); max-height: 0; margin-top: 0; padding-top: 0; padding-bottom: 0; }
@@ -237,13 +248,31 @@
 
       <section class="sec" aria-labelledby="h-join">
         <h2 class="sec-head" id="h-join"><span class="ic"><svg viewBox="0 0 24 24"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/></svg></span><span class="d">Join a session</span><span class="count">3</span><a href="#">All events</a></h2>
-        <div class="psst" id="psst" role="region" aria-label="Your friends are going">
-          <span class="d kick">Psst, your friends are going →</span>
-          <div class="row2">
-            <span class="faces"><span class="ava" data-who="chloe"></span><span class="ava" data-who="kiko"></span></span>
-            <div><b>Chloe and Kiko are going to Barbell Basics</b><small>Sat 10 · 8am · Kwun Tong · <span class="hot">only 2 spots left</span></small></div>
+        <div class="psst-stack" id="psst" role="region" aria-label="Your friends are going">
+          <div class="psst-head"><span class="d kick">Psst, your friends are going →</span><span class="pcount" id="pcount">3</span></div>
+          <div class="pdeck">
+            <div class="psst pcard" data-target="#ev-barbell" data-names="Chloe and Kiko" data-toast="Chloe and Kiko will see you there 💜">
+              <div class="row2">
+                <span class="faces"><span class="ava" data-who="chloe"></span><span class="ava" data-who="kiko"></span></span>
+                <div><b>Chloe and Kiko are going to Barbell Basics</b><small>Sat 10 · 8am · Kwun Tong · <span class="hot">only 2 spots left</span></small></div>
+              </div>
+              <div class="btns"><button class="yes">Join them · HK$180</button><button class="no">It's okay</button></div>
+            </div>
+            <div class="psst pcard" data-target="#ev-boxing" data-names="Mandy" data-toast="Mandy will be glad of the company 🥊">
+              <div class="row2">
+                <span class="faces"><span class="ava" data-who="mandy"></span></span>
+                <div><b>Mandy is going to Boxing Fundamentals</b><small>Sat 17 · 10am · Sheung Wan · her first time too</small></div>
+              </div>
+              <div class="btns"><button class="yes">Join her · HK$250</button><button class="no">It's okay</button></div>
+            </div>
+            <div class="psst pcard" data-target="#ev-paddle" data-names="Sara and Aisha" data-toast="Sara and Aisha will save you a board 🏄‍♀️">
+              <div class="row2">
+                <span class="faces"><span class="ava" data-who="sara"></span><span class="ava" data-who="aisha"></span></span>
+                <div><b>Sara and Aisha are going to Paddle &amp; Brunch</b><small>Sun 25 · 9am · Sai Kung · brunch included</small></div>
+              </div>
+              <div class="btns"><button class="yes">Join them · HK$420</button><button class="no">It's okay</button></div>
+            </div>
           </div>
-          <div class="btns"><button class="yes" id="psst-yes">Join them · HK$180</button><button class="no" id="psst-no">It's okay</button></div>
         </div>
 
         <div class="rail join-rail">
@@ -252,12 +281,12 @@
             <div class="body"><span class="d ttl">Barbell Basics</span><p class="meta">Sat 10 Oct · 8:00am · Kwun Tong</p>
               <div class="row"><div class="people"><span class="avs"><span class="ava" data-who="chloe"></span><span class="ava" data-who="kiko"></span><span class="ava" data-seed="33"></span></span><span class="who">Chloe, Kiko + 12</span></div><span class="price">HK$180</span><button class="join">Join</button></div></div>
           </div>
-          <div class="ev">
+          <div class="ev" id="ev-boxing">
             <div class="photo" data-scene="studio" data-people="5" data-seed="9" data-tone="color" data-alt="Boxing workshop in the studio"><span class="tag">3 first-timers</span><button class="info" aria-expanded="false" aria-label="Instructor details: Jess"><span class="ava" data-who="jess"></span></button><div class="details">With Coach Jess Albano at Left Hook Studio. Stance, jab-cross, footwork and pad work. Gloves and wraps provided.</div></div>
             <div class="body"><span class="d ttl">Boxing Fundamentals</span><p class="meta">Sat 17 Oct · 10:00am · Sheung Wan</p>
               <div class="row"><div class="people"><span class="avs"><span class="ava" data-who="mandy"></span><span class="ava" data-seed="52"></span><span class="ava" data-seed="54"></span></span><span class="who">Mandy + 8</span></div><span class="price">HK$250</span><button class="join">Join</button></div></div>
           </div>
-          <div class="ev">
+          <div class="ev" id="ev-paddle">
             <div class="photo" data-scene="beach" data-people="6" data-seed="5" data-tone="color" data-alt="Paddleboarding at Sai Kung"><span class="tag">Brunch included</span><button class="info" aria-expanded="false" aria-label="Instructor details: Tash"><span class="ava" data-seed="47"></span></button><div class="details">With instructor Tash Wong. Two hours on the water with an instructor, then brunch by the harbour. Board hire included. You must be able to swim.</div></div>
             <div class="body"><span class="d ttl">Paddle &amp; Brunch</span><p class="meta">Sun 25 Oct · 9:00am · Sai Kung</p>
               <div class="row"><div class="people"><span class="avs"><span class="ava" data-who="sara"></span><span class="ava" data-seed="62"></span><span class="ava" data-seed="64"></span></span><span class="who">Sara + 5</span></div><span class="price">HK$420</span><button class="join">Join</button></div></div>
@@ -451,7 +480,7 @@
     function say(msg) { toast.textContent = msg; toast.classList.add("show"); clearTimeout(say.t); say.t = setTimeout(() => toast.classList.remove("show"), 2400); }
 
     // Psst: join friends, or dismiss. Kept in sync with the Barbell card under "coming up".
-    const psst = document.getElementById("psst"), barbellJoin = document.querySelector("#ev-barbell .join");
+    const psst = document.getElementById("psst");
     function markJoined(b) {
       b.textContent = "You're going ✓"; b.classList.add("done"); b.disabled = true;
       const ppl = b.closest(".ev")?.querySelector(".people");
@@ -464,18 +493,40 @@
         const who = ppl.querySelector(".who"); who.textContent = "You, " + who.textContent;
       }
     }
-    document.getElementById("psst-yes").addEventListener("click", e => {
-      psst.classList.add("joined");
-      e.currentTarget.textContent = "You're in with Chloe & Kiko ✓"; e.currentTarget.disabled = true;
-      document.getElementById("psst-no").remove();
-      markJoined(barbellJoin);
-      say("You're in! Chloe and Kiko will see you there 💜");
-      setTimeout(() => psst.classList.add("gone"), 2200);
+    // Psst stack: answer the front card, and the next friend slides up.
+    let pcards = [...psst.querySelectorAll(".pcard")];
+    function layoutStack() {
+      pcards.forEach((c, i) => {
+        c.style.zIndex = 10 - i;
+        c.style.transform = i ? `translateY(${Math.min(i, 2) * 15}px) scale(${1 - Math.min(i, 2) * .035})` : "";
+        c.style.opacity = i > 2 ? 0 : 1;
+        c.classList.toggle("behind", i > 0); c.inert = i > 0;
+      });
+      document.getElementById("pcount").textContent = pcards.length;
+      if (!pcards.length) psst.classList.add("gone");
+    }
+    function dropCard(card) {
+      if (!pcards.includes(card)) return;
+      card.classList.add("out");
+      setTimeout(() => { card.remove(); pcards = pcards.filter(c => c !== card); layoutStack(); }, 330);
+    }
+    pcards.forEach(card => {
+      card.querySelector(".no").addEventListener("click", () => dropCard(card));
+      card.querySelector(".yes").addEventListener("click", e => {
+        const j = document.querySelector(card.dataset.target + " .join");
+        if (j && !j.disabled) markJoined(j);
+        card.classList.add("joined");
+        e.currentTarget.textContent = `You're in with ${card.dataset.names.replace(" and ", " & ")} ✓`; e.currentTarget.disabled = true;
+        card.querySelector(".no").remove();
+        say("You're in! " + card.dataset.toast);
+        setTimeout(() => dropCard(card), 1300);
+      });
     });
-    document.getElementById("psst-no").addEventListener("click", () => psst.classList.add("gone"));
+    layoutStack();
     document.querySelectorAll(".join").forEach(b => b.addEventListener("click", () => {
       markJoined(b);
-      if (b === barbellJoin) psst.classList.add("gone");
+      const id = "#" + b.closest(".ev").id, card = pcards.find(c => c.dataset.target === id);
+      if (card) dropCard(card);
       say("You're in! We've saved your spot. See you there 💪");
     }));
 
