@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>v15 · Chic — GLG Home</title>
+  <style>
+    :root {
+      --ivory: #f7f3ec;
+      --ink: #161412;
+      --taupe: #9a8d7b;
+      --hair: #d9d0c2;
+      --didot: Didot, "Bodoni 72", "Bodoni MT", "Playfair Display", "Times New Roman", serif;
+      --sans: "Avenir Next", Avenir, "Helvetica Neue", Arial, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #e6dfd3; color: var(--ink); font: 14px/1.6 var(--sans); }
+    button { font: inherit; cursor: pointer; border: 0; color: inherit; background: none; }
+    .app { max-width: 430px; margin: 0 auto; min-height: 100vh; background: var(--ivory); position: relative; }
+    @media (min-width: 600px) { .app { margin: 24px auto; min-height: 0; overflow: clip; box-shadow: 0 30px 80px rgba(60,40,20,.15); } }
+    main { padding: 18px 26px 32px; }
+
+    .caps { font: 500 10px var(--sans); letter-spacing: .32em; text-transform: uppercase; color: var(--taupe); }
+    .top { display: flex; justify-content: space-between; align-items: center; }
+    .top a { color: var(--taupe); text-decoration: none; }
+    .brand { text-align: center; margin: 22px 0 0; color: var(--ink); }
+
+    h1 { font: italic 400 46px/1.02 var(--didot); text-align: center; margin: 30px 0 14px; letter-spacing: -.01em; }
+    .date { text-align: center; }
+    .rule { height: 1px; background: var(--ink); margin: 26px 0; position: relative; }
+    .rule::after { content: "◆"; position: absolute; left: 50%; top: -9px; transform: translateX(-50%); background: var(--ivory); padding: 0 10px; font-size: 10px; line-height: 18px; }
+    .intro { font: italic 19px/1.45 var(--didot); text-align: center; margin: 0 6px; }
+
+    h2 { font: 400 26px var(--didot); margin: 40px 0 14px; display: flex; justify-content: space-between; align-items: baseline; }
+    h2 .caps { letter-spacing: .24em; }
+
+    /* in numbers */
+    .nums { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--hair); border-bottom: 1px solid var(--hair); }
+    .nums div { text-align: center; padding: 16px 4px; }
+    .nums div + div { border-left: 1px solid var(--hair); }
+    .nums b { display: block; font: 400 38px/1 var(--didot); }
+    .nums .caps { font-size: 9px; letter-spacing: .22em; }
+
+    /* itinerary */
+    .it { display: flex; align-items: baseline; gap: 8px; padding: 10px 0; }
+    .it .day { font: italic 17px var(--didot); white-space: nowrap; }
+    .it .dots { flex: 1; border-bottom: 1px dotted var(--taupe); transform: translateY(-4px); }
+    .it .time { font: 500 11px var(--sans); letter-spacing: .14em; }
+    .it-sub { margin: -6px 0 6px; color: var(--taupe); font-size: 13px; }
+
+    /* reserve */
+    .res { display: grid; grid-template-columns: 34px 1fr; gap: 6px 10px; padding: 18px 0; border-top: 1px solid var(--hair); }
+    .res:last-child { border-bottom: 1px solid var(--hair); }
+    .res .no { font: italic 22px/1 var(--didot); color: var(--taupe); }
+    .res b { font: 400 24px/1.1 var(--didot); display: block; }
+    .res p { margin: 4px 0 8px; color: #5d554b; font-size: 13px; }
+    .res .row { display: flex; justify-content: space-between; align-items: baseline; }
+    .reserve { font: 500 11px var(--sans); letter-spacing: .24em; text-transform: uppercase; border-bottom: 1px solid var(--ink); padding: 0 0 2px; }
+    .reserve.done { border-color: transparent; color: var(--taupe); }
+    .scarce { font: italic 14px var(--didot); color: #8a3b2e; }
+
+    /* notes */
+    .note { padding: 16px 0; border-bottom: 1px solid var(--hair); }
+    .note q { font: italic 18px/1.4 var(--didot); quotes: "“" "”"; display: block; }
+    .note .caps { display: block; margin-top: 8px; }
+    .line { height: 1px; background: var(--hair); margin-top: 12px; position: relative; }
+    .line i { position: absolute; left: 0; top: -1px; height: 3px; width: 41%; background: var(--ink); }
+    .applaud { padding: 0; margin-top: 8px; font: 500 10px var(--sans); letter-spacing: .22em; text-transform: uppercase; color: var(--taupe); }
+    .applaud[aria-pressed="true"] { color: var(--ink); }
+
+    /* invitation */
+    .invite { margin-top: 34px; border: 3px double var(--ink); padding: 22px 18px; text-align: center; }
+    .invite .big { font: italic 40px/1 var(--didot); margin: 8px 0; }
+    .invite p { margin: 0 0 12px; font: 15px/1.5 var(--didot); }
+
+    .tabs { position: sticky; bottom: 0; display: flex; justify-content: space-around; background: rgba(247,243,236,.95); backdrop-filter: blur(6px); border-top: 1px solid var(--ink); padding: 14px 0 18px; }
+    .tabs a { font: 500 9px var(--sans); letter-spacing: .28em; text-transform: uppercase; color: var(--taupe); text-decoration: none; }
+    .tabs a.on { color: var(--ink); }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <main>
+      <div class="top caps"><a href="../index.html">← Gallery</a><span>Tue 06.10</span></div>
+      <p class="brand caps" style="color:var(--ink)">Girls Lift Girls &nbsp;·&nbsp; Hong Kong</p>
+
+      <h1>Good morning,<br>Jasmine.</h1>
+      <p class="date caps">Your week, considered</p>
+      <div class="rule"></div>
+      <p class="intro">A sunrise on Dragon's Back, a run along the harbour, and, should you wish, a place at the barbell on Saturday.</p>
+
+      <h2>In numbers <span class="caps">Since March 2025</span></h2>
+      <div class="nums">
+        <div><b>27</b><span class="caps">Sessions</span></div>
+        <div><b>3</b><span class="caps">Week streak</span></div>
+        <div><b>60</b><span class="caps">Kg squat</span></div>
+      </div>
+
+      <h2>Your itinerary</h2>
+      <div class="it"><span class="day">Sunday 11</span><span class="dots"></span><span class="time">06:15</span></div>
+      <p class="it-sub">Dragon's Back Sunrise Hike · To Tei Wan · confirmed</p>
+      <div class="it"><span class="day">Wednesday 14</span><span class="dots"></span><span class="time">19:30</span></div>
+      <p class="it-sub">Harbourfront 5K · Star Ferry clock tower · confirmed</p>
+
+      <h2>To reserve <span class="caps">Three sessions</span></h2>
+      <div class="res">
+        <span class="no">i.</span>
+        <div><b>Barbell Basics</b><p>Saturday 10 October, 8am. Iron Harbour, Kwun Tong. Squat and deadlift with Coach Mei-Ling Ho.</p>
+          <div class="row"><span class="scarce">Two places remain</span><button class="reserve">Reserve · HK$180</button></div></div>
+      </div>
+      <div class="res">
+        <span class="no">ii.</span>
+        <div><b>Boxing Fundamentals</b><p>Saturday 17 October, 10am. Left Hook Studio, Sheung Wan. Gloves and wraps provided.</p>
+          <div class="row"><span class="caps">9 of 20</span><button class="reserve">Reserve · HK$250</button></div></div>
+      </div>
+      <div class="res">
+        <span class="no">iii.</span>
+        <div><b>Paddle &amp; Brunch</b><p>Sunday 25 October, 9am. Sai Kung waterfront. Two hours on the water, then brunch by the harbour.</p>
+          <div class="row"><span class="caps">6 of 12</span><button class="reserve">Reserve · HK$420</button></div></div>
+      </div>
+
+      <h2>Notes from the chapter</h2>
+      <div class="note"><q>From Wednesday, run club begins at the Star Ferry clock tower. Look for the pink flag.</q><span class="caps">Hana Okafor, chapter lead</span></div>
+      <div class="note"><q>A 100 kg deadlift, on Saturday. Two years ago I couldn't lift the empty bar.</q><span class="caps">Chloe Ng, member</span><button class="applaud" aria-pressed="false" data-n="34">Applaud · 34</button></div>
+      <div class="note"><q>412,000 of a million kilograms, lifted together. Your share: 2,140.</q><div class="line"><i></i></div><span class="caps">Lift a Million · 25 days remain</span></div>
+      <div class="note"><q>Splitting a taxi to To Tei Wan on Sunday, 5:40am from Quarry Bay.</q><span class="caps">Priya Raman · 6 replies</span></div>
+
+      <div class="invite">
+        <span class="caps">Save the date</span>
+        <div class="big">Global Lift Day</div>
+        <p>Saturday 7 November. Seven chapters, one hour.<br>Hong Kong lifts at five o'clock, Iron Harbour.</p>
+        <span class="caps">GLG Headquarters</span>
+      </div>
+    </main>
+
+    <nav class="tabs"><a class="on" href="#">Home</a><a href="#">Events</a><a href="#">Community</a><a href="#">Profile</a></nav>
+  </div>
+
+  <script>
+    document.querySelectorAll(".reserve").forEach(b => b.addEventListener("click", () => {
+      b.textContent = "Reserved — see you there"; b.classList.add("done"); b.disabled = true;
+    }));
+    document.querySelectorAll(".applaud").forEach(a => a.addEventListener("click", () => {
+      const on = a.getAttribute("aria-pressed") !== "true";
+      a.setAttribute("aria-pressed", on);
+      a.textContent = `${on ? "Applauded" : "Applaud"} · ${+a.dataset.n + (on ? 1 : 0)}`;
+    }));
+  </script>
+</body>
+</html>

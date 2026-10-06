@@ -97,3 +97,8 @@
 ## v14: Cool
 - **Asked for:** a "cool" theme.
 - **Made:** cool grey with ink and one electric blue, Helvetica with tight tracking plus monospace, all lowercase ("morning jasmine. here's what's dropping."). There's a holographic animated member card (member #0412, sessions, streak, PB). Booked events are "claimed", and the bookable ones are numbered "drops" with live ticking countdowns (from a fixed prototype "now" of 07:42 Tue 6 Oct), fill meters and "claim spot". The community is a terse lowercase feed with ↑ reactions.
+
+## v15: Chic
+- **Asked for:** a "chic" theme.
+- **Made:** quiet luxury in ivory and ink with Didot/Bodoni italics, Avenir spaced caps and hairline rules. The tone is refined ("Your week, considered.", "Two places remain"). Has an "In numbers" strip, "Your itinerary" with dotted leaders, "To reserve" with roman numerals and underlined text links, "Notes from the chapter" as italic quotes with an Applaud action, and Global Lift Day as a double-ruled save-the-date card.
+- Also updated the gallery's intro to the versions to tell the v06–v15 part of the story.
