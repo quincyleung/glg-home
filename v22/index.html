@@ -1,0 +1,438 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>v22 · Stronger Together — GLG Home</title>
+  <style>
+    :root {
+      --purple: #4a1fb8;
+      --deep: #24104f;
+      --lav: #efe9ff;
+      --lav2: #c9b6ff;
+      --pink: #ff7aa8;
+      --mint: #dff5ea;
+      --ink: #1a1328;
+      --muted: #6e6585;
+      --line: #ece7f5;
+      --display: Oswald, "Avenir Next Condensed", "Helvetica Neue", "Arial Narrow", sans-serif;
+      --body: Arimo, Arial, "Helvetica Neue", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #e4ddf3; color: var(--ink); font: 15px/1.45 var(--body); }
+    button { font: inherit; cursor: pointer; border: 0; color: inherit; background: none; }
+    .app { max-width: 430px; margin: 0 auto; min-height: 100vh; background: #fff; position: relative; overflow-x: clip; }
+    @media (min-width: 600px) { .app { margin: 24px auto; min-height: 0; border-radius: 28px; overflow: clip; box-shadow: 0 20px 60px rgba(40,10,90,.2); } }
+    .d { font-family: var(--display); font-weight: 700; text-transform: uppercase; font-stretch: condensed; letter-spacing: .01em; }
+    .photo { position: relative; overflow: hidden; background: var(--lav); }
+    .photo svg { display: block; width: 100%; height: 100%; }
+    .ava { display: block; border-radius: 50%; overflow: hidden; flex: none; }
+    .ava svg { display: block; width: 100%; height: 100%; }
+
+    /* top bar over the hero */
+    .bar { position: absolute; top: 0; left: 0; right: 0; z-index: 3; display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; color: #fff; }
+    .bar a { color: #fff; text-decoration: none; font-size: 13px; font-weight: 700; background: rgba(0,0,0,.25); padding: 5px 10px; border-radius: 99px; }
+    .bar .logo { font-size: 17px; letter-spacing: .04em; }
+    .me { width: 36px; height: 36px; border-radius: 50%; background: #fff; color: var(--purple); display: grid; place-items: center; font-weight: 700; font-size: 12px; }
+
+    /* hero */
+    .hero { height: 330px; }
+    .hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(36,16,79,.35) 0%, transparent 30%, transparent 45%, rgba(36,16,79,.88) 100%); }
+    .hero .txt { position: absolute; left: 18px; right: 18px; bottom: 52px; z-index: 2; color: #fff; }
+    .hero .k { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; opacity: .85; }
+    .hero h1 { font-size: 42px; line-height: 1; margin: 4px 0 0; white-space: nowrap; }
+
+    main { padding: 0 16px 24px; }
+
+    /* member card: flips to check-in QR */
+    .flip-wrap { perspective: 1200px; position: relative; z-index: 2; margin-top: -36px; }
+    .flip { position: relative; transform-style: preserve-3d; transition: transform .7s cubic-bezier(.2,.75,.25,1); cursor: pointer; border-radius: 22px; outline: none; }
+    .flip:focus-visible { box-shadow: 0 0 0 3px var(--pink); }
+    .flip.on { transform: rotateY(180deg); }
+    .face { -webkit-backface-visibility: hidden; backface-visibility: hidden; border-radius: 22px; padding: 16px; }
+    .front { background: linear-gradient(135deg, #5a2ad0, var(--purple) 45%, var(--deep)); color: #fff; box-shadow: 0 14px 34px rgba(40,10,90,.3); }
+    .front .row { display: flex; justify-content: space-between; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--lav2); }
+    .front .name { font-size: 28px; line-height: 1; margin: 10px 0 12px; display: block; }
+    .front .st { display: flex; align-items: baseline; justify-content: space-between; }
+    .front .st .d { font-size: 17px; }
+    .front .st small { font-size: 12px; color: var(--lav2); }
+    .week { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; margin: 8px 0 12px; text-align: center; font-size: 10px; color: var(--lav2); font-weight: 700; }
+    .week i { display: grid; place-items: center; height: 30px; border-radius: 9px; background: rgba(255,255,255,.12); margin-bottom: 3px; font-style: normal; font-size: 12px; color: #fff; }
+    .week i.done { background: #fff; color: var(--purple); }
+    .week i.plan { background: transparent; box-shadow: inset 0 0 0 1.5px var(--lav2); color: var(--lav2); }
+    .week i.today { box-shadow: inset 0 0 0 2px var(--pink); }
+    .nums { display: flex; align-items: flex-end; gap: 22px; border-top: 1px solid rgba(255,255,255,.18); padding-top: 10px; font-size: 12px; color: var(--lav2); }
+    .nums b { display: block; font: 700 22px var(--display); color: #fff; }
+    .hint { margin-left: auto; font: 700 11px var(--display); text-transform: uppercase; letter-spacing: .08em; color: #fff; }
+    .back { position: absolute; inset: 0; transform: rotateY(180deg); background: #fff; display: flex; align-items: center; gap: 14px; box-shadow: 0 0 0 2px var(--purple), 0 14px 34px rgba(40,10,90,.2); }
+    .qr { width: 136px; height: 136px; flex: none; padding: 6px; }
+    .qr svg { display: block; width: 100%; height: 100%; }
+    .back .k { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+    .back .d { display: block; font-size: 24px; line-height: 1; margin: 4px 0; color: var(--purple); }
+    .back p { margin: 8px 0 6px; font-size: 13px; color: var(--muted); }
+    .back .hint { color: var(--purple); margin: 0; }
+
+    h2 { font-size: 22px; margin: 30px 0 12px; display: flex; justify-content: space-between; align-items: baseline; }
+    h2 a { font: 700 13px var(--body); text-transform: none; color: var(--purple); text-decoration: none; letter-spacing: 0; }
+
+    /* you're going */
+    .rail { display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: 16px; margin: 0 -16px; padding: 0 16px 6px; scrollbar-width: none; }
+    .rail::-webkit-scrollbar { display: none; }
+    .ticket { scroll-snap-align: start; flex: 0 0 78%; border-radius: 18px; overflow: hidden; background: var(--lav); }
+    .ticket .photo { height: 130px; }
+    .date { position: absolute; top: 10px; left: 10px; z-index: 2; background: #fff; border-radius: 10px; padding: 4px 9px; text-align: center; line-height: 1.05; }
+    .date span { font-size: 10px; font-weight: 700; color: var(--purple); text-transform: uppercase; }
+    .date b { display: block; font: 700 20px var(--display); }
+    .ticket .body { padding: 12px 14px 14px; }
+    .ticket .body .d { font-size: 18px; }
+    .ticket small { color: var(--muted); font-size: 13px; display: block; }
+    .people { display: flex; align-items: center; gap: 8px; margin-top: 10px; font-size: 12px; color: var(--muted); }
+    .people .going { margin-left: auto; }
+    .avs { display: flex; flex: none; }
+    .avs .ava { width: 26px; height: 26px; box-shadow: 0 0 0 2px var(--lav); }
+    .avs .ava + .ava { margin-left: -7px; }
+    .going { background: var(--purple); color: #fff; font-weight: 700; font-size: 12px; padding: 4px 10px; border-radius: 99px; white-space: nowrap; }
+
+    /* psst */
+    .psst { margin-top: 22px; background: var(--lav); border-radius: 20px; padding: 16px; border-left: 5px solid var(--pink); transition: opacity .35s, transform .35s, max-height .45s .2s, margin .45s .2s, padding .45s .2s; max-height: 400px; overflow: hidden; }
+    .psst.gone { opacity: 0; transform: translateY(-6px); max-height: 0; margin-top: 0; padding-top: 0; padding-bottom: 0; }
+    .psst .kick { font-size: 15px; color: var(--purple); }
+    .psst .row2 { display: flex; align-items: center; gap: 12px; margin: 12px 0 14px; }
+    .psst .faces { display: flex; flex: none; }
+    .psst .faces .ava { width: 48px; height: 48px; box-shadow: 0 0 0 3px var(--lav); }
+    .psst .faces .ava + .ava { margin-left: -14px; }
+    .psst b { display: block; font-size: 16px; line-height: 1.3; }
+    .psst small { display: block; font-size: 13px; color: var(--muted); margin-top: 2px; }
+    .psst .hot { color: #d6336c; font-weight: 700; }
+    .psst .btns { display: flex; gap: 8px; }
+    .psst .btns button { flex: 1; font: 700 15px var(--display); text-transform: uppercase; letter-spacing: .05em; padding: 11px; border-radius: 99px; }
+    .psst .yes { background: var(--purple); color: #fff; }
+    .psst .no { background: #fff; color: var(--purple); box-shadow: inset 0 0 0 2px var(--lav2); }
+    .psst.joined .yes { background: var(--mint); color: #1f6b52; }
+
+    /* coming up: equal photo cards */
+    .ev { border-radius: 20px; overflow: hidden; border: 1px solid var(--line); margin-bottom: 12px; }
+    .ev .photo { height: 150px; }
+    .tag { position: absolute; z-index: 2; top: 12px; left: 12px; font: 700 12px var(--display); letter-spacing: .06em; text-transform: uppercase; padding: 4px 10px; border-radius: 6px; background: #fff; color: var(--purple); }
+    .tag.hot { background: var(--pink); color: #fff; }
+    .ev .body { padding: 14px; }
+    .ev .body .d { font-size: 21px; line-height: 1.05; }
+    .ev .meta { color: var(--muted); font-size: 13px; margin: 4px 0 12px; }
+    .ev .row { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+    .price { font: 700 18px var(--display); }
+    .join { background: var(--purple); color: #fff; font: 700 15px var(--display); text-transform: uppercase; letter-spacing: .06em; padding: 10px 22px; border-radius: 99px; transition: transform .15s; }
+    .join:active { transform: scale(.96); }
+    .join.done { background: var(--lav); color: var(--purple); }
+
+    /* from the community: compact snippets */
+    .post { display: flex; gap: 12px; align-items: flex-start; padding: 12px; border: 1px solid var(--line); border-radius: 18px; margin-bottom: 8px; }
+    .post .pb { flex: 1; min-width: 0; }
+    .post .head { display: flex; align-items: center; gap: 7px; margin-bottom: 6px; font-size: 12px; }
+    .post .head .ava { width: 26px; height: 26px; }
+    .post .head small { color: var(--muted); }
+    .post .kind { margin-left: auto; font: 700 10px var(--display); letter-spacing: .08em; text-transform: uppercase; padding: 2px 8px; border-radius: 6px; white-space: nowrap; background: var(--lav); color: var(--purple); }
+    .post .kind.announcements { background: var(--purple); color: #fff; }
+    .post .kind.challenges { background: #ffe3ee; color: #c2185b; }
+    .post .t { display: block; font: 700 16px/1.1 var(--display); text-transform: uppercase; letter-spacing: .01em; }
+    .post p { margin: 3px 0 8px; font-size: 13px; line-height: 1.4; color: #3d3550; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .post .photo { width: 72px; height: 72px; flex: none; border-radius: 12px; }
+    .post .pbar { height: 6px; border-radius: 99px; background: var(--lav); overflow: hidden; margin: 0 0 8px; }
+    .post .pbar i { display: block; height: 100%; border-radius: 99px; background: var(--purple); }
+    .post .act { background: var(--lav); color: var(--purple); font: 700 12px var(--display); text-transform: uppercase; letter-spacing: .06em; padding: 5px 12px; border-radius: 99px; }
+    .post .act.done { background: var(--purple); color: #fff; }
+
+    /* values band */
+    .values { margin-top: 28px; background: var(--purple); color: #fff; overflow: hidden; white-space: nowrap; padding: 12px 0; }
+    .values span { display: inline-block; font: 700 18px var(--display); text-transform: uppercase; letter-spacing: .04em; animation: run 26s linear infinite; }
+    @keyframes run { to { transform: translateX(-50%); } }
+
+    .tabs { position: sticky; bottom: 0; z-index: 5; display: flex; justify-content: space-around; background: rgba(255,255,255,.95); backdrop-filter: blur(8px); border-top: 1px solid var(--line); padding: 10px 0 14px; }
+    .tabs a { color: var(--muted); text-decoration: none; font: 700 12px var(--display); text-transform: uppercase; letter-spacing: .06em; }
+    .tabs a.on { color: var(--purple); }
+    .toast { position: fixed; left: 50%; bottom: 84px; transform: translate(-50%, 20px); background: var(--purple); color: #fff; padding: 12px 18px; border-radius: 14px; font-size: 14px; opacity: 0; pointer-events: none; transition: .3s; max-width: 90vw; z-index: 10; }
+    .toast.show { opacity: 1; transform: translate(-50%, 0); }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header class="photo hero" data-scene="harbour" data-people="9" data-seed="14" data-duo="#1e0a52,#f3ecff" data-alt="GLG Hong Kong members together at the harbour">
+      <div class="txt"><span class="k">Tue 6 Oct · Hong Kong chapter</span><h1 class="d">Morning, Jasmine.</h1></div>
+    </header>
+    <div class="bar"><a href="../index.html">← Gallery</a><span class="d logo">Girls Lift Girls</span><span class="me" aria-label="Jasmine's profile">JT</span></div>
+
+    <main>
+      <div class="flip-wrap">
+        <div class="flip" id="flip" role="button" tabindex="0" aria-pressed="false" aria-label="Member card. Tap to show your check-in QR code">
+          <div class="face front">
+            <div class="row"><span>Girls Lift Girls · Hong Kong</span><span>#0412</span></div>
+            <span class="d name">Jasmine Tran</span>
+            <div class="st"><span class="d">🔥 3 weeks strong</span><small>This week: 2 planned</small></div>
+            <div class="week">
+              <div><i class="done">✓</i>M</div><div><i class="today"></i>T</div><div><i class="plan">5K</i>W</div><div><i></i>T</div><div><i></i>F</div><div><i></i>S</div><div><i class="plan">⛰</i>S</div>
+            </div>
+            <div class="nums"><div><b>27</b>sessions</div><div><b>34h</b>total time</div><span class="hint">Tap for check-in ↻</span></div>
+          </div>
+          <div class="face back" aria-hidden="true">
+            <div class="qr" id="qr"></div>
+            <div><span class="k">Check-in pass</span><span class="d">Jasmine Tran</span><span class="k">Member #0412 · Hong Kong</span><p>Show this at the door to sign in to any GLG session.</p><span class="hint">Tap to flip back ↻</span></div>
+          </div>
+        </div>
+      </div>
+
+      <h2 class="d">You're going <a href="#">Calendar</a></h2>
+      <div class="rail">
+        <div class="ticket">
+          <div class="photo" data-scene="trail" data-people="6" data-seed="31" data-tone="color" data-alt="Members hiking Dragon's Back"><span class="date"><span>Sun</span><b>11</b></span></div>
+          <div class="body"><span class="d">Dragon's Back Sunrise Hike</span><small>6:15am · To Tei Wan · coffee at Shek O after</small>
+            <div class="people"><span class="avs"><span class="ava" data-who="jasmine"></span><span class="ava" data-who="priya"></span><span class="ava" data-who="hana"></span></span>You, Priya + 21<span class="going">Going ✓</span></div></div>
+        </div>
+        <div class="ticket">
+          <div class="photo" data-scene="harbour" data-people="7" data-seed="8" data-tone="color" data-alt="Run club at the harbour"><span class="date"><span>Wed</span><b>14</b></span></div>
+          <div class="body"><span class="d">Harbourfront 5K Run Club</span><small>7:30pm · Star Ferry clock tower (new start)</small>
+            <div class="people"><span class="avs"><span class="ava" data-who="jasmine"></span><span class="ava" data-who="aisha"></span></span>You, Aisha + 29<span class="going">Going ✓</span></div></div>
+        </div>
+      </div>
+
+      <div class="psst" id="psst" role="region" aria-label="Your friends are going">
+        <span class="d kick">Psst, your friends are going →</span>
+        <div class="row2">
+          <span class="faces"><span class="ava" data-who="chloe"></span><span class="ava" data-who="kiko"></span></span>
+          <div><b>Chloe and Kiko are going to Barbell Basics</b><small>Sat 10 · 8am · Kwun Tong · <span class="hot">only 2 spots left</span></small></div>
+        </div>
+        <div class="btns"><button class="yes" id="psst-yes">Join them · HK$180</button><button class="no" id="psst-no">It's okay</button></div>
+      </div>
+
+      <h2 class="d">Coming up <a href="#">All events</a></h2>
+      <div class="ev" id="ev-barbell">
+        <div class="photo" data-scene="gym" data-people="6" data-seed="3" data-tone="color" data-alt="Barbell session at Iron Harbour"><span class="tag hot">Only 2 spots left</span></div>
+        <div class="body"><span class="d">Barbell Basics: Squat &amp; Deadlift</span>
+          <p class="meta">Sat 10 Oct · 8:00am · Iron Harbour, Kwun Tong · with Coach Mei-Ling</p>
+          <div class="row"><span class="price">HK$180</span><button class="join">Join</button></div></div>
+      </div>
+      <div class="ev">
+        <div class="photo" data-scene="studio" data-people="5" data-seed="9" data-tone="color" data-alt="Boxing workshop in the studio"><span class="tag">3 first-timers going</span></div>
+        <div class="body"><span class="d">Boxing Fundamentals</span>
+          <p class="meta">Sat 17 Oct · 10:00am · Left Hook Studio, Sheung Wan · gloves provided</p>
+          <div class="row"><span class="price">HK$250</span><button class="join">Join</button></div></div>
+      </div>
+      <div class="ev">
+        <div class="photo" data-scene="beach" data-people="6" data-seed="5" data-tone="color" data-alt="Paddleboarding at Sai Kung"><span class="tag">Brunch included</span></div>
+        <div class="body"><span class="d">Paddle &amp; Brunch</span>
+          <p class="meta">Sun 25 Oct · 9:00am · Sai Kung waterfront · 6 of 12 spots taken</p>
+          <div class="row"><span class="price">HK$420</span><button class="join">Join</button></div></div>
+      </div>
+
+      <h2 class="d">From the community <a href="#">See all</a></h2>
+      <div id="feed" aria-live="polite"></div>
+    </main>
+
+    <div class="values" aria-label="Our values"><span>Finding strength in · Redefining norms · Accepting challenges · Being stronger together · Finding strength in · Redefining norms · Accepting challenges · Being stronger together ·&nbsp;</span></div>
+
+    <nav class="tabs"><a class="on" href="#">Home</a><a href="#">Events</a><a href="#">Community</a><a href="#">Profile</a></nav>
+  </div>
+  <div class="toast" id="toast" role="status"></div>
+
+  <script>
+    // Illustrated "photos": groups of women at GLG sessions, drawn as SVG so no real photos are used.
+    // <div class="photo" data-scene="gym|harbour|trail|beach|studio" data-people="6" data-seed="3" data-tone="duo|color"></div>
+    const Photo = (() => {
+      const SKIN = ["#f3d2b8", "#e8b48f", "#c98e66", "#a26a44", "#7a4a2c", "#5a3520"];
+      const HAIR = ["#1b1210", "#3a2418", "#6b4226", "#b07a3f", "#2a1a2e", "#1b1210"];
+      const TOPS = ["#7b4fe0", "#ff7aa8", "#ffffff", "#24202e", "#ffd23f", "#5fd0c0", "#b9a3ff", "#ff8a5c"];
+      const BOTS = ["#1d1d24", "#3a3350", "#4a1fb8", "#2b2b33", "#5b4a7a"];
+      let uid = 0;
+      const rng = seed => () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+      const pick = (r, a) => a[Math.floor(r() * a.length)];
+
+      function person(r, x, y, s) {
+        const skin = pick(r, SKIN), hair = pick(r, HAIR), top = pick(r, TOPS), bot = pick(r, BOTS);
+        const hr = 11 * s, hy = y - 118 * s + hr, sh = hy + hr + 5 * s, hip = sh + 40 * s;
+        const p = r(), pose = p < .28 ? "up" : p < .55 ? "hug" : p < .66 ? "flex" : "down";
+        const aw = 7 * s, st = `stroke="${skin}" stroke-width="${aw}" stroke-linecap="round" fill="none"`;
+        let g = "";
+        const style = Math.floor(r() * 4);
+        if (style === 2) g += `<path d="M${x - hr} ${hy} Q${x - hr * 1.3} ${sh + 14 * s} ${x - hr * .4} ${sh + 16 * s} L${x + hr * .4} ${sh + 16 * s} Q${x + hr * 1.3} ${sh + 14 * s} ${x + hr} ${hy}Z" fill="${hair}"/>`;
+        if (style === 1) g += `<ellipse cx="${x + hr * .9}" cy="${hy + hr * .6}" rx="${hr * .45}" ry="${hr * 1.1}" fill="${hair}" transform="rotate(-20 ${x + hr} ${hy})"/>`;
+        g += `<path d="M${x - 7 * s} ${hip} L${x - 10 * s} ${y + 4 * s} M${x + 7 * s} ${hip} L${x + 10 * s} ${y + 4 * s}" stroke="${bot}" stroke-width="${11 * s}" stroke-linecap="round"/>`;
+        if (pose === "up") g += `<path d="M${x - 11 * s} ${sh + 3 * s} L${x - 24 * s} ${hy - 26 * s} M${x + 11 * s} ${sh + 3 * s} L${x + 24 * s} ${hy - 26 * s}" ${st}/>`;
+        else if (pose === "hug") g += `<path d="M${x - 11 * s} ${sh + 3 * s} L${x - 15 * s} ${hip} M${x + 11 * s} ${sh + 3 * s} L${x + 34 * s} ${sh + 8 * s}" ${st}/>`;
+        else if (pose === "flex") g += `<path d="M${x - 11 * s} ${sh + 3 * s} L${x - 28 * s} ${sh + 4 * s} L${x - 28 * s} ${sh - 16 * s} M${x + 11 * s} ${sh + 3 * s} L${x + 15 * s} ${hip}" ${st}/>`;
+        else g += `<path d="M${x - 11 * s} ${sh + 3 * s} L${x - 15 * s} ${hip + 4 * s} M${x + 11 * s} ${sh + 3 * s} L${x + 15 * s} ${hip + 4 * s}" ${st}/>`;
+        g += `<rect x="${x - 14 * s}" y="${sh - 3 * s}" width="${28 * s}" height="${hip - sh + 8 * s}" rx="${10 * s}" fill="${top}"/>`;
+        g += `<rect x="${x - 3.5 * s}" y="${hy + hr - 2 * s}" width="${7 * s}" height="${8 * s}" fill="${skin}"/>`;
+        g += `<circle cx="${x}" cy="${hy}" r="${hr}" fill="${skin}"/>`;
+        g += `<path d="M${x - hr} ${hy + 1 * s} A${hr} ${hr} 0 0 1 ${x + hr} ${hy + 1 * s} Q${x} ${hy - hr * .35} ${x - hr} ${hy + 1 * s}Z" fill="${hair}"/>`;
+        if (style === 0) g += `<circle cx="${x}" cy="${hy - hr * 1.05}" r="${hr * .5}" fill="${hair}"/>`;
+        if (r() < .5) g += `<path d="M${x - 4 * s} ${hy + 4 * s} Q${x} ${hy + 7 * s} ${x + 4 * s} ${hy + 4 * s}" stroke="#3a1f1a" stroke-width="${1.4 * s}" fill="none" stroke-linecap="round"/>`;
+        return g;
+      }
+
+      function scene(type, r, W, H) {
+        const hz = H * .62;
+        switch (type) {
+          case "harbour": return `<defs><linearGradient id="sk${uid}" x2="0" y2="1"><stop offset="0" stop-color="#3b2a6b"/><stop offset=".6" stop-color="#f2785c"/><stop offset="1" stop-color="#ffc48a"/></linearGradient></defs>
+            <rect width="${W}" height="${H}" fill="url(#sk${uid})"/><circle cx="${W * .72}" cy="${hz - 30}" r="26" fill="#ffe0a8"/>
+            ${Array.from({ length: 16 }, (_, i) => { const w = 14 + r() * 22, h = 30 + r() * 90; return `<rect x="${i * W / 15 - 6}" y="${hz - h}" width="${w}" height="${h + 2}" fill="#1e1a33"/>`; }).join("")}
+            <rect y="${hz}" width="${W}" height="${H - hz}" fill="#2c3f6b"/>`;
+          case "trail": return `<defs><linearGradient id="sk${uid}" x2="0" y2="1"><stop offset="0" stop-color="#ffb37a"/><stop offset="1" stop-color="#ffe6c2"/></linearGradient></defs>
+            <rect width="${W}" height="${H}" fill="url(#sk${uid})"/><circle cx="${W * .3}" cy="${hz - 40}" r="30" fill="#fff3d6"/>
+            <path d="M0 ${hz - 30} Q${W * .25} ${hz - 90} ${W * .5} ${hz - 40} T${W} ${hz - 60} V${H} H0Z" fill="#8a9a6a"/>
+            <path d="M0 ${hz} Q${W * .3} ${hz - 40} ${W * .6} ${hz - 6} T${W} ${hz - 20} V${H} H0Z" fill="#5d7a48"/>
+            <path d="M${W * .45} ${H} Q${W * .5} ${hz + 20} ${W * .62} ${hz}" stroke="#d9c49a" stroke-width="18" fill="none"/>`;
+          case "beach": return `<defs><linearGradient id="sk${uid}" x2="0" y2="1"><stop offset="0" stop-color="#9fd8ff"/><stop offset="1" stop-color="#ffe3f0"/></linearGradient></defs>
+            <rect width="${W}" height="${H}" fill="url(#sk${uid})"/><circle cx="${W * .8}" cy="${hz - 60}" r="24" fill="#fff6c9"/>
+            <rect y="${hz - 30}" width="${W}" height="40" fill="#3aa0d8"/><rect y="${hz + 8}" width="${W}" height="${H}" fill="#f2dcb3"/>
+            <rect x="${W * .05}" y="${hz + 30}" width="120" height="16" rx="8" fill="#ff8fb8" transform="rotate(-6 ${W * .1} ${hz})"/>`;
+          case "studio": return `<rect width="${W}" height="${H}" fill="#efe7f7"/>
+            ${[0.1, 0.4, 0.7].map(f => `<rect x="${W * f}" y="${H * .08}" width="${W * .22}" height="${H * .4}" fill="#fffaf0"/><rect x="${W * f + W * .105}" y="${H * .08}" width="5" height="${H * .4}" fill="#dccdea"/>`).join("")}
+            <rect y="${hz + 6}" width="${W}" height="${H}" fill="#c9a77f"/>
+            ${[0, 1, 2, 3].map(i => `<rect x="${i * W / 4 + 8}" y="${hz + 40}" width="${W / 4 - 18}" height="22" rx="4" fill="${["#b9a3ff", "#ff9ec4", "#7bd3c4", "#ffd88a"][i]}"/>`).join("")}`;
+          default: return `<defs><radialGradient id="sk${uid}" cx=".5" cy="0" r="1"><stop offset="0" stop-color="#6b6b78"/><stop offset="1" stop-color="#18181c"/></radialGradient></defs>
+            <rect width="${W}" height="${H}" fill="url(#sk${uid})"/>
+            <rect x="${W * .06}" y="${H * .12}" width="8" height="${hz - H * .12}" fill="#444"/><rect x="${W * .3}" y="${H * .12}" width="8" height="${hz - H * .12}" fill="#444"/>
+            <rect x="${W * .04}" y="${H * .3}" width="${W * .3}" height="6" fill="#999"/>
+            ${[0, 1, 2, 3].map(i => `<circle cx="${W * .62 + i * 34}" cy="${H * .3}" r="${18 - i * 2}" fill="none" stroke="#7a1fe0" stroke-width="8"/>`).join("")}
+            <rect y="${hz}" width="${W}" height="${H}" fill="#2a2a30"/>`;
+        }
+      }
+
+      function hex(c) { return [1, 3, 5].map(i => (parseInt(c.slice(i, i + 2), 16) / 255).toFixed(3)); }
+
+      function draw(el) {
+        uid++;
+        const W = 400, H = 300, r = rng(+el.dataset.seed || 1), n = +el.dataset.people || 5;
+        const [d, l] = (el.dataset.duo || "#2a0f6b,#e6d9ff").split(",").map(hex);
+        let people = "";
+        const back = el.dataset.portrait ? 0 : Math.ceil(n / 2), front = el.dataset.portrait ? 0 : n - back;
+        if (el.dataset.portrait) people = person(r, W / 2, H * 2.4, 5.5);
+        for (let i = 0; i < back; i++) people += person(r, (i + .5) * W / back + (r() - .5) * 14, H * .98, 1.2);
+        for (let i = 0; i < front; i++) people += person(r, (i + .5) * W / front + (r() - .5) * 14 + W / back / 2 * (front < back ? 1 : .5) - (front < back ? 0 : 10), H * 1.28, 1.55);
+        const duo = el.dataset.tone !== "color";
+        el.insertAdjacentHTML("afterbegin", `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMax slice" role="img" aria-label="${el.dataset.alt || "GLG members together"}">
+          <defs>
+            <filter id="duo${uid}" color-interpolation-filters="sRGB"><feColorMatrix type="saturate" values="0"/><feComponentTransfer>
+              <feFuncR type="table" tableValues="${d[0]} ${l[0]}"/><feFuncG type="table" tableValues="${d[1]} ${l[1]}"/><feFuncB type="table" tableValues="${d[2]} ${l[2]}"/></feComponentTransfer></filter>
+            <filter id="gr${uid}"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
+          </defs>
+          <g ${duo ? `filter="url(#duo${uid})"` : ""}>${scene(el.dataset.scene, r, W, H)}${people}</g>
+          <rect width="${W}" height="${H}" filter="url(#gr${uid})" opacity=".09"/>
+        </svg>`);
+      }
+      return { drawAll: (root = document) => root.querySelectorAll(".photo[data-scene]").forEach(draw), draw };
+    })();
+    Photo.drawAll();
+    // Illustrated avatars (fictional members, no photos). <span class="ava" data-who="chloe"></span>
+    const Avatar = (() => {
+      const SKIN = ["#f3d2b8", "#e8b48f", "#c98e66", "#a26a44", "#7a4a2c", "#5a3520"];
+      const HAIR = ["#1b1210", "#3a2418", "#6b4226", "#b07a3f", "#2a1a2e", "#8a3a2a"];
+      const BG = ["#e9e1ff", "#ffd9e8", "#d9ecff", "#dff5ea", "#fff0c9", "#efe2ff", "#ffe2d1"];
+      const TOP = ["#4a1fb8", "#7b4fe0", "#ff7aa8", "#24104f", "#5fd0c0", "#ffb44d", "#ffffff"];
+      // Fixed looks for named members so they stay recognisable across the page: [skin, hair, style, bg, top]
+      const PEOPLE = {
+        jasmine: [1, 0, "bun", 0, 0], priya: [3, 0, "long", 3, 4], chloe: [0, 1, "pony", 1, 1], hana: [5, 0, "curly", 4, 3],
+        meiling: [1, 0, "bob", 2, 2], aisha: [4, 0, "curly", 1, 5], mandy: [0, 2, "long", 6, 0], kiko: [1, 0, "bob", 5, 2],
+        sara: [3, 0, "pony", 2, 1], jess: [2, 3, "short", 0, 3]
+      };
+      const STYLES = ["bun", "long", "pony", "curly", "bob", "short"];
+      const rng = seed => () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+
+      function svg(look) {
+        const [si, hi, style, bi, ti] = look, skin = SKIN[si], hair = HAIR[hi], bg = BG[bi], top = TOP[ti];
+        let back = "", front = "";
+        if (style === "long") back = `<path d="M17 30 Q16 54 22 58 H42 Q48 54 47 30 Q47 12 32 12 Q17 12 17 30Z" fill="${hair}"/>`;
+        if (style === "bob") back = `<path d="M17 30 Q16 46 20 47 H44 Q48 46 47 30 Q47 13 32 13 Q17 13 17 30Z" fill="${hair}"/>`;
+        if (style === "curly") back = [[18, 24], [22, 16], [30, 12], [38, 13], [45, 19], [47, 28], [16, 33], [48, 36], [18, 41], [46, 43]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="7" fill="${hair}"/>`).join("");
+        if (style === "pony") back = `<ellipse cx="48" cy="34" rx="5" ry="11" fill="${hair}" transform="rotate(-18 48 34)"/>`;
+        if (style === "bun") front = `<circle cx="32" cy="11" r="6.5" fill="${hair}"/>`;
+        const fringe = style === "short"
+          ? `<path d="M19 28 Q19 14 32 14 Q45 14 45 28 Q40 20 32 21 Q24 21 19 28Z" fill="${hair}"/>`
+          : `<path d="M19 30 Q18 14 32 14 Q46 14 45 30 Q42 21 34 20 Q27 23 19 30Z" fill="${hair}"/>`;
+        return `<svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="32" fill="${bg}"/>${back}
+          <path d="M8 66 Q10 49 32 49 Q54 49 56 66Z" fill="${top}"/><rect x="28" y="40" width="8" height="10" fill="${skin}"/>
+          <ellipse cx="32" cy="31" rx="13" ry="14.5" fill="${skin}"/>${fringe}${front}
+          <ellipse cx="27" cy="32" rx="1.6" ry="2" fill="#2a1a1a"/><ellipse cx="37" cy="32" rx="1.6" ry="2" fill="#2a1a1a"/>
+          <circle cx="24" cy="37" r="2.4" fill="#ff8fb0" opacity=".35"/><circle cx="40" cy="37" r="2.4" fill="#ff8fb0" opacity=".35"/>
+          <path d="M28.5 38.5 Q32 41.5 35.5 38.5" stroke="#5a2a2a" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>`;
+      }
+      function lookFor(el) {
+        if (PEOPLE[el.dataset.who]) return PEOPLE[el.dataset.who];
+        const r = rng(+el.dataset.seed || 7);
+        return [Math.floor(r() * 6), Math.floor(r() * 6), STYLES[Math.floor(r() * 6)], Math.floor(r() * 7), Math.floor(r() * 7)];
+      }
+      const draw = el => { el.innerHTML = svg(lookFor(el)); };
+      return { draw, drawAll: (root = document) => root.querySelectorAll(".ava").forEach(draw), svgFor: who => svg(PEOPLE[who]) };
+    })();
+    Avatar.drawAll();
+
+    // Member card flips to a check-in QR code (decorative pattern for the prototype, not a real code).
+    (function qr() {
+      const N = 25, r = (seed => () => (seed = (seed * 16807) % 2147483647) / 2147483647)(412);
+      const finder = (x, y) => `<rect x="${x}" y="${y}" width="7" height="7" rx="1.6" fill="#24104f"/><rect x="${x + 1}" y="${y + 1}" width="5" height="5" rx="1.1" fill="#fff"/><rect x="${x + 2}" y="${y + 2}" width="3" height="3" rx=".8" fill="#4a1fb8"/>`;
+      const inFinder = (x, y) => (x < 8 && y < 8) || (x > N - 9 && y < 8) || (x < 8 && y > N - 9);
+      const inLogo = (x, y) => x > 8 && x < 16 && y > 8 && y < 16;
+      let cells = "";
+      for (let y = 0; y < N; y++) for (let x = 0; x < N; x++) {
+        if (inFinder(x, y) || inLogo(x, y)) continue;
+        const on = (x === 6 || y === 6) ? (x + y) % 2 === 0 : r() > .52;
+        if (on) cells += `<rect x="${x + .08}" y="${y + .08}" width=".84" height=".84" rx=".25" fill="#24104f"/>`;
+      }
+      document.getElementById("qr").innerHTML = `<svg viewBox="0 0 ${N} ${N}" role="img" aria-label="Check-in QR code">${cells}${finder(0, 0)}${finder(N - 7, 0)}${finder(0, N - 7)}
+        <rect x="9.3" y="9.3" width="6.4" height="6.4" rx="1.6" fill="#4a1fb8"/><text x="12.5" y="13.6" text-anchor="middle" font-family="Arial" font-weight="700" font-size="2.5" fill="#fff">GLG</text></svg>`;
+    })();
+    const flip = document.getElementById("flip");
+    function toggleFlip() { const on = !flip.classList.contains("on"); flip.classList.toggle("on", on); flip.setAttribute("aria-pressed", on); flip.querySelector(".back").setAttribute("aria-hidden", !on); flip.querySelector(".front").setAttribute("aria-hidden", on); }
+    flip.addEventListener("click", toggleFlip);
+    flip.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggleFlip(); } });
+
+    const toast = document.getElementById("toast");
+    function say(msg) { toast.textContent = msg; toast.classList.add("show"); clearTimeout(say.t); say.t = setTimeout(() => toast.classList.remove("show"), 2400); }
+
+    // Psst: join friends, or dismiss. Kept in sync with the Barbell card under "coming up".
+    const psst = document.getElementById("psst"), barbellJoin = document.querySelector("#ev-barbell .join");
+    function markJoined(b) { b.textContent = "You're going ✓"; b.classList.add("done"); b.disabled = true; }
+    document.getElementById("psst-yes").addEventListener("click", e => {
+      psst.classList.add("joined");
+      e.currentTarget.textContent = "You're in with Chloe & Kiko ✓"; e.currentTarget.disabled = true;
+      document.getElementById("psst-no").remove();
+      markJoined(barbellJoin);
+      say("You're in! Chloe and Kiko will see you there 💜");
+      setTimeout(() => psst.classList.add("gone"), 2200);
+    });
+    document.getElementById("psst-no").addEventListener("click", () => psst.classList.add("gone"));
+    document.querySelectorAll(".join").forEach(b => b.addEventListener("click", () => {
+      markJoined(b);
+      if (b === barbellJoin) psst.classList.add("gone");
+      say("You're in! We've saved your spot. See you there 💪");
+    }));
+
+    // From the community: a small snippet of the 3 most recent items (filters live on the Community tab).
+    const feedItems = [
+      { type: "posts", age: 14, when: "yesterday", who: "priya", name: "Priya Raman", title: "Taxi to Dragon's Back?", text: "Splitting a taxi to To Tei Wan on Sunday, 5:40am from Quarry Bay. You're on this hike too 🚕 · 6 replies", act: "Join the taxi", done: "In the taxi ✓" },
+      { type: "announcements", age: 20, when: "yesterday", seed: 90, name: "GLG HQ", title: "Global Lift Day · Sat 7 Nov", text: "All seven chapters lift at the same hour for the first time. Hong Kong lifts at 5pm at Iron Harbour.", photo: { scene: "gym", people: 8, seed: 77 }, act: "Remind me", done: "Reminder set ✓" },
+      { type: "challenges", age: 30, when: "Monday", who: "jasmine", name: "Your streak", title: "Make it 4 weeks 🔥", text: "3 weeks in a row. Wednesday's 5K makes it 4.", progress: 75, act: "On track ✓", done: "On track ✓" },
+      { type: "posts", age: 40, when: "2 days ago", who: "kiko", name: "Kiko Sato", title: "Hi everyone 👋", text: "Just joined with Mandy and Sara. Barbell Basics on Saturday is my first ever session!", photo: { scene: "studio", people: 3, seed: 40 }, act: "👋 Wave", done: "Waved 👋" },
+      { type: "announcements", age: 48, when: "2 days ago", who: "hana", name: "Hana Okafor", title: "Run club has a new start line", text: "From Wednesday we meet at the Star Ferry clock tower. Same time, 7:30pm. Look for the pink flag!", photo: { scene: "harbour", people: 6, seed: 8 }, act: "Got it", done: "See you Wednesday ✓" },
+      { type: "posts", age: 72, when: "Saturday", who: "chloe", name: "Chloe Ng", title: "100 kg deadlift. New PR 🔥", text: "Two years ago I couldn't lift the empty bar. Thank you, Mei-Ling and the Saturday crew.", photo: { scene: "gym", people: 5, seed: 21 }, act: "💜 Lift her up · 34", done: "💜 Lifted · 35" },
+      { type: "challenges", age: 120, when: "5 days ago", who: "meiling", name: "Lift a Million", title: "412,000 / 1,000,000 kg", text: "Hit a million by 31 Oct and HK$5,000 goes to a local women's shelter. Your share: 2,140 kg.", progress: 41, act: "Log a lift", done: "Logged ✓" }
+    ];
+    const kindLabel = { posts: "Post", challenges: "Challenge", announcements: "Announcement" };
+    (function renderFeed() {
+      const list = feedItems.slice().sort((a, b) => a.age - b.age).slice(0, 3);
+      const feed = document.getElementById("feed");
+      feed.innerHTML = list.map(i => `<article class="post">
+        <div class="pb">
+          <div class="head"><span class="ava" ${i.who ? `data-who="${i.who}"` : `data-seed="${i.seed}"`}></span><b>${i.name}</b><small>· ${i.when}</small><span class="kind ${i.type}">${kindLabel[i.type]}</span></div>
+          <span class="t">${i.title}</span><p>${i.text}</p>${i.progress ? `<div class="pbar"><i style="width:${i.progress}%"></i></div>` : ""}<button class="act${i.act === i.done ? " done" : ""}">${i.act}</button>
+        </div>
+        ${i.photo ? `<div class="photo" data-scene="${i.photo.scene}" data-people="${i.photo.people}" data-seed="${i.photo.seed}" data-tone="color"></div>` : ""}
+      </article>`).join("");
+      feed.querySelectorAll(".photo").forEach(Photo.draw);
+      Avatar.drawAll(feed);
+      feed.querySelectorAll(".act").forEach((b, n) => b.addEventListener("click", () => {
+        const i = list[n], on = !b.classList.contains("done");
+        b.classList.toggle("done", on); b.textContent = on ? i.done : i.act;
+      }));
+    })();
+  </script>
+</body>
+</html>

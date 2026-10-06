@@ -173,3 +173,14 @@
 ## v21: compact community snippet
 - **Asked for:** smaller images and posts in "from the community", and remove the filter buttons ("I'll just save it for the community page. This is just a small snippet people can see").
 - **Made:** removed the posts / challenges / announcements chips from the home. The 3 latest items are now compact snippets: a 24px avatar, name · time and type tag on one line, a 14px title, the text clamped to two lines, a small action pill, and a 68px square photo thumbnail on the right when there's a photo. Updated my saved preferences: the filters belong on the Community tab, not the home.
+
+## v22: Stronger Together
+- **Asked for:** carry what you like about v21 into a new v22, but in v16's style.
+- **Made:** v16's look (white and GLG purple, Oswald-style caps, Arimo, full-bleed duotone group-photo hero, colour photo cards, scrolling values band) with v21's features:
+  - "MORNING, JASMINE." on one line, with a date kicker and nothing under it. The JT profile icon sits top right.
+  - A deep-purple member card overlaps the hero with the name, "3 weeks strong", this week's day tiles and 27 sessions · 34h total time. Tapping it flips to a white check-in pass with the QR.
+  - "You're going" photo tickets with avatars of who's going.
+  - The "psst, your friends are going →" nudge (Chloe and Kiko → Barbell Basics) with "Join them · HK$180" and "It's okay". It syncs with the Barbell card and shows a toast.
+  - "Coming up" as three equal photo cards.
+  - "From the community" as three compact snippets with small thumbnails and no filters.
+- Avatars come from the illustrated avatar generator (same looks as v19 and v20).
