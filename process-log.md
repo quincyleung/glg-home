@@ -29,3 +29,8 @@
 - **Asked for:** Departures as the first version (from the round 1 sketches).
 - **Made:** a black and amber transit board. Each event is a "departure" with time, venue as the platform, and a status (blinking "2 LEFT", "BOOKED", "ON TIME"). Tap a row to expand the details and "BOOK SEAT". Chapter news and the global update scroll as a ticker.
 - **Pushback:** none yet.
+
+## v02: Order Sheet
+- **Asked for:** Order Sheet as the second version.
+- **Made:** a cream and red 點心紙 (dim sum order sheet). Events are grouped as Strength / Outdoors, with tick boxes and prices. Booked events carry a red 已訂 BOOKED stamp. A sticky button keeps a running total ("Book 2 events · HK$430") and stamps everything at once. News sits in a "Today's notes" box.
+- **Pushback:** none yet.

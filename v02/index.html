@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>v02 · Order Sheet — GLG Home</title>
+  <style>
+    :root {
+      --paper: #fbf3e4;
+      --red: #b3261e;
+      --ink: #2a2420;
+      --muted: #8a7461;
+      --serif: "Songti TC", "Songti SC", "Noto Serif TC", Georgia, serif;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #e9dcc6; color: var(--ink); font: 15px/1.45 var(--serif); }
+    button { font: inherit; cursor: pointer; border: 0; }
+    .app { max-width: 430px; margin: 0 auto; min-height: 100vh; background: var(--paper); position: relative; display: flex; flex-direction: column; }
+    @media (min-width: 600px) { .app { margin: 24px auto; min-height: 0; border-radius: 28px; overflow: clip; box-shadow: 0 20px 60px rgba(90,50,10,.2); } }
+    main { padding: 16px 18px 20px; flex: 1; }
+
+    .top { display: flex; justify-content: space-between; font: 600 13px system-ui, sans-serif; color: var(--muted); }
+    .top a { color: var(--muted); text-decoration: none; }
+    .sheet { border: 2px solid var(--red); outline: 1px solid var(--red); outline-offset: 3px; margin-top: 18px; padding: 14px 12px; }
+    .title { text-align: center; color: var(--red); border-bottom: 2px solid var(--red); padding-bottom: 10px; }
+    .title .zh { font-size: 26px; letter-spacing: .3em; font-weight: 700; }
+    .title .en { font-size: 12px; letter-spacing: .2em; text-transform: uppercase; }
+    .meta { display: flex; justify-content: space-between; font-size: 13px; color: var(--red); padding: 8px 0; border-bottom: 1px solid var(--red); }
+    .meta b { color: var(--ink); font-weight: 400; border-bottom: 1px solid var(--ink); padding: 0 6px; }
+
+    .cat { color: var(--red); font-size: 12px; letter-spacing: .2em; margin: 12px 0 2px; }
+    .item { display: grid; grid-template-columns: 26px 1fr auto; gap: 10px; align-items: center; padding: 10px 0; border-bottom: 1px dotted var(--red); position: relative; }
+    .item label { display: contents; cursor: pointer; }
+    .box { width: 22px; height: 22px; border: 2px solid var(--red); display: grid; place-items: center; color: var(--red); font-size: 18px; line-height: 1; font-family: "Bradley Hand", "Segoe Print", cursive; }
+    .item input { position: absolute; opacity: 0; pointer-events: none; }
+    .item input:checked + .box::after { content: "✓"; }
+    .item input:focus-visible + .box { outline: 2px solid var(--ink); outline-offset: 2px; }
+    .name b { display: block; font-size: 16px; }
+    .name small { display: block; color: var(--muted); font-size: 13px; }
+    .name .hot { color: var(--red); font-weight: 700; }
+    .price { color: var(--red); font-size: 16px; text-align: right; }
+    .stamp { display: inline-block; margin-top: 5px; transform: rotate(-4deg); border: 2px solid var(--red); color: var(--red); border-radius: 6px; padding: 1px 6px; font-weight: 700; font-size: 13px; letter-spacing: .1em; opacity: .85; background: rgba(251,243,228,.7); }
+    .item.booked .box { border-style: dashed; opacity: .5; }
+
+    .specials { margin-top: 18px; background: #fff8ec; border: 1px dashed var(--red); padding: 12px; }
+    .specials h2 { margin: 0 0 6px; color: var(--red); font-size: 14px; letter-spacing: .2em; }
+    .specials p { margin: 0 0 8px; font-size: 14px; }
+    .specials p:last-child { margin: 0; }
+    .specials small { color: var(--muted); font: 12px system-ui, sans-serif; }
+
+    .cta { position: sticky; bottom: 0; background: var(--paper); padding: 10px 18px 0; border-top: 1px solid #e6d4b8; }
+    .order { width: 100%; background: var(--red); color: #fff; font: 700 15px system-ui, sans-serif; padding: 14px; border-radius: 12px; transition: opacity .2s; }
+    .order:disabled { opacity: .4; cursor: default; }
+    .tabs { display: flex; justify-content: space-around; padding: 10px 0 14px; font: 600 11px system-ui, sans-serif; }
+    .tabs a { color: var(--muted); text-decoration: none; }
+    .tabs a.on { color: var(--red); }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <main>
+      <div class="top"><a href="../">← Gallery</a><span>Tue 6 Oct</span></div>
+
+      <div class="sheet">
+        <div class="title"><div class="zh">女子舉重</div><div class="en">GLG Hong Kong · Order sheet</div></div>
+        <div class="meta"><span>Member <b>Jasmine T.</b></span><span>Week <b>6–25 Oct</b></span></div>
+
+        <p class="cat">力量 · STRENGTH</p>
+        <div class="item"><label><input type="checkbox" data-price="180"><span class="box"></span>
+          <span class="name"><b>Barbell Basics</b><small>Sat 10 · 8am · Kwun Tong · <span class="hot">2 left</span></small></span></label>
+          <span class="price">$180</span></div>
+        <div class="item"><label><input type="checkbox" data-price="250"><span class="box"></span>
+          <span class="name"><b>Boxing Fundamentals</b><small>Sat 17 · 10am · Sheung Wan</small></span></label>
+          <span class="price">$250</span></div>
+
+        <p class="cat">戶外 · OUTDOORS</p>
+        <div class="item booked"><span class="box">●</span>
+          <span class="name"><b>Dragon's Back Sunrise Hike</b><small>Sun 11 · 6:15am · To Tei Wan</small><span class="stamp">已訂 BOOKED</span></span>
+          <span class="price">Free</span></div>
+        <div class="item booked"><span class="box">●</span>
+          <span class="name"><b>Harbourfront 5K Run</b><small>Wed 14 · 7:30pm · Star Ferry</small><span class="stamp">已訂 BOOKED</span></span>
+          <span class="price">Free</span></div>
+        <div class="item"><label><input type="checkbox" data-price="420"><span class="box"></span>
+          <span class="name"><b>Paddle &amp; Brunch</b><small>Sun 25 · 9am · Sai Kung · brunch incl.</small></span></label>
+          <span class="price">$420</span></div>
+      </div>
+
+      <div class="specials">
+        <h2>今日推介 · TODAY'S NOTES</h2>
+        <p>🚩 Run club now starts at the Star Ferry clock tower. Look for the pink flag! <small>Hana · 2d</small></p>
+        <p>🏋️ Lift a Million: 412,000 / 1,000,000 kg moved this month. <small>Mei-Ling · 5d</small></p>
+        <p>🌏 Global Lift Day, Sat 7 Nov: all seven chapters lift at once. HK at 5pm. <small>GLG HQ</small></p>
+      </div>
+    </main>
+
+    <div class="cta">
+      <button class="order" id="order" disabled>Tick what you'd like</button>
+      <nav class="tabs"><a class="on" href="#">Home</a><a href="#">Events</a><a href="#">Community</a><a href="#">Profile</a></nav>
+    </div>
+  </div>
+
+  <script>
+    const order = document.getElementById("order");
+    const boxes = () => [...document.querySelectorAll(".item input:checked")];
+    function update() {
+      const picked = boxes();
+      const total = picked.reduce((t, b) => t + +b.dataset.price, 0);
+      order.disabled = !picked.length;
+      order.textContent = picked.length ? `Book ${picked.length} event${picked.length > 1 ? "s" : ""} · HK$${total}` : "Tick what you'd like";
+    }
+    document.querySelectorAll(".item input").forEach(b => b.addEventListener("change", update));
+    order.addEventListener("click", () => {
+      boxes().forEach(b => {
+        const item = b.closest(".item");
+        item.classList.add("booked");
+        item.querySelector(".name").insertAdjacentHTML("beforeend", '<span class="stamp">已訂 BOOKED</span>');
+        b.disabled = true;
+        b.checked = false;
+      });
+      update();
+      order.textContent = "You're in! See you there 💪";
+    });
+  </script>
+</body>
+</html>
