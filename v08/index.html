@@ -101,12 +101,61 @@
     .tabs { position: sticky; bottom: 14px; margin: 0 14px 14px; display: flex; justify-content: space-around; background: var(--ink); border-radius: 99px; padding: 12px 6px; z-index: 5; }
     .tabs a { color: #8a8494; text-decoration: none; font-size: 12px; font-weight: 700; }
     .tabs a.on { color: #fff; }
+
+    /* ---- Hype restyle: dark, loud, sporty ---- */
+    :root {
+      --ink: #f4f4f0;
+      --muted: #8d8d96;
+      --line: #26262c;
+      --bg: #0b0b0d;
+      --hot: #d4ff3a;
+      --volt: #d4ff3a;
+      --orange: #ff5a1f;
+      --sunset: linear-gradient(160deg, #ff5a1f, #ff2d55 60%, #7a1cff);
+      --green: #d4ff3a;
+      --display: Impact, Haettenschweiler, "Arial Narrow Bold", "Franklin Gothic Bold", sans-serif;
+    }
+    body { background: #000; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
+    @media (min-width: 600px) { .app { box-shadow: 0 0 0 1px #222, 0 20px 60px rgba(0,0,0,.6); } }
+    .logo { font: 400 20px var(--display); letter-spacing: .04em; color: var(--volt); }
+    .avatar { background: var(--volt); color: #000; }
+    .ring { color: var(--muted); text-transform: uppercase; font-size: 10px; letter-spacing: .06em; font-weight: 700; }
+    .ring i { background: conic-gradient(var(--volt), var(--orange), var(--volt)); }
+    .ring i span { border-color: var(--bg); background: #1a1a1f !important; color: var(--volt); }
+    .ring.seen i { background: #333; }
+    h1 { font: 400 46px/.92 var(--display); text-transform: uppercase; letter-spacing: .005em; margin-top: 22px; }
+    h1 em { font-style: normal; color: var(--volt); }
+    .sub { text-transform: uppercase; font-size: 12px; letter-spacing: .1em; font-weight: 700; }
+    h2 { font: 400 26px var(--display); text-transform: uppercase; letter-spacing: .01em; }
+    h2 a { font: 700 12px "Helvetica Neue", Arial, sans-serif; color: var(--volt); text-transform: uppercase; letter-spacing: .08em; }
+    .me { background: #16161a; border: 1px solid var(--line); }
+    .streak { background: conic-gradient(var(--volt) 0 75%, #2a2a30 75% 100%); }
+    .streak b { background: #16161a; font: 400 18px/1 var(--display); color: var(--volt); }
+    .pill { background: rgba(212,255,58,.12); color: var(--volt); text-transform: uppercase; letter-spacing: .06em; font-size: 10px; }
+    .slide { border-radius: 8px; height: 280px; }
+    .slide b { font: 400 40px/.95 var(--display); text-transform: uppercase; }
+    .slide .tag { background: #000; color: var(--volt); border-radius: 4px; }
+    .slide .emoji { opacity: .35; font-size: 110px; }
+    .slide .book { background: var(--volt); color: #000; border-radius: 4px; text-transform: uppercase; letter-spacing: .06em; font-weight: 900; }
+    .slide .book.done { background: #000; color: var(--volt); }
+    .dots i { background: #333; } .dots i.on { background: var(--volt); }
+    .ticket { background: #16161a; border-radius: 8px; border: 1px solid var(--line); }
+    .ticket .stub { border-right-color: #333; color: var(--orange); }
+    .ticket .stub b { font: 400 30px var(--display); color: var(--ink); }
+    .ticket .ok { color: var(--volt); }
+    .mini > div { background: #16161a; border: 1px solid var(--line); border-radius: 8px; }
+    .bar { background: #2a2a30; } .bar i { background: linear-gradient(90deg, var(--orange), var(--volt)); }
+    .story h3 { font: 400 48px/.95 var(--display); text-transform: uppercase; }
+    .story .act { background: var(--volt); color: #000; border-radius: 4px; text-transform: uppercase; letter-spacing: .06em; }
+    .tabs { background: #16161a; border: 1px solid var(--line); border-radius: 8px; }
+    .tabs a { text-transform: uppercase; letter-spacing: .08em; font-size: 11px; }
+    .tabs a.on { color: var(--volt); }
   </style>
 </head>
 <body>
   <div class="app">
     <main>
-      <div class="top pad"><a class="back" href="../index.html">← Gallery</a><span class="logo">GLG·HK</span><span class="avatar" aria-label="Jasmine's profile">JT</span></div>
+      <div class="top pad"><a class="back" href="../index.html">← Gallery</a><span class="logo">GLG / HK</span><span class="avatar" aria-label="Jasmine's profile">JT</span></div>
 
       <div class="rings" aria-label="Community stories">
         <button class="ring" data-s="0"><i><span style="background:#ff7a59">HO</span></i>Hana</button>
@@ -117,16 +166,16 @@
       </div>
 
       <div class="pad">
-        <h1>Morning, Jasmine ☀️</h1>
-        <p class="sub">5 new stories from your chapter.</p>
+        <h1>Let's go,<br><em>Jasmine.</em></h1>
+        <p class="sub">5 new from the squad. Tap in.</p>
 
         <div class="me">
           <div class="streak"><b>3<br>wks</b></div>
-          <div><p><b>You're on a 3-week streak.</b></p><small>27 sessions · 2 booked this week · squat PB 60 kg</small><br><span class="pill">🌅 Early Riser</span></div>
+          <div><p><b>3 weeks straight. Don't break it.</b></p><small>27 sessions · 2 booked this week · squat PB 60 kg</small><br><span class="pill">🌅 Early Riser</span></div>
         </div>
       </div>
 
-      <h2 class="pad">Swipe this week <a href="#">All events</a></h2>
+      <h2 class="pad">This week <a href="#">All events</a></h2>
       <div class="deck" id="deck">
         <div class="slide" style="background:var(--sunset)"><span class="tag">Sat 10 · 2 spots left</span><span class="emoji">🏋️</span><b>Barbell Basics</b><span>8:00am · Iron Harbour, Kwun Tong · with Mei-Ling</span><button class="book">Book · HK$180</button></div>
         <div class="slide" style="background:linear-gradient(160deg,#ffb347,#ff7a59 50%,#c2185b)"><span class="tag">Sat 17 · 9/20</span><span class="emoji">🥊</span><b>Boxing Fundamentals</b><span>10:00am · Left Hook Studio, Sheung Wan</span><button class="book">Book · HK$250</button></div>
@@ -135,11 +184,11 @@
       <div class="dots" id="dots"><i class="on"></i><i></i><i></i></div>
 
       <div class="pad">
-        <h2>Your tickets <a href="#">Calendar</a></h2>
+        <h2>Locked in <a href="#">Calendar</a></h2>
         <div class="ticket"><div class="stub">SUN<b>11</b></div><div class="body"><b>Dragon's Back Sunrise Hike</b><small>6:15am · To Tei Wan · in 5 days</small></div><span class="ok">✓</span></div>
         <div class="ticket"><div class="stub">WED<b>14</b></div><div class="body"><b>Harbourfront 5K</b><small>7:30pm · Star Ferry clock tower (new!)</small></div><span class="ok">✓</span></div>
 
-        <h2>Around the chapter</h2>
+        <h2>The squad</h2>
         <div class="mini">
           <div><small>Lift a Million</small>412k / 1M kg. You've added 2,140 kg.<div class="bar"><i></i></div></div>
           <div><small>Chat · 6 replies</small>Priya's splitting a taxi to Sunday's hike. You're going too.</div>
@@ -164,8 +213,8 @@
 
   <script>
     const stories = [
-      { who: "Hana · Chapter lead · 2d", bg: "linear-gradient(160deg,#ff7a59,#c2185b)", t: "Run club has a new start point 🚩", b: "From Wednesday, Harbourfront 5K starts at the Star Ferry clock tower. Same time, 7:30pm. Look for the pink flag!", a: "Got it 👍" },
-      { who: "Chloe Ng · 3d", bg: "linear-gradient(160deg,#8a2be2,#ff3d77)", t: "100 kg deadlift PR 🔥", b: "Pulled it at Iron Harbour on Saturday. Two years ago I couldn't lift the empty bar.", a: "🙌 Hype her · 34" },
+      { who: "Hana · Chapter lead · 2d", bg: "linear-gradient(160deg,#ff7a59,#c2185b)", t: "New start line 🚩", b: "From Wednesday, Harbourfront 5K starts at the Star Ferry clock tower. Same time, 7:30pm. Look for the pink flag!", a: "Got it 👍" },
+      { who: "Chloe Ng · 3d", bg: "linear-gradient(160deg,#8a2be2,#ff3d77)", t: "100 kg. PR. 🔥", b: "Pulled it at Iron Harbour on Saturday. Two years ago I couldn't lift the empty bar.", a: "🙌 Hype her · 34" },
       { who: "Priya Raman · 1d", bg: "linear-gradient(160deg,#2a9d8f,#1d4e89)", t: "Taxi to Dragon's Back?", b: "Leaving Quarry Bay 5:40am Sunday for To Tei Wan. Room for three more. 6 replies.", a: "I'm in 🚕" },
       { who: "Lift a Million · Mei-Ling", bg: "linear-gradient(160deg,#ff3d77,#ffb347)", t: "412,000 kg and counting", b: "41% there with 25 days left. Hit a million and HK$5,000 goes to a local women's shelter. You've added 2,140 kg.", a: "Log a lift" },
       { who: "GLG HQ · yesterday", bg: "linear-gradient(160deg,#18151c,#5b2be2)", t: "Global Lift Day · Sat 7 Nov 🌏", b: "All seven chapters lift at the same hour for the first time. Hong Kong lifts at 5pm at Iron Harbour.", a: "Remind me" }

@@ -75,3 +75,6 @@
 
 ## v06 restyled: calm
 - **Made:** Optima headings with Avenir body text, sage, sand and clay, and hairline borders instead of shadows. The energy picker became three breathing circles (Resting / Steady / Energised), and the copy is gentler ("How does your body feel today?", "Rest is part of training", "From the circle", "Send love").
+
+## v08 restyled: hype
+- **Made:** a dark, loud sports-brand mood: black with volt yellow and an orange-to-violet gradient, condensed Impact caps for headings, square-cornered buttons and hype copy ("Let's go, Jasmine.", "Locked in", "The squad", "3 weeks straight. Don't break it."). The story viewer and swipe deck still work.
