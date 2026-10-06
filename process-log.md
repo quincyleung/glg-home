@@ -58,3 +58,8 @@
 - **Asked for:** develop the Stories direction (Nike Training Club / Instagram).
 - **Made:** a white page with story rings at the top for Hana, Chloe, Priya, the challenge and GLG HQ. Tapping one opens a full-screen story viewer with progress bars, tap-to-advance and an action ("Hype her", "I'm in 🚕", "Remind me"). Below that: a streak ring and stats, a swipeable deck of gradient event cards with dots, "Your tickets" as perforated stubs, and two community tiles.
 - **Pushback:** none yet.
+
+## v09: City Map
+- **Asked for:** develop the City Map direction (Hike Clerb / Brown Girl Surf: the city as your playground).
+- **Made:** an SVG map of Hong Kong (harbour, Kowloon, the island, Sai Kung) with event pins: green for booked, pink for open, and a pulsing pin for "2 left". Plus a "You" dot and All / Booked / Open filters. A bottom sheet holds a district-explorer stat (6 of 18 districts, 3-week streak), "Your plans" cards, "Open near you" with distances (tapping a pin highlights its card), and "Around the city" community notes tagged by place.
+- **Pushback:** none yet.
