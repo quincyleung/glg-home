@@ -106,3 +106,7 @@
 ## v13 redone: Together
 - **Pushback:** "v13 is too similar to v10. Can you redo v13 so it's giving sporty, photo based (like Strava), and together."
 - **Made:** a Strava-style white-and-orange activity app. "Your week" has planned sessions, km and time with a day-by-day bar chart and streak. "You're going" shows route-map thumbnails. "Join a group session" cards have photo headers and "14 of 16" with avatars. The feed has group activities ("Harbourfront 5K: 31 of us": distance, pace, together count, a dusk harbour photo, route map, kudos and comments) and Chloe's PR as a strength activity. Plus a Lift a Million club challenge with leaderboard (you're #38) and club news. The photos are illustrated SVG scenes, because AGENTS.md rules out real photos and external images. Added the activity stats and leaderboard to `content.md`.
+
+## v07 recoloured: full pastel
+- **Pushback:** "make v7 more colorful… fully embody the pastel colorful theme (feel like the black doesn't quite fit)."
+- **Made:** replaced every black surface. Text is now a deep grape, the headline is a pink→lilac→blue gradient, and the stats card is a peach→pink→lilac gradient. Book buttons are white pills tinted to match their tile, the tab bar is white with a pastel active pill, and the page has a soft rainbow wash.
