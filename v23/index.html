@@ -94,6 +94,7 @@
     .ticket, .ev { border-radius: 12px; overflow: hidden; }
     .ticket { scroll-snap-align: start; flex: 0 0 84%; background: var(--lav); }
     .ev { border: 1px solid var(--line); margin-bottom: 12px; background: #fff; }
+    .join-rail .ev { scroll-snap-align: start; flex: 0 0 84%; margin-bottom: 0; }
     .ticket .photo, .ev .photo { height: 118px; }
     .photo.map { background: #eef0ea; }
     .tag { position: absolute; z-index: 2; top: 10px; left: 10px; font: 800 11px var(--display); letter-spacing: .02em; text-transform: uppercase; padding: 4px 8px; border-radius: 4px; background: #fff; color: var(--purple); }
@@ -239,20 +240,22 @@
           <div class="btns"><button class="yes" id="psst-yes">Join them · HK$180</button><button class="no" id="psst-no">It's okay</button></div>
         </div>
 
-        <div class="ev" id="ev-barbell">
-          <div class="photo" data-scene="gym" data-people="6" data-seed="3" data-tone="color" data-alt="Barbell session at Iron Harbour"><span class="tag hot">Only 2 spots left</span><button class="info" aria-expanded="false" aria-label="Instructor details: Mei-Ling"><span class="ava" data-who="meiling"></span></button><div class="details">Squat and deadlift with Coach Mei-Ling Ho: set-up, bracing and safe bailing. No experience needed.</div></div>
-          <div class="body"><span class="d ttl">Barbell Basics</span><p class="meta">Sat 10 Oct · 8:00am · Kwun Tong</p>
-            <div class="row"><div class="people"><span class="avs"><span class="ava" data-who="chloe"></span><span class="ava" data-who="kiko"></span><span class="ava" data-seed="33"></span></span><span class="who">Chloe, Kiko + 12</span></div><span class="price">HK$180</span><button class="join">Join</button></div></div>
-        </div>
-        <div class="ev">
-          <div class="photo" data-scene="studio" data-people="5" data-seed="9" data-tone="color" data-alt="Boxing workshop in the studio"><span class="tag">3 first-timers</span><button class="info" aria-expanded="false" aria-label="Instructor details: Jess"><span class="ava" data-who="jess"></span></button><div class="details">With Coach Jess Albano at Left Hook Studio. Stance, jab-cross, footwork and pad work. Gloves and wraps provided.</div></div>
-          <div class="body"><span class="d ttl">Boxing Fundamentals</span><p class="meta">Sat 17 Oct · 10:00am · Sheung Wan</p>
-            <div class="row"><div class="people"><span class="avs"><span class="ava" data-who="mandy"></span><span class="ava" data-seed="52"></span><span class="ava" data-seed="54"></span></span><span class="who">Mandy + 8</span></div><span class="price">HK$250</span><button class="join">Join</button></div></div>
-        </div>
-        <div class="ev">
-          <div class="photo" data-scene="beach" data-people="6" data-seed="5" data-tone="color" data-alt="Paddleboarding at Sai Kung"><span class="tag">Brunch included</span><button class="info" aria-expanded="false" aria-label="Instructor details: Tash"><span class="ava" data-seed="47"></span></button><div class="details">With instructor Tash Wong. Two hours on the water with an instructor, then brunch by the harbour. Board hire included. You must be able to swim.</div></div>
-          <div class="body"><span class="d ttl">Paddle &amp; Brunch</span><p class="meta">Sun 25 Oct · 9:00am · Sai Kung</p>
-            <div class="row"><div class="people"><span class="avs"><span class="ava" data-who="sara"></span><span class="ava" data-seed="62"></span><span class="ava" data-seed="64"></span></span><span class="who">Sara + 5</span></div><span class="price">HK$420</span><button class="join">Join</button></div></div>
+        <div class="rail join-rail">
+          <div class="ev" id="ev-barbell">
+            <div class="photo" data-scene="gym" data-people="6" data-seed="3" data-tone="color" data-alt="Barbell session at Iron Harbour"><span class="tag hot">Only 2 spots left</span><button class="info" aria-expanded="false" aria-label="Instructor details: Mei-Ling"><span class="ava" data-who="meiling"></span></button><div class="details">Squat and deadlift with Coach Mei-Ling Ho: set-up, bracing and safe bailing. No experience needed.</div></div>
+            <div class="body"><span class="d ttl">Barbell Basics</span><p class="meta">Sat 10 Oct · 8:00am · Kwun Tong</p>
+              <div class="row"><div class="people"><span class="avs"><span class="ava" data-who="chloe"></span><span class="ava" data-who="kiko"></span><span class="ava" data-seed="33"></span></span><span class="who">Chloe, Kiko + 12</span></div><span class="price">HK$180</span><button class="join">Join</button></div></div>
+          </div>
+          <div class="ev">
+            <div class="photo" data-scene="studio" data-people="5" data-seed="9" data-tone="color" data-alt="Boxing workshop in the studio"><span class="tag">3 first-timers</span><button class="info" aria-expanded="false" aria-label="Instructor details: Jess"><span class="ava" data-who="jess"></span></button><div class="details">With Coach Jess Albano at Left Hook Studio. Stance, jab-cross, footwork and pad work. Gloves and wraps provided.</div></div>
+            <div class="body"><span class="d ttl">Boxing Fundamentals</span><p class="meta">Sat 17 Oct · 10:00am · Sheung Wan</p>
+              <div class="row"><div class="people"><span class="avs"><span class="ava" data-who="mandy"></span><span class="ava" data-seed="52"></span><span class="ava" data-seed="54"></span></span><span class="who">Mandy + 8</span></div><span class="price">HK$250</span><button class="join">Join</button></div></div>
+          </div>
+          <div class="ev">
+            <div class="photo" data-scene="beach" data-people="6" data-seed="5" data-tone="color" data-alt="Paddleboarding at Sai Kung"><span class="tag">Brunch included</span><button class="info" aria-expanded="false" aria-label="Instructor details: Tash"><span class="ava" data-seed="47"></span></button><div class="details">With instructor Tash Wong. Two hours on the water with an instructor, then brunch by the harbour. Board hire included. You must be able to swim.</div></div>
+            <div class="body"><span class="d ttl">Paddle &amp; Brunch</span><p class="meta">Sun 25 Oct · 9:00am · Sai Kung</p>
+              <div class="row"><div class="people"><span class="avs"><span class="ava" data-who="sara"></span><span class="ava" data-seed="62"></span><span class="ava" data-seed="64"></span></span><span class="who">Sara + 5</span></div><span class="price">HK$420</span><button class="join">Join</button></div></div>
+          </div>
         </div>
       </section>
 

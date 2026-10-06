@@ -230,3 +230,7 @@
 - **Asked for:** v24 keeps all the requests and changes so far but applies them to v20.
 - **Made:** started from v22 (with the white "Join a session" band and new name) and brought in v20's avatar-led identity. The hero photo is replaced by "MORNING, JASMINE." over v20's orbit: Jasmine at the centre inside a purple streak ring, her crew on the inner ring with pink "new" dots, and the chapter drifting on the outer ring. Tapping someone opens a spotlight card with their news and an action (hidden until you tap, to keep the top short). Then the same streak card (Check in → QR) and the same banded sections. On every event card the image slot is a v20 seat grid: filled seats are the avatars of who's going, dashed seats are open (Barbell shows its last 2), and big sessions end in a "+9" or "+17" chip. Tapping an empty seat, Join, or the psst "Join them" all seat Jasmine (pink ring) and update who's going. Label top-left, instructor photo top-right, one-line meta, who's going + price + Join, community snippet and tab bar all carry over.
 - **Also asked:** remove the "i" icon from the instructor profile photos. Removed the badge in v22, v23 and v24. The photo alone opens the details (with a purple ring while open).
+
+## v23: Join a session carousel
+- **Asked for:** make v23's "Join a session" a carousel too.
+- **Made:** the three session cards (Barbell, Boxing, Paddle) now sit in a swipeable, snap-scrolling row like "You're going" (84% wide with the next card peeking). The psst nudge stays above it. Joining still updates who's going and syncs with psst.
