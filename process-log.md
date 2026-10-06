@@ -197,3 +197,7 @@
 ## v22: simpler card
 - **Asked for:** "I don't love how Jasmine is repeated twice on the page." Simplify v22's card using v16's title, but keep sessions, total time and check-in.
 - **Made:** the card front has no name, chapter or member-number row and no ring. It's v16's "🔥 3 WEEKS STRONG" title with "This week: 2 planned", full-width day tiles (Monday done, today outlined, Wednesday's 5K and Sunday's hike dashed), and a bottom row with 27 sessions · 34h total time and a purple "Check in" pill with a QR glyph. Tapping still flips to the check-in pass, which keeps her name and member #0412 for door staff.
+
+## v22: who's going on "coming up"
+- **Asked for:** show who's going (just 3 icons, like her booked events) on the coming-up events.
+- **Made:** each coming-up card has an avatar row like the "you're going" tickets: Barbell Basics "Chloe, Kiko + 12", Boxing "Mandy + 8", Paddle & Brunch "Sara + 5" (matching the spot counts). Joining a session (from its card or the psst nudge) puts Jasmine's avatar first and changes the line to "You, Chloe, Kiko + 12".

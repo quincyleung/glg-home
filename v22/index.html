@@ -117,6 +117,8 @@
     .ev .body { padding: 14px; }
     .ev .body .d { font-size: 21px; line-height: 1.05; }
     .ev .meta { color: var(--muted); font-size: 13px; margin: 4px 0 12px; }
+    .ev .people { margin: -4px 0 12px; }
+    .ev .avs .ava { box-shadow: 0 0 0 2px #fff; }
     .ev .row { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
     .price { font: 700 18px var(--display); }
     .join { background: var(--purple); color: #fff; font: 700 15px var(--display); text-transform: uppercase; letter-spacing: .06em; padding: 10px 22px; border-radius: 99px; transition: transform .15s; }
@@ -230,18 +232,21 @@
         <div class="photo" data-scene="gym" data-people="6" data-seed="3" data-tone="color" data-alt="Barbell session at Iron Harbour"><span class="tag hot">Only 2 spots left</span></div>
         <div class="body"><span class="d">Barbell Basics: Squat &amp; Deadlift</span>
           <p class="meta">Sat 10 Oct · 8:00am · Iron Harbour, Kwun Tong · with Coach Mei-Ling</p>
+          <div class="people"><span class="avs"><span class="ava" data-who="chloe"></span><span class="ava" data-who="kiko"></span><span class="ava" data-seed="33"></span></span>Chloe, Kiko + 12</div>
           <div class="row"><span class="price">HK$180</span><button class="join">Join</button></div></div>
       </div>
       <div class="ev">
         <div class="photo" data-scene="studio" data-people="5" data-seed="9" data-tone="color" data-alt="Boxing workshop in the studio"><span class="tag">3 first-timers going</span></div>
         <div class="body"><span class="d">Boxing Fundamentals</span>
           <p class="meta">Sat 17 Oct · 10:00am · Left Hook Studio, Sheung Wan · gloves provided</p>
+          <div class="people"><span class="avs"><span class="ava" data-who="mandy"></span><span class="ava" data-seed="52"></span><span class="ava" data-seed="54"></span></span>Mandy + 8</div>
           <div class="row"><span class="price">HK$250</span><button class="join">Join</button></div></div>
       </div>
       <div class="ev">
         <div class="photo" data-scene="beach" data-people="6" data-seed="5" data-tone="color" data-alt="Paddleboarding at Sai Kung"><span class="tag">Brunch included</span></div>
         <div class="body"><span class="d">Paddle &amp; Brunch</span>
           <p class="meta">Sun 25 Oct · 9:00am · Sai Kung waterfront · 6 of 12 spots taken</p>
+          <div class="people"><span class="avs"><span class="ava" data-who="sara"></span><span class="ava" data-seed="62"></span><span class="ava" data-seed="64"></span></span>Sara + 5</div>
           <div class="row"><span class="price">HK$420</span><button class="join">Join</button></div></div>
       </div>
 
@@ -417,7 +422,18 @@
 
     // Psst: join friends, or dismiss. Kept in sync with the Barbell card under "coming up".
     const psst = document.getElementById("psst"), barbellJoin = document.querySelector("#ev-barbell .join");
-    function markJoined(b) { b.textContent = "You're going ✓"; b.classList.add("done"); b.disabled = true; }
+    function markJoined(b) {
+      b.textContent = "You're going ✓"; b.classList.add("done"); b.disabled = true;
+      const ppl = b.closest(".ev")?.querySelector(".people");
+      if (ppl && !ppl.dataset.me) {
+        ppl.dataset.me = "1";
+        const avs = ppl.querySelector(".avs");
+        avs.lastElementChild.remove();
+        avs.insertAdjacentHTML("afterbegin", '<span class="ava" data-who="jasmine"></span>');
+        Avatar.drawAll(avs);
+        ppl.lastChild.textContent = "You, " + ppl.lastChild.textContent;
+      }
+    }
     document.getElementById("psst-yes").addEventListener("click", e => {
       psst.classList.add("joined");
       e.currentTarget.textContent = "You're in with Chloe & Kiko ✓"; e.currentTarget.disabled = true;
