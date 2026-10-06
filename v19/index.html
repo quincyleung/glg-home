@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>v19 · Quiet — GLG Home</title>
+  <style>
+    :root {
+      --purple: #4a1fb8;
+      --ink: #17121f;
+      --muted: #8a8496;
+      --faint: #c9c4d3;
+      --line: #eeebf2;
+      --display: Oswald, "Avenir Next Condensed", "Helvetica Neue", "Arial Narrow", sans-serif;
+      --body: Arimo, "Helvetica Neue", Arial, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f2f7; color: var(--ink); font: 15px/1.5 var(--body); }
+    button { font: inherit; cursor: pointer; border: 0; color: inherit; background: none; padding: 0; }
+    .app { max-width: 430px; margin: 0 auto; min-height: 100vh; background: #fff; position: relative; overflow-x: clip; }
+    @media (min-width: 600px) { .app { margin: 24px auto; min-height: 0; border-radius: 28px; overflow: clip; box-shadow: 0 20px 60px rgba(30,10,60,.08); } }
+    main { padding: 18px 26px 40px; }
+    .lbl { font: 600 11px var(--display); text-transform: uppercase; letter-spacing: .22em; color: var(--muted); }
+    .ava { display: block; width: 28px; height: 28px; border-radius: 50%; overflow: hidden; flex: none; }
+    .ava svg { display: block; width: 100%; height: 100%; }
+    .stack { display: flex; flex: none; } .stack .ava { width: 22px; height: 22px; box-shadow: 0 0 0 2px #fff; } .stack .ava + .ava { margin-left: -6px; }
+
+    .top { display: flex; justify-content: space-between; }
+    .top a { color: var(--muted); text-decoration: none; font-size: 13px; }
+
+    .hello { margin-top: 64px; }
+    .hello h1 { font: 400 34px/1.1 var(--body); letter-spacing: -.02em; margin: 0; }
+    .hello p { margin: 10px 0 0; color: var(--muted); font-size: 16px; }
+    .hello p b { color: var(--ink); font-weight: 400; }
+
+    /* streak: one dot per week */
+    .weeks { display: flex; align-items: center; gap: 7px; margin-top: 22px; }
+    .weeks i { width: 8px; height: 8px; border-radius: 50%; background: var(--line); }
+    .weeks i.on { background: var(--faint); }
+    .weeks i.streak { background: var(--purple); }
+    .weeks span { margin-left: 8px; font-size: 13px; color: var(--muted); }
+
+    /* next up */
+    .next { margin-top: 56px; }
+    .next .t { font: 400 26px/1.15 var(--body); letter-spacing: -.02em; margin: 8px 0 4px; }
+    .next .m { color: var(--muted); }
+    .next .who { display: flex; align-items: center; gap: 10px; margin-top: 12px; font-size: 13px; color: var(--muted); }
+
+    section { margin-top: 52px; }
+    .row { display: flex; align-items: center; gap: 14px; padding: 16px 0; border-bottom: 1px solid var(--line); }
+    .row:first-of-type { border-top: 1px solid var(--line); margin-top: 12px; }
+    .row .when { width: 52px; flex: none; font-size: 13px; color: var(--muted); line-height: 1.3; }
+    .row .what { flex: 1; min-width: 0; }
+    .row .what small { display: block; color: var(--muted); font-size: 13px; }
+    .row .go { font-size: 13px; color: var(--purple); }
+    .seats { display: flex; gap: 3px; margin-top: 6px; flex-wrap: wrap; }
+    .seats i { width: 6px; height: 6px; border-radius: 50%; background: var(--faint); }
+    .seats i.free { background: none; box-shadow: inset 0 0 0 1px var(--purple); }
+    .seats i.me { background: var(--purple); }
+    .join { font-size: 14px; color: var(--purple); border-bottom: 1px solid var(--purple); }
+    .join.done { color: var(--muted); border-color: transparent; }
+
+    /* community */
+    .note { display: flex; gap: 14px; padding: 16px 0; border-bottom: 1px solid var(--line); }
+    .note:first-of-type { border-top: 1px solid var(--line); margin-top: 12px; }
+    .note p { margin: 0; flex: 1; }
+    .note small { display: block; color: var(--muted); font-size: 12px; margin-top: 2px; }
+    .heart { font-size: 13px; color: var(--muted); margin-top: 6px; }
+    .heart[aria-pressed="true"] { color: var(--purple); }
+    .pinned { color: var(--purple); }
+    .line { height: 2px; background: var(--line); margin-top: 8px; }
+    .line i { display: block; height: 100%; width: 41%; background: var(--purple); }
+    details summary { list-style: none; cursor: pointer; padding: 16px 0; color: var(--purple); font-size: 14px; }
+    details summary::-webkit-details-marker { display: none; }
+    details[open] summary { display: none; }
+
+    .values { margin-top: 56px; color: var(--faint); font-size: 13px; line-height: 1.8; }
+
+    .tabs { position: sticky; bottom: 0; display: flex; justify-content: space-around; background: rgba(255,255,255,.96); padding: 14px 0 18px; border-top: 1px solid var(--line); }
+    .tabs a { color: var(--muted); text-decoration: none; font-size: 13px; }
+    .tabs a.on { color: var(--ink); }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <main>
+      <div class="top"><a href="../index.html">← Gallery</a><span class="lbl">GLG · HK</span></div>
+
+      <div class="hello">
+        <h1>Morning, Jasmine.</h1>
+        <p>You've moved <b>3 weeks in a row</b>. Two sessions this week.</p>
+        <div class="weeks" aria-label="Weekly streak, last 12 weeks">
+          <i class="on"></i><i></i><i class="on"></i><i class="on"></i><i></i><i class="on"></i><i class="on"></i><i></i><i class="on"></i><i class="streak"></i><i class="streak"></i><i class="streak"></i>
+          <span>12 weeks</span>
+        </div>
+      </div>
+
+      <div class="next">
+        <span class="lbl">Next · in 5 days</span>
+        <p class="t">Dragon's Back at sunrise</p>
+        <span class="m">Sunday 6:15am · To Tei Wan</span>
+        <div class="who"><span class="stack"><span class="ava" data-who="priya"></span><span class="ava" data-who="hana"></span><span class="ava" data-seed="21"></span><span class="ava" data-seed="22"></span></span>Priya, Hana and 20 others</div>
+      </div>
+
+      <section>
+        <span class="lbl">Booked</span>
+        <div class="row"><span class="when">Sun 11<br>6:15</span><div class="what">Dragon's Back Sunrise Hike<small>Priya's sharing a taxi from Quarry Bay</small></div><span class="go">Going</span></div>
+        <div class="row"><span class="when">Wed 14<br>7:30</span><div class="what">Harbourfront 5K<small>New start: Star Ferry clock tower</small></div><span class="go">Going</span></div>
+      </section>
+
+      <section>
+        <span class="lbl">Open</span>
+        <div class="row"><span class="when">Sat 10<br>8:00</span><div class="what">Barbell Basics<small>Kwun Tong · HK$180 · 2 seats left</small><div class="seats" data-taken="14" data-total="16"></div></div><button class="join">Join</button></div>
+        <div class="row"><span class="when">Sat 17<br>10:00</span><div class="what">Boxing Fundamentals<small>Sheung Wan · HK$250</small><div class="seats" data-taken="9" data-total="20"></div></div><button class="join">Join</button></div>
+        <div class="row"><span class="when">Sun 25<br>9:00</span><div class="what">Paddle &amp; Brunch<small>Sai Kung · HK$420</small><div class="seats" data-taken="6" data-total="12"></div></div><button class="join">Join</button></div>
+      </section>
+
+      <section>
+        <span class="lbl">Community</span>
+        <div class="note"><span class="ava" data-who="hana"></span><p><span class="pinned">Pinned.</span> Run club now starts at the Star Ferry clock tower.<small>Hana · chapter lead · 2d</small></p></div>
+        <div class="note"><span class="ava" data-who="chloe"></span><p>Chloe pulled a 100 kg deadlift. A new PR.<small>Saturday · Iron Harbour</small><button class="heart" aria-pressed="false" data-n="34">♡ 34</button></p></div>
+        <details>
+          <summary>Show 3 more</summary>
+          <div class="note"><span class="stack"><span class="ava" data-who="mandy"></span><span class="ava" data-who="kiko"></span><span class="ava" data-who="sara"></span></span><p>Mandy, Kiko and Sara joined this week.<small>Say hi on Saturday</small></p></div>
+          <div class="note"><span class="ava" data-who="meiling"></span><p>Lift a Million: 412,000 of 1,000,000 kg. Yours: 2,140.<span class="line" style="display:block"><i></i></span><small>25 days left</small></p></div>
+          <div class="note"><span class="ava" data-seed="40"></span><p>Global Lift Day is Saturday 7 November. Hong Kong lifts at 5pm.<small>GLG HQ · yesterday</small></p></div>
+        </details>
+      </section>
+
+      <p class="values">Finding strength in. Redefining norms.<br>Accepting challenges. Being stronger together.</p>
+    </main>
+
+    <nav class="tabs"><a class="on" href="#">Home</a><a href="#">Events</a><a href="#">Community</a><a href="#">Profile</a></nav>
+  </div>
+
+  <script>
+    // Illustrated avatars (fictional members, no photos). <span class="ava" data-who="chloe"></span>
+    const Avatar = (() => {
+      const SKIN = ["#f3d2b8", "#e8b48f", "#c98e66", "#a26a44", "#7a4a2c", "#5a3520"];
+      const HAIR = ["#1b1210", "#3a2418", "#6b4226", "#b07a3f", "#2a1a2e", "#8a3a2a"];
+      const BG = ["#e9e1ff", "#ffd9e8", "#d9ecff", "#dff5ea", "#fff0c9", "#efe2ff", "#ffe2d1"];
+      const TOP = ["#4a1fb8", "#7b4fe0", "#ff7aa8", "#24104f", "#5fd0c0", "#ffb44d", "#ffffff"];
+      // Fixed looks for named members so they stay recognisable across the page: [skin, hair, style, bg, top]
+      const PEOPLE = {
+        jasmine: [1, 0, "bun", 0, 0], priya: [3, 0, "long", 3, 4], chloe: [0, 1, "pony", 1, 1], hana: [5, 0, "curly", 4, 3],
+        meiling: [1, 0, "bob", 2, 2], aisha: [4, 0, "curly", 1, 5], mandy: [0, 2, "long", 6, 0], kiko: [1, 0, "bob", 5, 2],
+        sara: [3, 0, "pony", 2, 1], jess: [2, 3, "short", 0, 3]
+      };
+      const STYLES = ["bun", "long", "pony", "curly", "bob", "short"];
+      const rng = seed => () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+
+      function svg(look) {
+        const [si, hi, style, bi, ti] = look, skin = SKIN[si], hair = HAIR[hi], bg = BG[bi], top = TOP[ti];
+        let back = "", front = "";
+        if (style === "long") back = `<path d="M17 30 Q16 54 22 58 H42 Q48 54 47 30 Q47 12 32 12 Q17 12 17 30Z" fill="${hair}"/>`;
+        if (style === "bob") back = `<path d="M17 30 Q16 46 20 47 H44 Q48 46 47 30 Q47 13 32 13 Q17 13 17 30Z" fill="${hair}"/>`;
+        if (style === "curly") back = [[18, 24], [22, 16], [30, 12], [38, 13], [45, 19], [47, 28], [16, 33], [48, 36], [18, 41], [46, 43]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="7" fill="${hair}"/>`).join("");
+        if (style === "pony") back = `<ellipse cx="48" cy="34" rx="5" ry="11" fill="${hair}" transform="rotate(-18 48 34)"/>`;
+        if (style === "bun") front = `<circle cx="32" cy="11" r="6.5" fill="${hair}"/>`;
+        const fringe = style === "short"
+          ? `<path d="M19 28 Q19 14 32 14 Q45 14 45 28 Q40 20 32 21 Q24 21 19 28Z" fill="${hair}"/>`
+          : `<path d="M19 30 Q18 14 32 14 Q46 14 45 30 Q42 21 34 20 Q27 23 19 30Z" fill="${hair}"/>`;
+        return `<svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="32" fill="${bg}"/>${back}
+          <path d="M8 66 Q10 49 32 49 Q54 49 56 66Z" fill="${top}"/><rect x="28" y="40" width="8" height="10" fill="${skin}"/>
+          <ellipse cx="32" cy="31" rx="13" ry="14.5" fill="${skin}"/>${fringe}${front}
+          <ellipse cx="27" cy="32" rx="1.6" ry="2" fill="#2a1a1a"/><ellipse cx="37" cy="32" rx="1.6" ry="2" fill="#2a1a1a"/>
+          <circle cx="24" cy="37" r="2.4" fill="#ff8fb0" opacity=".35"/><circle cx="40" cy="37" r="2.4" fill="#ff8fb0" opacity=".35"/>
+          <path d="M28.5 38.5 Q32 41.5 35.5 38.5" stroke="#5a2a2a" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>`;
+      }
+      function lookFor(el) {
+        if (PEOPLE[el.dataset.who]) return PEOPLE[el.dataset.who];
+        const r = rng(+el.dataset.seed || 7);
+        return [Math.floor(r() * 6), Math.floor(r() * 6), STYLES[Math.floor(r() * 6)], Math.floor(r() * 7), Math.floor(r() * 7)];
+      }
+      const draw = el => { el.innerHTML = svg(lookFor(el)); };
+      return { draw, drawAll: (root = document) => root.querySelectorAll(".ava").forEach(draw), svgFor: who => svg(PEOPLE[who]) };
+    })();
+    Avatar.drawAll();
+    document.querySelectorAll(".seats").forEach(s => {
+      const t = +s.dataset.taken, n = +s.dataset.total;
+      s.innerHTML = Array.from({ length: n }, (_, i) => `<i class="${i < t ? "" : "free"}"></i>`).join("");
+      s.setAttribute("aria-label", `${t} of ${n} seats taken`);
+    });
+    document.querySelectorAll(".join").forEach(b => b.addEventListener("click", () => {
+      const free = b.closest(".row").querySelector(".seats i.free");
+      if (free) free.className = "me";
+      b.textContent = "Going"; b.classList.add("done"); b.disabled = true;
+    }));
+    document.querySelectorAll(".heart").forEach(h => h.addEventListener("click", () => {
+      const on = h.getAttribute("aria-pressed") !== "true";
+      h.setAttribute("aria-pressed", on);
+      h.textContent = `${on ? "♥" : "♡"} ${+h.dataset.n + (on ? 1 : 0)}`;
+    }));
+  </script>
+</body>
+</html>

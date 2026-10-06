@@ -148,3 +148,8 @@
 ## Renumbering again: two more innovative versions first
 - **Asked for:** two more innovative versions before converging (e.g. more minimalistic, avatars instead of photos), inserted before Lavender Drop and Night Session, which become the convergence steps.
 - **Made:** Lavender Drop moved v19 → v21 and Night Session v20 → v22. New versions take v19 and v20. Convergence now runs v21–v25.
+
+## v19: Quiet
+- **Asked for:** an innovative, more minimalistic version with avatars instead of photos.
+- **Made:** almost no UI chrome: white, one GLG purple, Arimo at regular weight with tiny spaced Oswald labels, and lots of air. "Morning, Jasmine." with a one-line status and the streak as twelve dots (one per week, the last three purple). "Next · in 5 days" makes the hike the single focus, with the avatars of who's going. Plain hairline lists for Booked and Open. Each open session shows its seats as dots (outlined = free), and Join fills one in purple. The community has two items plus a "Show 3 more" fold. The GLG values sit in pale grey at the end.
+- New: an illustrated avatar generator with fixed fictional looks per named member, so Chloe, Priya and the others stay recognisable everywhere.
