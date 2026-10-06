@@ -1,0 +1,541 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>v23 · Together, Converged — GLG Home</title>
+  <style>
+    :root {
+      --purple: #6c3ce0;
+      --deep: #4b23b5;
+      --lav: #efeafd;
+      --lav2: #cbbcf7;
+      --pink: #ff7aa8;
+      --mint: #dff5ea;
+      --ink: #242428;
+      --muted: #6d6d78;
+      --line: #e6e6eb;
+      --display: "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif;
+      --body: "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #dcdce2; color: var(--ink); font: 15px/1.45 var(--body); }
+    button { font: inherit; cursor: pointer; border: 0; color: inherit; background: none; }
+    .app { max-width: 430px; margin: 0 auto; min-height: 100vh; background: #fff; position: relative; overflow-x: clip; }
+    @media (min-width: 600px) { .app { margin: 24px auto; min-height: 0; border-radius: 28px; overflow: clip; box-shadow: 0 20px 60px rgba(40,10,90,.2); } }
+    .d { font-family: var(--display); font-weight: 800; letter-spacing: -.02em; }
+    .photo { position: relative; overflow: hidden; background: var(--lav); }
+    .photo svg { display: block; width: 100%; height: 100%; }
+    .ava { display: block; border-radius: 50%; overflow: hidden; flex: none; }
+    .ava svg { display: block; width: 100%; height: 100%; }
+
+    /* v13 top bar */
+    .bar { position: sticky; top: 0; z-index: 8; display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; background: #fff; border-bottom: 1px solid var(--line); }
+    .bar a { color: var(--muted); text-decoration: none; font-size: 13px; font-weight: 600; }
+    .bar .logo { font: italic 900 21px var(--display); color: var(--deep); letter-spacing: -.02em; }
+    .me { width: 34px; height: 34px; border-radius: 50%; background: var(--purple); color: #fff; display: grid; place-items: center; font-weight: 700; font-size: 12px; }
+    .greet { margin: 0 -16px; padding: 22px 16px 14px; }
+    .greet h1 { font: 800 30px/1 var(--display); letter-spacing: -.03em; margin: 0; white-space: nowrap; }
+
+    main { padding: 0 16px; background: #f3effd; }
+
+    /* member card: flips to check-in QR */
+    .flip-wrap { perspective: 1200px; position: relative; z-index: 2; }
+    .flip { position: relative; transform-style: preserve-3d; transition: transform .7s cubic-bezier(.2,.75,.25,1); cursor: pointer; border-radius: 14px; outline: none; }
+    .flip:focus-visible { box-shadow: 0 0 0 3px var(--pink); }
+    .flip.on { transform: rotateY(180deg); }
+    .face { -webkit-backface-visibility: hidden; backface-visibility: hidden; border-radius: 14px; padding: 16px; }
+    .front { color: var(--ink); background: #fff; box-shadow: 0 0 0 1px #e6defa, 0 1px 2px rgba(74,31,184,.06); }
+    .top-row { display: flex; align-items: baseline; justify-content: space-between; }
+    .top-row .title { font-size: 20px; color: var(--ink); }
+    .top-row small { color: var(--muted); font-size: 12px; }
+    .bars { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; align-items: end; height: 84px; margin: 12px 0; }
+    .bars > div { display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; gap: 4px; font-size: 10px; font-weight: 700; color: var(--muted); }
+    .bars .lbl { font-size: 10px; color: var(--purple); min-height: 12px; }
+    .bars i { width: 100%; border-radius: 4px; background: var(--line); }
+    .bars i.done { background: var(--purple); }
+    .bars i.plan { background: repeating-linear-gradient(-45deg, var(--lav2) 0 4px, #fff 4px 8px); border: 1.5px solid var(--purple); }
+    .bars .today { color: var(--ink); }
+    .nums { display: flex; align-items: center; gap: 22px; border-top: 1px solid var(--line); padding-top: 12px; font-size: 12px; color: var(--muted); }
+    .nums b { display: block; font: 800 22px var(--display); color: var(--ink); letter-spacing: -.02em; }
+    .checkin { margin-left: auto; display: inline-flex; align-items: center; gap: 6px; background: var(--purple); color: #fff; font: 800 13px var(--display); padding: 9px 12px; border-radius: 8px; }
+    .checkin svg { width: 16px; height: 16px; fill: none; stroke: #fff; stroke-width: 2; }
+    .hint { font: 700 12px var(--display); color: var(--purple); }
+    .back { position: absolute; inset: 0; transform: rotateY(180deg); background: #fff; display: flex; align-items: center; gap: 14px; box-shadow: 0 0 0 2px var(--purple), 0 14px 34px rgba(40,10,90,.2); }
+    .qr { width: 136px; height: 136px; flex: none; padding: 6px; }
+    .qr svg { display: block; width: 100%; height: 100%; }
+    .back .k { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+    .back .d { display: block; font-size: 24px; line-height: 1; margin: 4px 0; color: var(--purple); }
+    .back p { margin: 8px 0 6px; font-size: 13px; color: var(--muted); }
+    .back .hint { color: var(--purple); margin: 0; }
+
+    /* sections: alternating bands with sticky headers so you always know where you are */
+    .sec { margin: 0 -16px; padding: 0 16px 24px; position: relative; }
+    .sec.tint { background: #f3effd; }
+    .flip-wrap + .sec { margin-top: 8px; }
+    .sec + .sec { border-top: 1px solid var(--line); }
+    .sec-head { position: sticky; top: 59px; z-index: 6; display: flex; align-items: center; gap: 10px; margin: 0 -16px 12px; padding: 16px 16px 12px; background: inherit; }
+    .sec.tint .sec-head { background: rgba(243,239,253,.94); backdrop-filter: blur(10px); }
+    .sec:not(.tint) .sec-head { background: rgba(255,255,255,.94); backdrop-filter: blur(10px); }
+    .sec-head .ic { width: 32px; height: 32px; border-radius: 8px; background: var(--purple); display: grid; place-items: center; flex: none; }
+    .sec-head .ic svg { width: 19px; height: 19px; fill: none; stroke: #fff; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .sec-head .d { font-size: 19px; line-height: 1; }
+    .sec-head .count { font: 800 12px var(--display); background: var(--lav); color: var(--purple); padding: 2px 8px; border-radius: 99px; }
+    .sec.tint .sec-head .count { background: #fff; }
+    .sec-head a { margin-left: auto; font: 700 13px var(--body); color: var(--purple); text-decoration: none; }
+    .sec.tint .ticket, .sec.tint .post { background: #fff; }
+    .sec.tint .ticket .avs .ava { box-shadow: 0 0 0 2px #fff; }
+    .sec .psst { margin: 0 0 14px; }
+
+    /* you're going + coming up: one shared compact card */
+    .rail { display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: 16px; margin: 0 -16px; padding: 0 16px 6px; scrollbar-width: none; }
+    .rail::-webkit-scrollbar { display: none; }
+    .ticket, .ev { border-radius: 12px; overflow: hidden; }
+    .ticket { scroll-snap-align: start; flex: 0 0 84%; background: var(--lav); }
+    .ev { border: 1px solid var(--line); margin-bottom: 12px; background: #fff; }
+    .ticket .photo, .ev .photo { height: 118px; }
+    .photo.map { background: #eef0ea; }
+    .tag { position: absolute; z-index: 2; top: 10px; left: 10px; font: 800 11px var(--display); letter-spacing: .02em; text-transform: uppercase; padding: 4px 8px; border-radius: 4px; background: #fff; color: var(--purple); }
+    .tag.hot { background: var(--pink); color: #fff; }
+    .info { position: absolute; z-index: 4; top: 8px; right: 8px; width: 38px; height: 38px; border-radius: 50%; padding: 0; background: #fff; box-shadow: 0 0 0 2px #fff, 0 3px 10px rgba(0,0,0,.25); transition: box-shadow .2s; }
+    .info .ava { width: 100%; height: 100%; }
+    .info::after { content: "i"; position: absolute; right: -3px; bottom: -3px; width: 15px; height: 15px; border-radius: 50%; background: var(--purple); color: #fff; font: italic 700 10px/15px Georgia, serif; text-align: center; box-shadow: 0 0 0 2px #fff; }
+    .info[aria-expanded="true"] { box-shadow: 0 0 0 3px var(--purple), 0 3px 10px rgba(0,0,0,.25); }
+    .info[aria-expanded="true"]::after { content: "×"; font-style: normal; }
+    .details { position: absolute; z-index: 3; left: 8px; right: 8px; bottom: 8px; background: rgba(255,255,255,.96); border-radius: 12px; padding: 8px 10px; font-size: 12px; line-height: 1.4; color: var(--ink); opacity: 0; transform: translateY(6px); pointer-events: none; transition: opacity .2s, transform .2s; }
+    .details.open { opacity: 1; transform: none; pointer-events: auto; }
+    .ticket .body, .ev .body { padding: 10px 12px 12px; }
+    .ttl { display: block; font-size: 16px; line-height: 1.15; }
+    .meta { margin: 3px 0 10px; font-size: 13px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .row { display: flex; align-items: center; gap: 8px; }
+    .people { flex: 1; min-width: 0; display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); }
+    .people .who { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .avs { display: flex; flex: none; }
+    .avs .ava { width: 24px; height: 24px; box-shadow: 0 0 0 2px #fff; }
+    .ticket .avs .ava { box-shadow: 0 0 0 2px var(--lav); }
+    .avs .ava + .ava { margin-left: -7px; }
+    .going { background: var(--lav); color: var(--purple); font-weight: 800; font-size: 12px; padding: 7px 11px; border-radius: 8px; white-space: nowrap; flex: none; }
+    .price { font: 800 15px var(--display); flex: none; }
+    .join { flex: none; background: var(--purple); color: #fff; font: 800 13px var(--display); padding: 9px 16px; border-radius: 8px; transition: transform .15s; }
+    .join:active { transform: scale(.96); }
+    .join.done { background: var(--lav); color: var(--purple); }
+
+    /* psst */
+    .psst { margin-top: 22px; background: var(--lav); border-radius: 12px; padding: 16px; border-left: 5px solid var(--pink); transition: opacity .35s, transform .35s, max-height .45s .2s, margin .45s .2s, padding .45s .2s; max-height: 400px; overflow: hidden; }
+    .psst.gone { opacity: 0; transform: translateY(-6px); max-height: 0; margin-top: 0; padding-top: 0; padding-bottom: 0; }
+    .psst .kick { font-size: 14px; color: var(--purple); }
+    .psst .row2 { display: flex; align-items: center; gap: 12px; margin: 12px 0 14px; }
+    .psst .faces { display: flex; flex: none; }
+    .psst .faces .ava { width: 48px; height: 48px; box-shadow: 0 0 0 3px var(--lav); }
+    .psst .faces .ava + .ava { margin-left: -14px; }
+    .psst b { display: block; font-size: 16px; line-height: 1.3; }
+    .psst small { display: block; font-size: 13px; color: var(--muted); margin-top: 2px; }
+    .psst .hot { color: #d6336c; font-weight: 700; }
+    .psst .btns { display: flex; gap: 8px; }
+    .psst .btns button { flex: 1; font: 800 14px var(--display); padding: 11px; border-radius: 8px; }
+    .psst .yes { background: var(--purple); color: #fff; }
+    .psst .no { background: #fff; color: var(--purple); box-shadow: inset 0 0 0 2px var(--lav2); }
+    .psst.joined .yes { background: var(--mint); color: #1f6b52; }
+
+    /* from the community: compact snippets */
+    .post { display: block; padding: 12px; border: 1px solid var(--line); border-radius: 12px; margin-bottom: 8px; }
+    .post .pb { flex: 1; min-width: 0; }
+    .post .head { display: flex; align-items: center; gap: 7px; margin-bottom: 6px; font-size: 12px; }
+    .post .head .ava { width: 26px; height: 26px; }
+    .post .head small { color: var(--muted); }
+    .post .kind { margin-left: 2px; font: 800 10px var(--display); letter-spacing: .04em; text-transform: uppercase; padding: 2px 8px; border-radius: 6px; white-space: nowrap; background: var(--lav); color: var(--purple); }
+    .post .kind.announcements { background: var(--purple); color: #fff; }
+    .post .kind.challenges { background: #ffe3ee; color: #c2185b; }
+    .post .t { display: block; font: 800 15px/1.2 var(--display); letter-spacing: -.01em; }
+    .post p { margin: 3px 0 8px; font-size: 13px; line-height: 1.4; color: #3d3550; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .post .photo { width: 72px; height: 72px; flex: none; border-radius: 8px; }
+    .post .pbar { height: 6px; border-radius: 99px; background: var(--lav); overflow: hidden; margin: 0 0 8px; }
+    .post .pbar i { display: block; height: 100%; border-radius: 99px; background: var(--purple); }
+    .post .act { background: var(--lav); color: var(--purple); font: 800 12px var(--display); padding: 6px 12px; border-radius: 6px; }
+    .post .act.done { background: var(--purple); color: #fff; }
+
+    .post .react { display: flex; gap: 6px; }
+    .post .react button, .post .chrow .act { font: 800 12px var(--display); padding: 6px 11px; border-radius: 6px; border: 1.5px solid var(--line); background: var(--lav); color: var(--purple); }
+    .post .heart[aria-pressed="true"] { background: #ffe3ee; color: #d6336c; }
+    .post .cmt[aria-expanded="true"] { background: var(--purple); color: #fff; }
+    .post .comments { margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--line); }
+    .post .c { display: flex; gap: 6px; align-items: flex-start; margin-bottom: 6px; }
+    .post .c .ava { width: 20px; height: 20px; border-radius: 50%; overflow: hidden; flex: none; }
+    .post .c .ava svg { display: block; width: 100%; height: 100%; }
+    .post .c p { margin: 0; font-size: 12px; line-height: 1.35; display: block; -webkit-line-clamp: unset; color: inherit; }
+    .post .all { display: block; font-size: 11px; color: var(--muted); margin: 0 0 6px 26px; text-decoration: none; }
+    .post .add { display: flex; gap: 6px; align-items: center; }
+    .post .add .ava { width: 20px; height: 20px; border-radius: 50%; overflow: hidden; flex: none; }
+    .post .add .ava svg { display: block; width: 100%; height: 100%; }
+    .post .add input { flex: 1; min-width: 0; font: 12px inherit; border: 1px solid var(--line); border-radius: 99px; padding: 6px 10px; outline: none; }
+    .post .add input:focus { border-color: var(--purple); }
+    .post .add button { font-size: 12px; font-weight: 700; color: var(--purple); }
+    .post .chrow { display: flex; align-items: center; gap: 10px; }
+    .post .main { display: flex; gap: 12px; align-items: flex-start; }
+    .post .main + .react, .post .main + .pbar, .post .main + .chrow { margin-top: 2px; }
+    .post .members { font-size: 11px; color: var(--muted); }
+    .post .chrow .act { background: var(--purple); color: #fff; }
+    .post .chrow .act.done { background: var(--lav); color: var(--purple); }
+
+    .tabs { position: sticky; bottom: 0; z-index: 5; display: grid; grid-template-columns: repeat(4, 1fr); background: rgba(255,255,255,.96); backdrop-filter: blur(12px); border-top: 1px solid var(--line); padding: 8px 8px calc(14px + env(safe-area-inset-bottom)); box-shadow: 0 -6px 20px rgba(40,10,90,.06); }
+    .tabs a { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 6px 0 2px; color: var(--muted); text-decoration: none; font: 700 11px var(--display); }
+    .tabs .ic { display: grid; place-items: center; width: 52px; height: 32px; border-radius: 99px; transition: background .2s; }
+    .tabs svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .tabs a.on { color: var(--purple); }
+    .tabs a.on .ic { background: var(--lav); }
+    .tabs a.on svg { stroke-width: 2.2; }
+    .tabs .badge { position: relative; }
+    .tabs .badge::after { content: ""; position: absolute; top: 4px; right: 12px; width: 8px; height: 8px; border-radius: 50%; background: var(--pink); border: 2px solid #fff; }
+    .toast { position: fixed; left: 50%; bottom: 100px; transform: translate(-50%, 20px); background: var(--purple); color: #fff; padding: 12px 18px; border-radius: 14px; font-size: 14px; opacity: 0; pointer-events: none; transition: .3s; max-width: 90vw; z-index: 10; }
+    .toast.show { opacity: 1; transform: translate(-50%, 0); }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <div class="bar"><a href="../index.html">← Gallery</a><span class="logo">GLG</span><span class="me" aria-label="Jasmine's profile">JT</span></div>
+
+    <main>
+      <div class="greet"><h1>Morning, Jasmine.</h1></div>
+      <div class="flip-wrap">
+        <div class="flip" id="flip" role="button" tabindex="0" aria-pressed="false" aria-label="Your streak and stats. Tap to show your check-in QR code">
+          <div class="face front">
+            <div class="top-row"><span class="d title">🔥 3 weeks strong</span><small>This week: 2 planned</small></div>
+            <div class="bars" aria-label="This week: Monday done, Wednesday 5K and Sunday hike planned">
+              <div><span class="lbl">✓</span><i class="done" style="height:34px"></i>M</div><div class="today"><span class="lbl"></span><i style="height:6px"></i>T</div><div><span class="lbl">5K</span><i class="plan" style="height:28px"></i>W</div><div><span class="lbl"></span><i style="height:6px"></i>T</div><div><span class="lbl"></span><i style="height:6px"></i>F</div><div><span class="lbl"></span><i style="height:6px"></i>S</div><div><span class="lbl">⛰</span><i class="plan" style="height:46px"></i>S</div>
+            </div>
+            <div class="nums"><div><b>27</b>sessions</div><div><b>34h</b>total time</div><span class="checkin"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M14 14h3v3h-3zM18 18h3v3h-3zM14 20h1M20 14h1"/></svg>Check in</span></div>
+          </div>
+          <div class="face back" aria-hidden="true">
+            <div class="qr" id="qr"></div>
+            <div><span class="k">Check-in pass</span><span class="d">Jasmine Tran</span><span class="k">Member #0412 · Hong Kong</span><p>Show this at the door to sign in to any GLG session.</p><span class="hint">Tap to flip back ↻</span></div>
+          </div>
+        </div>
+      </div>
+
+      <section class="sec tint" aria-labelledby="h-going">
+        <h2 class="sec-head" id="h-going"><span class="ic"><svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/><path d="m9 15 2 2 4-4"/></svg></span><span class="d">You're going</span><span class="count">2</span><a href="#">Calendar</a></h2>
+  <div class="rail">
+          <div class="ticket">
+          <div class="photo map" role="img" aria-label="Route: Dragon's Back, 8.5 km"><svg viewBox="0 0 300 118" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="300" height="118" fill="#eef0ea"/><path d="M0 84 C60 70 90 100 150 88 S240 60 300 70" stroke="#d3e4c6" stroke-width="26" fill="none"/><path d="M0 30 H300" stroke="#fff" stroke-width="5"/><path d="M190 0 L170 118" stroke="#fff" stroke-width="5"/><path d="M40 98 C70 80 90 84 112 66 S150 34 182 40 230 22 252 18" stroke="#6c3ce0" stroke-width="4" fill="none" stroke-linecap="round"/><circle cx="40" cy="98" r="5" fill="#2a9d3f" stroke="#fff" stroke-width="2"/><circle cx="252" cy="18" r="5" fill="#242428" stroke="#fff" stroke-width="2"/></svg><span class="tag">In 5 days · 8.5 km</span><button class="info" aria-expanded="false" aria-label="Details, with Hana"><span class="ava" data-who="hana"></span></button><div class="details">Led by Hana Okafor. 8.5 km, easy to moderate. Bring water and a headlamp. Coffee at Shek O after.</div></div>
+          <div class="body"><span class="d ttl">Dragon's Back Sunrise Hike</span><p class="meta">Sun 11 Oct · 6:15am · To Tei Wan</p>
+            <div class="row"><div class="people"><span class="avs"><span class="ava" data-who="jasmine"></span><span class="ava" data-who="priya"></span><span class="ava" data-who="hana"></span></span><span class="who">You, Priya + 21</span></div><span class="going">Going ✓</span></div></div>
+        </div>
+        <div class="ticket">
+          <div class="photo map" role="img" aria-label="Route: Harbourfront 5K"><svg viewBox="0 0 300 118" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="300" height="118" fill="#eef0ea"/><rect y="74" width="300" height="44" fill="#cfe2f0"/><path d="M0 26 H300M80 0 V74M210 0 V74" stroke="#fff" stroke-width="5"/><path d="M40 66 C90 70 150 72 210 66 S270 54 266 46 C260 38 236 42 214 50 S110 62 60 58 Z" stroke="#6c3ce0" stroke-width="4" fill="none" stroke-linejoin="round"/><circle cx="40" cy="66" r="5" fill="#2a9d3f" stroke="#fff" stroke-width="2"/></svg><span class="tag">In 8 days · 5.0 km</span><button class="info" aria-expanded="false" aria-label="Details, with Hana"><span class="ava" data-who="hana"></span></button><div class="details">Hosted by Hana Okafor. New start: Star Ferry clock tower (look for the pink flag). 6:30 and 5:30/km pace groups. Bag drop available.</div></div>
+          <div class="body"><span class="d ttl">Harbourfront 5K Run Club</span><p class="meta">Wed 14 Oct · 7:30pm · Tsim Sha Tsui</p>
+            <div class="row"><div class="people"><span class="avs"><span class="ava" data-who="jasmine"></span><span class="ava" data-who="aisha"></span><span class="ava" data-seed="24"></span></span><span class="who">You, Aisha + 29</span></div><span class="going">Going ✓</span></div></div>
+        </div>
+        </div>
+
+      </section>
+
+      <section class="sec" aria-labelledby="h-coming">
+        <h2 class="sec-head" id="h-coming"><span class="ic"><svg viewBox="0 0 24 24"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/></svg></span><span class="d">Coming up</span><span class="count">3</span><a href="#">All events</a></h2>
+        <div class="psst" id="psst" role="region" aria-label="Your friends are going">
+          <span class="d kick">Psst, your friends are going →</span>
+          <div class="row2">
+            <span class="faces"><span class="ava" data-who="chloe"></span><span class="ava" data-who="kiko"></span></span>
+            <div><b>Chloe and Kiko are going to Barbell Basics</b><small>Sat 10 · 8am · Kwun Tong · <span class="hot">only 2 spots left</span></small></div>
+          </div>
+          <div class="btns"><button class="yes" id="psst-yes">Join them · HK$180</button><button class="no" id="psst-no">It's okay</button></div>
+        </div>
+
+        <div class="ev" id="ev-barbell">
+          <div class="photo" data-scene="gym" data-people="6" data-seed="3" data-tone="color" data-alt="Barbell session at Iron Harbour"><span class="tag hot">Only 2 spots left</span><button class="info" aria-expanded="false" aria-label="Details, with Mei-Ling"><span class="ava" data-who="meiling"></span></button><div class="details">Squat and deadlift with Coach Mei-Ling Ho: set-up, bracing and safe bailing. No experience needed.</div></div>
+          <div class="body"><span class="d ttl">Barbell Basics</span><p class="meta">Sat 10 Oct · 8:00am · Kwun Tong</p>
+            <div class="row"><div class="people"><span class="avs"><span class="ava" data-who="chloe"></span><span class="ava" data-who="kiko"></span><span class="ava" data-seed="33"></span></span><span class="who">Chloe, Kiko + 12</span></div><span class="price">HK$180</span><button class="join">Join</button></div></div>
+        </div>
+        <div class="ev">
+          <div class="photo" data-scene="studio" data-people="5" data-seed="9" data-tone="color" data-alt="Boxing workshop in the studio"><span class="tag">3 first-timers</span><button class="info" aria-expanded="false" aria-label="Details, with Jess"><span class="ava" data-who="jess"></span></button><div class="details">With Coach Jess Albano at Left Hook Studio. Stance, jab-cross, footwork and pad work. Gloves and wraps provided.</div></div>
+          <div class="body"><span class="d ttl">Boxing Fundamentals</span><p class="meta">Sat 17 Oct · 10:00am · Sheung Wan</p>
+            <div class="row"><div class="people"><span class="avs"><span class="ava" data-who="mandy"></span><span class="ava" data-seed="52"></span><span class="ava" data-seed="54"></span></span><span class="who">Mandy + 8</span></div><span class="price">HK$250</span><button class="join">Join</button></div></div>
+        </div>
+        <div class="ev">
+          <div class="photo" data-scene="beach" data-people="6" data-seed="5" data-tone="color" data-alt="Paddleboarding at Sai Kung"><span class="tag">Brunch included</span><button class="info" aria-expanded="false" aria-label="Details, with Tash"><span class="ava" data-seed="47"></span></button><div class="details">With instructor Tash Wong. Two hours on the water with an instructor, then brunch by the harbour. Board hire included. You must be able to swim.</div></div>
+          <div class="body"><span class="d ttl">Paddle &amp; Brunch</span><p class="meta">Sun 25 Oct · 9:00am · Sai Kung</p>
+            <div class="row"><div class="people"><span class="avs"><span class="ava" data-who="sara"></span><span class="ava" data-seed="62"></span><span class="ava" data-seed="64"></span></span><span class="who">Sara + 5</span></div><span class="price">HK$420</span><button class="join">Join</button></div></div>
+        </div>
+      </section>
+
+      <section class="sec tint" aria-labelledby="h-community">
+        <h2 class="sec-head" id="h-community"><span class="ic"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 9.5h8M8 12.5h5"/></svg></span><span class="d">From the community</span><a href="#">See all</a></h2>
+        <div id="feed" aria-live="polite"></div>
+      </section>
+    </main>
+
+
+    <nav class="tabs" aria-label="Main">
+      <a class="on" href="#" aria-current="page"><span class="ic"><svg viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V20h5v-6h4v6h5V9.5"/></svg></span>Home</a>
+      <a href="#"><span class="ic"><svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/><path d="M8.5 14.5h3"/></svg></span>Events</a>
+      <a href="#"><span class="ic badge"><svg viewBox="0 0 24 24"><circle cx="9" cy="8.5" r="3.2"/><path d="M3 19.5c.6-3.2 3-5 6-5s5.4 1.8 6 5"/><circle cx="17" cy="9.5" r="2.5"/><path d="M15.8 14.6c2.6.1 4.6 1.8 5.2 4.9"/></svg></span>Community</a>
+      <a href="#"><span class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4.5 20.5c.8-4 3.7-6 7.5-6s6.7 2 7.5 6"/></svg></span>Profile</a>
+    </nav>
+  </div>
+  <div class="toast" id="toast" role="status"></div>
+
+  <script>
+    // Illustrated "photos": groups of women at GLG sessions, drawn as SVG so no real photos are used.
+    // <div class="photo" data-scene="gym|harbour|trail|beach|studio" data-people="6" data-seed="3" data-tone="duo|color"></div>
+    const Photo = (() => {
+      const SKIN = ["#f3d2b8", "#e8b48f", "#c98e66", "#a26a44", "#7a4a2c", "#5a3520"];
+      const HAIR = ["#1b1210", "#3a2418", "#6b4226", "#b07a3f", "#2a1a2e", "#1b1210"];
+      const TOPS = ["#7b4fe0", "#ff7aa8", "#ffffff", "#24202e", "#ffd23f", "#5fd0c0", "#b9a3ff", "#ff8a5c"];
+      const BOTS = ["#1d1d24", "#3a3350", "#4a1fb8", "#2b2b33", "#5b4a7a"];
+      let uid = 0;
+      const rng = seed => () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+      const pick = (r, a) => a[Math.floor(r() * a.length)];
+
+      function person(r, x, y, s) {
+        const skin = pick(r, SKIN), hair = pick(r, HAIR), top = pick(r, TOPS), bot = pick(r, BOTS);
+        const hr = 11 * s, hy = y - 118 * s + hr, sh = hy + hr + 5 * s, hip = sh + 40 * s;
+        const p = r(), pose = p < .28 ? "up" : p < .55 ? "hug" : p < .66 ? "flex" : "down";
+        const aw = 7 * s, st = `stroke="${skin}" stroke-width="${aw}" stroke-linecap="round" fill="none"`;
+        let g = "";
+        const style = Math.floor(r() * 4);
+        if (style === 2) g += `<path d="M${x - hr} ${hy} Q${x - hr * 1.3} ${sh + 14 * s} ${x - hr * .4} ${sh + 16 * s} L${x + hr * .4} ${sh + 16 * s} Q${x + hr * 1.3} ${sh + 14 * s} ${x + hr} ${hy}Z" fill="${hair}"/>`;
+        if (style === 1) g += `<ellipse cx="${x + hr * .9}" cy="${hy + hr * .6}" rx="${hr * .45}" ry="${hr * 1.1}" fill="${hair}" transform="rotate(-20 ${x + hr} ${hy})"/>`;
+        g += `<path d="M${x - 7 * s} ${hip} L${x - 10 * s} ${y + 4 * s} M${x + 7 * s} ${hip} L${x + 10 * s} ${y + 4 * s}" stroke="${bot}" stroke-width="${11 * s}" stroke-linecap="round"/>`;
+        if (pose === "up") g += `<path d="M${x - 11 * s} ${sh + 3 * s} L${x - 24 * s} ${hy - 26 * s} M${x + 11 * s} ${sh + 3 * s} L${x + 24 * s} ${hy - 26 * s}" ${st}/>`;
+        else if (pose === "hug") g += `<path d="M${x - 11 * s} ${sh + 3 * s} L${x - 15 * s} ${hip} M${x + 11 * s} ${sh + 3 * s} L${x + 34 * s} ${sh + 8 * s}" ${st}/>`;
+        else if (pose === "flex") g += `<path d="M${x - 11 * s} ${sh + 3 * s} L${x - 28 * s} ${sh + 4 * s} L${x - 28 * s} ${sh - 16 * s} M${x + 11 * s} ${sh + 3 * s} L${x + 15 * s} ${hip}" ${st}/>`;
+        else g += `<path d="M${x - 11 * s} ${sh + 3 * s} L${x - 15 * s} ${hip + 4 * s} M${x + 11 * s} ${sh + 3 * s} L${x + 15 * s} ${hip + 4 * s}" ${st}/>`;
+        g += `<rect x="${x - 14 * s}" y="${sh - 3 * s}" width="${28 * s}" height="${hip - sh + 8 * s}" rx="${10 * s}" fill="${top}"/>`;
+        g += `<rect x="${x - 3.5 * s}" y="${hy + hr - 2 * s}" width="${7 * s}" height="${8 * s}" fill="${skin}"/>`;
+        g += `<circle cx="${x}" cy="${hy}" r="${hr}" fill="${skin}"/>`;
+        g += `<path d="M${x - hr} ${hy + 1 * s} A${hr} ${hr} 0 0 1 ${x + hr} ${hy + 1 * s} Q${x} ${hy - hr * .35} ${x - hr} ${hy + 1 * s}Z" fill="${hair}"/>`;
+        if (style === 0) g += `<circle cx="${x}" cy="${hy - hr * 1.05}" r="${hr * .5}" fill="${hair}"/>`;
+        if (r() < .5) g += `<path d="M${x - 4 * s} ${hy + 4 * s} Q${x} ${hy + 7 * s} ${x + 4 * s} ${hy + 4 * s}" stroke="#3a1f1a" stroke-width="${1.4 * s}" fill="none" stroke-linecap="round"/>`;
+        return g;
+      }
+
+      function scene(type, r, W, H) {
+        const hz = H * .62;
+        switch (type) {
+          case "harbour": return `<defs><linearGradient id="sk${uid}" x2="0" y2="1"><stop offset="0" stop-color="#3b2a6b"/><stop offset=".6" stop-color="#f2785c"/><stop offset="1" stop-color="#ffc48a"/></linearGradient></defs>
+            <rect width="${W}" height="${H}" fill="url(#sk${uid})"/><circle cx="${W * .72}" cy="${hz - 30}" r="26" fill="#ffe0a8"/>
+            ${Array.from({ length: 16 }, (_, i) => { const w = 14 + r() * 22, h = 30 + r() * 90; return `<rect x="${i * W / 15 - 6}" y="${hz - h}" width="${w}" height="${h + 2}" fill="#1e1a33"/>`; }).join("")}
+            <rect y="${hz}" width="${W}" height="${H - hz}" fill="#2c3f6b"/>`;
+          case "trail": return `<defs><linearGradient id="sk${uid}" x2="0" y2="1"><stop offset="0" stop-color="#ffb37a"/><stop offset="1" stop-color="#ffe6c2"/></linearGradient></defs>
+            <rect width="${W}" height="${H}" fill="url(#sk${uid})"/><circle cx="${W * .3}" cy="${hz - 40}" r="30" fill="#fff3d6"/>
+            <path d="M0 ${hz - 30} Q${W * .25} ${hz - 90} ${W * .5} ${hz - 40} T${W} ${hz - 60} V${H} H0Z" fill="#8a9a6a"/>
+            <path d="M0 ${hz} Q${W * .3} ${hz - 40} ${W * .6} ${hz - 6} T${W} ${hz - 20} V${H} H0Z" fill="#5d7a48"/>
+            <path d="M${W * .45} ${H} Q${W * .5} ${hz + 20} ${W * .62} ${hz}" stroke="#d9c49a" stroke-width="18" fill="none"/>`;
+          case "beach": return `<defs><linearGradient id="sk${uid}" x2="0" y2="1"><stop offset="0" stop-color="#9fd8ff"/><stop offset="1" stop-color="#ffe3f0"/></linearGradient></defs>
+            <rect width="${W}" height="${H}" fill="url(#sk${uid})"/><circle cx="${W * .8}" cy="${hz - 60}" r="24" fill="#fff6c9"/>
+            <rect y="${hz - 30}" width="${W}" height="40" fill="#3aa0d8"/><rect y="${hz + 8}" width="${W}" height="${H}" fill="#f2dcb3"/>
+            <rect x="${W * .05}" y="${hz + 30}" width="120" height="16" rx="8" fill="#ff8fb8" transform="rotate(-6 ${W * .1} ${hz})"/>`;
+          case "studio": return `<rect width="${W}" height="${H}" fill="#efe7f7"/>
+            ${[0.1, 0.4, 0.7].map(f => `<rect x="${W * f}" y="${H * .08}" width="${W * .22}" height="${H * .4}" fill="#fffaf0"/><rect x="${W * f + W * .105}" y="${H * .08}" width="5" height="${H * .4}" fill="#dccdea"/>`).join("")}
+            <rect y="${hz + 6}" width="${W}" height="${H}" fill="#c9a77f"/>
+            ${[0, 1, 2, 3].map(i => `<rect x="${i * W / 4 + 8}" y="${hz + 40}" width="${W / 4 - 18}" height="22" rx="4" fill="${["#b9a3ff", "#ff9ec4", "#7bd3c4", "#ffd88a"][i]}"/>`).join("")}`;
+          default: return `<defs><radialGradient id="sk${uid}" cx=".5" cy="0" r="1"><stop offset="0" stop-color="#6b6b78"/><stop offset="1" stop-color="#18181c"/></radialGradient></defs>
+            <rect width="${W}" height="${H}" fill="url(#sk${uid})"/>
+            <rect x="${W * .06}" y="${H * .12}" width="8" height="${hz - H * .12}" fill="#444"/><rect x="${W * .3}" y="${H * .12}" width="8" height="${hz - H * .12}" fill="#444"/>
+            <rect x="${W * .04}" y="${H * .3}" width="${W * .3}" height="6" fill="#999"/>
+            ${[0, 1, 2, 3].map(i => `<circle cx="${W * .62 + i * 34}" cy="${H * .3}" r="${18 - i * 2}" fill="none" stroke="#7a1fe0" stroke-width="8"/>`).join("")}
+            <rect y="${hz}" width="${W}" height="${H}" fill="#2a2a30"/>`;
+        }
+      }
+
+      function hex(c) { return [1, 3, 5].map(i => (parseInt(c.slice(i, i + 2), 16) / 255).toFixed(3)); }
+
+      function draw(el) {
+        uid++;
+        const W = 400, H = 300, r = rng(+el.dataset.seed || 1), n = +el.dataset.people || 5;
+        const [d, l] = (el.dataset.duo || "#2a0f6b,#e6d9ff").split(",").map(hex);
+        let people = "";
+        const back = el.dataset.portrait ? 0 : Math.ceil(n / 2), front = el.dataset.portrait ? 0 : n - back;
+        if (el.dataset.portrait) people = person(r, W / 2, H * 2.4, 5.5);
+        for (let i = 0; i < back; i++) people += person(r, (i + .5) * W / back + (r() - .5) * 14, H * .98, 1.2);
+        for (let i = 0; i < front; i++) people += person(r, (i + .5) * W / front + (r() - .5) * 14 + W / back / 2 * (front < back ? 1 : .5) - (front < back ? 0 : 10), H * 1.28, 1.55);
+        const duo = el.dataset.tone !== "color";
+        el.insertAdjacentHTML("afterbegin", `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMax slice" role="img" aria-label="${el.dataset.alt || "GLG members together"}">
+          <defs>
+            <filter id="duo${uid}" color-interpolation-filters="sRGB"><feColorMatrix type="saturate" values="0"/><feComponentTransfer>
+              <feFuncR type="table" tableValues="${d[0]} ${l[0]}"/><feFuncG type="table" tableValues="${d[1]} ${l[1]}"/><feFuncB type="table" tableValues="${d[2]} ${l[2]}"/></feComponentTransfer></filter>
+            <filter id="gr${uid}"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
+          </defs>
+          <g ${duo ? `filter="url(#duo${uid})"` : ""}>${scene(el.dataset.scene, r, W, H)}${people}</g>
+          <rect width="${W}" height="${H}" filter="url(#gr${uid})" opacity=".09"/>
+        </svg>`);
+      }
+      return { drawAll: (root = document) => root.querySelectorAll(".photo[data-scene]").forEach(draw), draw };
+    })();
+    Photo.drawAll();
+    // Illustrated avatars (fictional members, no photos). <span class="ava" data-who="chloe"></span>
+    const Avatar = (() => {
+      const SKIN = ["#f3d2b8", "#e8b48f", "#c98e66", "#a26a44", "#7a4a2c", "#5a3520"];
+      const HAIR = ["#1b1210", "#3a2418", "#6b4226", "#b07a3f", "#2a1a2e", "#8a3a2a"];
+      const BG = ["#e9e1ff", "#ffd9e8", "#d9ecff", "#dff5ea", "#fff0c9", "#efe2ff", "#ffe2d1"];
+      const TOP = ["#4a1fb8", "#7b4fe0", "#ff7aa8", "#24104f", "#5fd0c0", "#ffb44d", "#ffffff"];
+      // Fixed looks for named members so they stay recognisable across the page: [skin, hair, style, bg, top]
+      const PEOPLE = {
+        jasmine: [1, 0, "bun", 0, 0], priya: [3, 0, "long", 3, 4], chloe: [0, 1, "pony", 1, 1], hana: [5, 0, "curly", 4, 3],
+        meiling: [1, 0, "bob", 2, 2], aisha: [4, 0, "curly", 1, 5], mandy: [0, 2, "long", 6, 0], kiko: [1, 0, "bob", 5, 2],
+        sara: [3, 0, "pony", 2, 1], jess: [2, 3, "short", 0, 3]
+      };
+      const STYLES = ["bun", "long", "pony", "curly", "bob", "short"];
+      const rng = seed => () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+
+      function svg(look) {
+        const [si, hi, style, bi, ti] = look, skin = SKIN[si], hair = HAIR[hi], bg = BG[bi], top = TOP[ti];
+        let back = "", front = "";
+        if (style === "long") back = `<path d="M17 30 Q16 54 22 58 H42 Q48 54 47 30 Q47 12 32 12 Q17 12 17 30Z" fill="${hair}"/>`;
+        if (style === "bob") back = `<path d="M17 30 Q16 46 20 47 H44 Q48 46 47 30 Q47 13 32 13 Q17 13 17 30Z" fill="${hair}"/>`;
+        if (style === "curly") back = [[18, 24], [22, 16], [30, 12], [38, 13], [45, 19], [47, 28], [16, 33], [48, 36], [18, 41], [46, 43]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="7" fill="${hair}"/>`).join("");
+        if (style === "pony") back = `<ellipse cx="48" cy="34" rx="5" ry="11" fill="${hair}" transform="rotate(-18 48 34)"/>`;
+        if (style === "bun") front = `<circle cx="32" cy="11" r="6.5" fill="${hair}"/>`;
+        const fringe = style === "short"
+          ? `<path d="M19 28 Q19 14 32 14 Q45 14 45 28 Q40 20 32 21 Q24 21 19 28Z" fill="${hair}"/>`
+          : `<path d="M19 30 Q18 14 32 14 Q46 14 45 30 Q42 21 34 20 Q27 23 19 30Z" fill="${hair}"/>`;
+        return `<svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="32" fill="${bg}"/>${back}
+          <path d="M8 66 Q10 49 32 49 Q54 49 56 66Z" fill="${top}"/><rect x="28" y="40" width="8" height="10" fill="${skin}"/>
+          <ellipse cx="32" cy="31" rx="13" ry="14.5" fill="${skin}"/>${fringe}${front}
+          <ellipse cx="27" cy="32" rx="1.6" ry="2" fill="#2a1a1a"/><ellipse cx="37" cy="32" rx="1.6" ry="2" fill="#2a1a1a"/>
+          <circle cx="24" cy="37" r="2.4" fill="#ff8fb0" opacity=".35"/><circle cx="40" cy="37" r="2.4" fill="#ff8fb0" opacity=".35"/>
+          <path d="M28.5 38.5 Q32 41.5 35.5 38.5" stroke="#5a2a2a" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>`;
+      }
+      function lookFor(el) {
+        if (PEOPLE[el.dataset.who]) return PEOPLE[el.dataset.who];
+        const r = rng(+el.dataset.seed || 7);
+        return [Math.floor(r() * 6), Math.floor(r() * 6), STYLES[Math.floor(r() * 6)], Math.floor(r() * 7), Math.floor(r() * 7)];
+      }
+      const draw = el => { el.innerHTML = svg(lookFor(el)); };
+      return { draw, drawAll: (root = document) => root.querySelectorAll(".ava").forEach(draw), svgFor: who => svg(PEOPLE[who]) };
+    })();
+    Avatar.drawAll();
+
+    // Member card flips to a check-in QR code (decorative pattern for the prototype, not a real code).
+    (function qr() {
+      const N = 25, r = (seed => () => (seed = (seed * 16807) % 2147483647) / 2147483647)(412);
+      const finder = (x, y) => `<rect x="${x}" y="${y}" width="7" height="7" rx="1.6" fill="#24104f"/><rect x="${x + 1}" y="${y + 1}" width="5" height="5" rx="1.1" fill="#fff"/><rect x="${x + 2}" y="${y + 2}" width="3" height="3" rx=".8" fill="#4a1fb8"/>`;
+      const inFinder = (x, y) => (x < 8 && y < 8) || (x > N - 9 && y < 8) || (x < 8 && y > N - 9);
+      const inLogo = (x, y) => x > 8 && x < 16 && y > 8 && y < 16;
+      let cells = "";
+      for (let y = 0; y < N; y++) for (let x = 0; x < N; x++) {
+        if (inFinder(x, y) || inLogo(x, y)) continue;
+        const on = (x === 6 || y === 6) ? (x + y) % 2 === 0 : r() > .52;
+        if (on) cells += `<rect x="${x + .08}" y="${y + .08}" width=".84" height=".84" rx=".25" fill="#24104f"/>`;
+      }
+      document.getElementById("qr").innerHTML = `<svg viewBox="0 0 ${N} ${N}" role="img" aria-label="Check-in QR code">${cells}${finder(0, 0)}${finder(N - 7, 0)}${finder(0, N - 7)}
+        <rect x="9.3" y="9.3" width="6.4" height="6.4" rx="1.6" fill="#4a1fb8"/><text x="12.5" y="13.6" text-anchor="middle" font-family="Arial" font-weight="700" font-size="2.5" fill="#fff">GLG</text></svg>`;
+    })();
+    const flip = document.getElementById("flip");
+    function toggleFlip() { const on = !flip.classList.contains("on"); flip.classList.toggle("on", on); flip.setAttribute("aria-pressed", on); flip.querySelector(".back").setAttribute("aria-hidden", !on); flip.querySelector(".front").setAttribute("aria-hidden", on); }
+    flip.addEventListener("click", toggleFlip);
+    flip.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggleFlip(); } });
+
+    document.querySelectorAll(".info").forEach(b => b.addEventListener("click", e => {
+      e.stopPropagation();
+      const d = b.nextElementSibling, open = !d.classList.contains("open");
+      d.classList.toggle("open", open); b.setAttribute("aria-expanded", open);
+    }));
+    const toast = document.getElementById("toast");
+    function say(msg) { toast.textContent = msg; toast.classList.add("show"); clearTimeout(say.t); say.t = setTimeout(() => toast.classList.remove("show"), 2400); }
+
+    // Psst: join friends, or dismiss. Kept in sync with the Barbell card under "coming up".
+    const psst = document.getElementById("psst"), barbellJoin = document.querySelector("#ev-barbell .join");
+    function markJoined(b) {
+      b.textContent = "You're going ✓"; b.classList.add("done"); b.disabled = true;
+      const ppl = b.closest(".ev")?.querySelector(".people");
+      if (ppl && !ppl.dataset.me) {
+        ppl.dataset.me = "1";
+        const avs = ppl.querySelector(".avs");
+        avs.lastElementChild.remove();
+        avs.insertAdjacentHTML("afterbegin", '<span class="ava" data-who="jasmine"></span>');
+        Avatar.drawAll(avs);
+        const who = ppl.querySelector(".who"); who.textContent = "You, " + who.textContent;
+      }
+    }
+    document.getElementById("psst-yes").addEventListener("click", e => {
+      psst.classList.add("joined");
+      e.currentTarget.textContent = "You're in with Chloe & Kiko ✓"; e.currentTarget.disabled = true;
+      document.getElementById("psst-no").remove();
+      markJoined(barbellJoin);
+      say("You're in! Chloe and Kiko will see you there 💜");
+      setTimeout(() => psst.classList.add("gone"), 2200);
+    });
+    document.getElementById("psst-no").addEventListener("click", () => psst.classList.add("gone"));
+    document.querySelectorAll(".join").forEach(b => b.addEventListener("click", () => {
+      markJoined(b);
+      if (b === barbellJoin) psst.classList.add("gone");
+      say("You're in! We've saved your spot. See you there 💪");
+    }));
+
+    const LOWER = false;
+    // From the community: a small snippet of the 3 most recent items (filters live on the Community tab).
+    // Posts and announcements can be hearted and commented on; challenges are community challenges you can join.
+    const tx = s => LOWER ? s.toLowerCase() : s;
+    const feedItems = [
+      { type: "posts", age: 14, when: "Yesterday", who: "priya", name: "Priya Raman", title: "Taxi to Dragon's Back?", text: "Splitting a taxi to To Tei Wan on Sunday, 5:40am from Quarry Bay. You're on this hike too 🚕", photo: { scene: "trail", people: 4, seed: 35 }, hearts: 5, comments: 6, sample: [{ who: "hana", name: "Hana", text: "Save me a seat!" }] },
+      { type: "announcements", age: 20, when: "Yesterday", seed: 90, name: "GLG HQ", title: "Global Lift Day · Sat 7 Nov", text: "All seven chapters lift at the same hour for the first time. Hong Kong lifts at 5pm at Iron Harbour.", photo: { scene: "gym", people: 8, seed: 77 }, hearts: 112, comments: 23, sample: [{ who: "meiling", name: "Mei-Ling", text: "HK is going to be loud 💜" }] },
+      { type: "challenges", age: 22, when: "Yesterday", who: "hana", name: "Sunrise Club", title: "October Sunrise Club: 4 sunrises", text: "Hike, run or stretch at sunrise with the chapter. Sunday's Dragon's Back would count as your first.", photo: { scene: "trail", people: 6, seed: 44 }, members: 38, joined: false },
+      { type: "posts", age: 40, when: "2 days ago", who: "kiko", name: "Kiko Sato", title: "Hi everyone 👋", text: "Just joined with Mandy and Sara. Barbell Basics on Saturday is my first ever session!", photo: { scene: "studio", people: 3, seed: 40 }, hearts: 18, comments: 5, sample: [{ who: "chloe", name: "Chloe", text: "See you Saturday!" }] },
+      { type: "announcements", age: 48, when: "2 days ago", who: "hana", name: "Hana Okafor", title: "Run club has a new start line", text: "From Wednesday we meet at the Star Ferry clock tower. Same time, 7:30pm. Look for the pink flag!", photo: { scene: "harbour", people: 6, seed: 8 }, hearts: 27, comments: 4, sample: [{ who: "aisha", name: "Aisha", text: "Pink flag gang 🚩" }] },
+      { type: "posts", age: 72, when: "Saturday", who: "chloe", name: "Chloe Ng", title: "100 kg deadlift. New PR 🔥", text: "Two years ago I couldn't lift the empty bar. Thank you, Mei-Ling and the Saturday crew.", photo: { scene: "gym", people: 5, seed: 21 }, hearts: 34, comments: 9, sample: [{ who: "meiling", name: "Mei-Ling", text: "So proud of you." }] },
+      { type: "challenges", age: 120, when: "5 days ago", who: "meiling", name: "Lift a Million", title: "412,000 / 1,000,000 kg", text: "Hit a million by 31 Oct and HK$5,000 goes to a local women's shelter.", progress: 41, members: 164, joined: true, mine: "2,140 kg" }
+    ];
+    const kindLabel = { posts: "Post", challenges: "Challenge", announcements: "Announcement" };
+    const avaFor = i => `<span class="ava" ${i.who ? `data-who="${i.who}"` : `data-seed="${i.seed}"`}></span>`;
+    function footFor(i) {
+      if (i.type === "challenges") {
+        const status = i.joined ? (i.mine ? `You're in · ${i.mine}` : "You're in ✓") : "Join challenge";
+        return `${i.progress ? `<div class="pbar"><i style="width:${i.progress}%"></i></div>` : ""}
+          <div class="chrow"><button class="act join-ch${i.joined ? " done" : ""}"${i.joined ? " disabled" : ""}>${tx(status)}</button><span class="members">${i.members} ${tx("members in")}</span></div>`;
+      }
+      return `<div class="react"><button class="heart" aria-pressed="false" aria-label="Heart">♡ <span>${i.hearts}</span></button><button class="cmt" aria-expanded="false" aria-label="Comments">💬 <span>${i.comments}</span></button></div>
+        <div class="comments" hidden>
+          ${i.sample.map(c => `<div class="c">${avaFor(c)}<p><b>${tx(c.name)}</b> ${tx(c.text)}</p></div>`).join("")}
+          ${i.comments > i.sample.length ? `<a class="all" href="#">${tx(`View all ${i.comments} comments`)}</a>` : ""}
+          <form class="add"><span class="ava" data-who="jasmine"></span><input type="text" placeholder="${tx("Add a comment…")}" aria-label="Add a comment"><button>${tx("Post")}</button></form>
+        </div>`;
+    }
+    (function renderFeed() {
+      const list = feedItems.slice().sort((a, b) => a.age - b.age).slice(0, 3);
+      const feed = document.getElementById("feed");
+      feed.innerHTML = list.map(i => `<article class="post">
+        <div class="head">${avaFor(i)}<b>${tx(i.name)}</b><small>· ${tx(i.when)}</small><span class="kind ${i.type}">${tx(kindLabel[i.type])}</span></div>
+        <div class="main">
+          <div class="pb"><span class="t">${tx(i.title)}</span><p>${tx(i.text)}</p></div>
+          ${i.photo ? `<div class="photo" data-scene="${i.photo.scene}" data-people="${i.photo.people}" data-seed="${i.photo.seed}" data-tone="color"></div>` : ""}
+        </div>
+        ${footFor(i)}
+      </article>`).join("");
+      feed.querySelectorAll(".photo").forEach(Photo.draw);
+      Avatar.drawAll(feed);
+
+      feed.querySelectorAll(".post").forEach((post, n) => {
+        const i = list[n];
+        const heart = post.querySelector(".heart");
+        heart?.addEventListener("click", () => {
+          const on = heart.getAttribute("aria-pressed") !== "true";
+          heart.setAttribute("aria-pressed", on);
+          heart.innerHTML = `${on ? "♥" : "♡"} <span>${i.hearts + (on ? 1 : 0)}</span>`;
+        });
+        const cmt = post.querySelector(".cmt"), box = post.querySelector(".comments");
+        cmt?.addEventListener("click", () => {
+          const open = box.hidden; box.hidden = !open; cmt.setAttribute("aria-expanded", open);
+          if (open) box.querySelector("input").focus();
+        });
+        post.querySelector(".add")?.addEventListener("submit", e => {
+          e.preventDefault();
+          const input = e.currentTarget.querySelector("input"), text = input.value.trim();
+          if (!text) return;
+          const div = document.createElement("div");
+          div.className = "c";
+          div.innerHTML = `<span class="ava" data-who="jasmine"></span><p><b>${tx("Jasmine")}</b> </p>`;
+          div.querySelector("p").append(text);
+          e.currentTarget.before(div); Avatar.drawAll(div);
+          input.value = "";
+          cmt.querySelector("span").textContent = ++i.comments;
+        });
+        post.querySelector(".join-ch:not([disabled])")?.addEventListener("click", e => {
+          const b = e.currentTarget;
+          b.textContent = tx("You're in ✓"); b.classList.add("done"); b.disabled = true;
+          post.querySelector(".members").textContent = `${i.members + 1} ${tx("members in")}`;
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
