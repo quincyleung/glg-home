@@ -36,11 +36,10 @@
     .me { width: 36px; height: 36px; border-radius: 50%; background: #fff; color: var(--purple); display: grid; place-items: center; font-weight: 700; font-size: 12px; }
 
     /* hero */
-    .hero { height: 330px; }
+    .hero { height: 232px; }
     .hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(36,16,79,.35) 0%, transparent 30%, transparent 45%, rgba(36,16,79,.88) 100%); }
-    .hero .txt { position: absolute; left: 18px; right: 18px; bottom: 52px; z-index: 2; color: #fff; }
-    .hero .k { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; opacity: .85; }
-    .hero h1 { font-size: 42px; line-height: 1; margin: 4px 0 0; white-space: nowrap; }
+    .hero .txt { position: absolute; left: 18px; right: 18px; bottom: 46px; z-index: 2; color: #fff; }
+    .hero h1 { font-size: 42px; line-height: 1; margin: 0; white-space: nowrap; }
 
     main { padding: 0 16px 24px; }
 
@@ -50,20 +49,21 @@
     .flip:focus-visible { box-shadow: 0 0 0 3px var(--pink); }
     .flip.on { transform: rotateY(180deg); }
     .face { -webkit-backface-visibility: hidden; backface-visibility: hidden; border-radius: 22px; padding: 16px; }
-    .front { background: linear-gradient(135deg, #5a2ad0, var(--purple) 45%, var(--deep)); color: #fff; box-shadow: 0 14px 34px rgba(40,10,90,.3); }
-    .front .row { display: flex; justify-content: space-between; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--lav2); }
-    .front .name { font-size: 28px; line-height: 1; margin: 10px 0 12px; display: block; }
-    .front .st { display: flex; align-items: baseline; justify-content: space-between; }
-    .front .st .d { font-size: 17px; }
-    .front .st small { font-size: 12px; color: var(--lav2); }
-    .week { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; margin: 8px 0 12px; text-align: center; font-size: 10px; color: var(--lav2); font-weight: 700; }
-    .week i { display: grid; place-items: center; height: 30px; border-radius: 9px; background: rgba(255,255,255,.12); margin-bottom: 3px; font-style: normal; font-size: 12px; color: #fff; }
-    .week i.done { background: #fff; color: var(--purple); }
-    .week i.plan { background: transparent; box-shadow: inset 0 0 0 1.5px var(--lav2); color: var(--lav2); }
+    .front { color: var(--ink); background: linear-gradient(115deg, #e9ddff 0%, #ffd9ec 30%, #d9ecff 55%, #e6fff4 75%, #e9ddff 100%); background-size: 220% 220%; animation: holo 9s ease-in-out infinite alternate; box-shadow: inset 0 0 0 1px rgba(255,255,255,.7), 0 14px 34px rgba(74,31,184,.18); }
+    @keyframes holo { to { background-position: 100% 100%; } }
+    .front .row { display: flex; justify-content: space-between; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+    .front .name { font-size: 28px; line-height: 1; margin: 12px 0 12px; display: block; color: var(--deep); }
+    .streak { display: flex; align-items: center; gap: 14px; }
+    .ring { width: 62px; height: 62px; border-radius: 50%; flex: none; display: grid; place-items: center; background: conic-gradient(var(--purple) 0 75%, rgba(255,255,255,.75) 75% 100%); }
+    .ring b { width: 48px; height: 48px; border-radius: 50%; background: #f8f3ff; display: grid; place-items: center; font: 700 15px/1 var(--display); text-transform: uppercase; text-align: center; color: var(--purple); }
+    .week { flex: 1; display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; text-align: center; font: 700 10px var(--display); text-transform: uppercase; color: var(--muted); }
+    .week i { display: grid; place-items: center; aspect-ratio: 1; border-radius: 8px; background: rgba(255,255,255,.75); margin-bottom: 3px; font-style: normal; font-size: 11px; color: var(--purple); }
+    .week i.done { background: var(--purple); color: #fff; }
+    .week i.plan { background: #fff; box-shadow: inset 0 0 0 1.5px var(--purple); }
     .week i.today { box-shadow: inset 0 0 0 2px var(--pink); }
-    .nums { display: flex; align-items: flex-end; gap: 22px; border-top: 1px solid rgba(255,255,255,.18); padding-top: 10px; font-size: 12px; color: var(--lav2); }
-    .nums b { display: block; font: 700 22px var(--display); color: #fff; }
-    .hint { margin-left: auto; font: 700 11px var(--display); text-transform: uppercase; letter-spacing: .08em; color: #fff; }
+    .nums { display: flex; align-items: flex-end; gap: 22px; margin-top: 14px; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+    .nums b { display: block; font: 700 22px var(--display); color: var(--deep); letter-spacing: 0; text-transform: none; }
+    .hint { margin-left: auto; font: 700 11px var(--display); text-transform: uppercase; letter-spacing: .08em; color: var(--purple); }
     .back { position: absolute; inset: 0; transform: rotateY(180deg); background: #fff; display: flex; align-items: center; gap: 14px; box-shadow: 0 0 0 2px var(--purple), 0 14px 34px rgba(40,10,90,.2); }
     .qr { width: 136px; height: 136px; flex: none; padding: 6px; }
     .qr svg { display: block; width: 100%; height: 100%; }
@@ -166,17 +166,23 @@
     .values span { display: inline-block; font: 700 18px var(--display); text-transform: uppercase; letter-spacing: .04em; animation: run 26s linear infinite; }
     @keyframes run { to { transform: translateX(-50%); } }
 
-    .tabs { position: sticky; bottom: 0; z-index: 5; display: flex; justify-content: space-around; background: rgba(255,255,255,.95); backdrop-filter: blur(8px); border-top: 1px solid var(--line); padding: 10px 0 14px; }
-    .tabs a { color: var(--muted); text-decoration: none; font: 700 12px var(--display); text-transform: uppercase; letter-spacing: .06em; }
+    .tabs { position: sticky; bottom: 0; z-index: 5; display: grid; grid-template-columns: repeat(4, 1fr); background: rgba(255,255,255,.96); backdrop-filter: blur(12px); border-top: 1px solid var(--line); padding: 8px 8px calc(14px + env(safe-area-inset-bottom)); box-shadow: 0 -6px 20px rgba(40,10,90,.06); }
+    .tabs a { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 6px 0 2px; color: var(--muted); text-decoration: none; font: 700 11px var(--display); text-transform: uppercase; letter-spacing: .08em; }
+    .tabs .ic { display: grid; place-items: center; width: 52px; height: 32px; border-radius: 99px; transition: background .2s; }
+    .tabs svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
     .tabs a.on { color: var(--purple); }
-    .toast { position: fixed; left: 50%; bottom: 84px; transform: translate(-50%, 20px); background: var(--purple); color: #fff; padding: 12px 18px; border-radius: 14px; font-size: 14px; opacity: 0; pointer-events: none; transition: .3s; max-width: 90vw; z-index: 10; }
+    .tabs a.on .ic { background: var(--lav); }
+    .tabs a.on svg { stroke-width: 2.2; }
+    .tabs .badge { position: relative; }
+    .tabs .badge::after { content: ""; position: absolute; top: 4px; right: 12px; width: 8px; height: 8px; border-radius: 50%; background: var(--pink); border: 2px solid #fff; }
+    .toast { position: fixed; left: 50%; bottom: 100px; transform: translate(-50%, 20px); background: var(--purple); color: #fff; padding: 12px 18px; border-radius: 14px; font-size: 14px; opacity: 0; pointer-events: none; transition: .3s; max-width: 90vw; z-index: 10; }
     .toast.show { opacity: 1; transform: translate(-50%, 0); }
   </style>
 </head>
 <body>
   <div class="app">
     <header class="photo hero" data-scene="harbour" data-people="9" data-seed="14" data-duo="#1e0a52,#f3ecff" data-alt="GLG Hong Kong members together at the harbour">
-      <div class="txt"><span class="k">Tue 6 Oct · Hong Kong chapter</span><h1 class="d">Morning, Jasmine.</h1></div>
+      <div class="txt"><h1 class="d">Morning, Jasmine.</h1></div>
     </header>
     <div class="bar"><a href="../index.html">← Gallery</a><span class="d logo">Girls Lift Girls</span><span class="me" aria-label="Jasmine's profile">JT</span></div>
 
@@ -186,9 +192,11 @@
           <div class="face front">
             <div class="row"><span>Girls Lift Girls · Hong Kong</span><span>#0412</span></div>
             <span class="d name">Jasmine Tran</span>
-            <div class="st"><span class="d">🔥 3 weeks strong</span><small>This week: 2 planned</small></div>
-            <div class="week">
-              <div><i class="done">✓</i>M</div><div><i class="today"></i>T</div><div><i class="plan">5K</i>W</div><div><i></i>T</div><div><i></i>F</div><div><i></i>S</div><div><i class="plan">⛰</i>S</div>
+            <div class="streak">
+              <div class="ring"><b>3<br>wks</b></div>
+              <div class="week" aria-label="This week: Monday done, Wednesday and Sunday planned">
+                <div><i class="done">✓</i>M</div><div><i class="today"></i>T</div><div><i class="plan">5K</i>W</div><div><i></i>T</div><div><i></i>F</div><div><i></i>S</div><div><i class="plan">⛰</i>S</div>
+              </div>
             </div>
             <div class="nums"><div><b>27</b>sessions</div><div><b>34h</b>total time</div><span class="hint">Tap for check-in ↻</span></div>
           </div>
@@ -248,7 +256,12 @@
 
     <div class="values" aria-label="Our values"><span>Finding strength in · Redefining norms · Accepting challenges · Being stronger together · Finding strength in · Redefining norms · Accepting challenges · Being stronger together ·&nbsp;</span></div>
 
-    <nav class="tabs"><a class="on" href="#">Home</a><a href="#">Events</a><a href="#">Community</a><a href="#">Profile</a></nav>
+    <nav class="tabs" aria-label="Main">
+      <a class="on" href="#" aria-current="page"><span class="ic"><svg viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V20h5v-6h4v6h5V9.5"/></svg></span>Home</a>
+      <a href="#"><span class="ic"><svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/><path d="M8.5 14.5h3"/></svg></span>Events</a>
+      <a href="#"><span class="ic badge"><svg viewBox="0 0 24 24"><circle cx="9" cy="8.5" r="3.2"/><path d="M3 19.5c.6-3.2 3-5 6-5s5.4 1.8 6 5"/><circle cx="17" cy="9.5" r="2.5"/><path d="M15.8 14.6c2.6.1 4.6 1.8 5.2 4.9"/></svg></span>Community</a>
+      <a href="#"><span class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4.5 20.5c.8-4 3.7-6 7.5-6s6.7 2 7.5 6"/></svg></span>Profile</a>
+    </nav>
   </div>
   <div class="toast" id="toast" role="status"></div>
 
