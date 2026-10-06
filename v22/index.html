@@ -49,15 +49,14 @@
     .flip:focus-visible { box-shadow: 0 0 0 3px var(--pink); }
     .flip.on { transform: rotateY(180deg); }
     .face { -webkit-backface-visibility: hidden; backface-visibility: hidden; border-radius: 22px; padding: 16px; }
-    .front { color: var(--ink); background: linear-gradient(115deg, #e9ddff 0%, #ffd9ec 30%, #d9ecff 55%, #e6fff4 75%, #e9ddff 100%); background-size: 220% 220%; animation: holo 9s ease-in-out infinite alternate; box-shadow: inset 0 0 0 1px rgba(255,255,255,.7), 0 14px 34px rgba(74,31,184,.18); }
-    @keyframes holo { to { background-position: 100% 100%; } }
+    .front { color: var(--ink); background: #fff; box-shadow: 0 0 0 1px var(--line), 0 14px 34px rgba(74,31,184,.14); }
     .front .row { display: flex; justify-content: space-between; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
     .front .name { font-size: 28px; line-height: 1; margin: 12px 0 12px; display: block; color: var(--deep); }
     .streak { display: flex; align-items: center; gap: 14px; }
-    .ring { width: 62px; height: 62px; border-radius: 50%; flex: none; display: grid; place-items: center; background: conic-gradient(var(--purple) 0 75%, rgba(255,255,255,.75) 75% 100%); }
-    .ring b { width: 48px; height: 48px; border-radius: 50%; background: #f8f3ff; display: grid; place-items: center; font: 700 15px/1 var(--display); text-transform: uppercase; text-align: center; color: var(--purple); }
+    .ring { width: 62px; height: 62px; border-radius: 50%; flex: none; display: grid; place-items: center; background: conic-gradient(var(--purple) 0 75%, var(--lav) 75% 100%); }
+    .ring b { width: 48px; height: 48px; border-radius: 50%; background: #fff; display: grid; place-items: center; font: 700 15px/1 var(--display); text-transform: uppercase; text-align: center; color: var(--purple); }
     .week { flex: 1; display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; text-align: center; font: 700 10px var(--display); text-transform: uppercase; color: var(--muted); }
-    .week i { display: grid; place-items: center; aspect-ratio: 1; border-radius: 8px; background: rgba(255,255,255,.75); margin-bottom: 3px; font-style: normal; font-size: 11px; color: var(--purple); }
+    .week i { display: grid; place-items: center; aspect-ratio: 1; border-radius: 8px; background: var(--lav); margin-bottom: 3px; font-style: normal; font-size: 11px; color: var(--purple); }
     .week i.done { background: var(--purple); color: #fff; }
     .week i.plan { background: #fff; box-shadow: inset 0 0 0 1.5px var(--purple); }
     .week i.today { box-shadow: inset 0 0 0 2px var(--pink); }
