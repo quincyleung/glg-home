@@ -153,3 +153,7 @@
 - **Asked for:** an innovative, more minimalistic version with avatars instead of photos.
 - **Made:** almost no UI chrome: white, one GLG purple, Arimo at regular weight with tiny spaced Oswald labels, and lots of air. "Morning, Jasmine." with a one-line status and the streak as twelve dots (one per week, the last three purple). "Next · in 5 days" makes the hike the single focus, with the avatars of who's going. Plain hairline lists for Booked and Open. Each open session shows its seats as dots (outlined = free), and Join fills one in purple. The community has two items plus a "Show 3 more" fold. The GLG values sit in pale grey at the end.
 - New: an illustrated avatar generator with fixed fictional looks per named member, so Chloe, Priya and the others stay recognisable everywhere.
+
+## v20: Orbit
+- **Asked for:** an innovative, avatar-based version.
+- **Made:** "MORNING, JASMINE." above an orbit diagram. Jasmine's avatar sits at the centre inside a purple streak ring ("🔥 3-week streak"), her crew (Chloe, Priya, Hana, Kiko, Aisha, Mei-Ling) orbits on an inner ring with pink "new" dots, and the wider chapter drifts slowly on an outer ring. Tapping a crew member shows their update in a spotlight card with an action (Lift her up, Join the taxi, Wave, Run with her). Sessions are drawn as seats: her booked ones show who's sitting with her, and open ones have dashed empty seats. Tapping a seat puts her avatar in it and books her. The chapter updates are avatar speech bubbles, and Lift a Million is 100 dots of 10,000 kg.

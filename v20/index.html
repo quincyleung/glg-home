@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>v20 · Orbit — GLG Home</title>
+  <style>
+    :root {
+      --purple: #4a1fb8;
+      --deep: #24104f;
+      --lav: #efe9ff;
+      --lav2: #c9b6ff;
+      --pink: #ff7aa8;
+      --ink: #1a1328;
+      --muted: #6e6585;
+      --line: #ece7f5;
+      --display: Oswald, "Avenir Next Condensed", "Helvetica Neue", "Arial Narrow", sans-serif;
+      --body: Arimo, Arial, "Helvetica Neue", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #e9e3f6; color: var(--ink); font: 15px/1.45 var(--body); }
+    button { font: inherit; cursor: pointer; border: 0; color: inherit; background: none; padding: 0; }
+    .app { max-width: 430px; margin: 0 auto; min-height: 100vh; background: #fff; position: relative; overflow-x: clip; }
+    @media (min-width: 600px) { .app { margin: 24px auto; min-height: 0; border-radius: 28px; overflow: clip; box-shadow: 0 20px 60px rgba(40,10,90,.15); } }
+    .d { font-family: var(--display); font-weight: 700; text-transform: uppercase; font-stretch: condensed; letter-spacing: .01em; }
+    .ava { display: block; border-radius: 50%; overflow: hidden; }
+    .ava svg { display: block; width: 100%; height: 100%; }
+    main { padding: 14px 16px 24px; }
+
+    .top { display: flex; justify-content: space-between; align-items: center; }
+    .top a { color: var(--muted); text-decoration: none; font-size: 13px; font-weight: 700; }
+    .top .logo { color: var(--purple); font-size: 15px; letter-spacing: .06em; }
+    h1 { font-size: 40px; line-height: .95; text-align: center; margin: 18px 0 2px; color: var(--purple); }
+    .sub { text-align: center; color: var(--muted); margin: 0; font-size: 14px; }
+
+    /* orbit */
+    .orbit { position: relative; width: 100%; aspect-ratio: 1; max-width: 360px; margin: 6px auto 0; }
+    .ring-line { position: absolute; border-radius: 50%; border: 1.5px dashed var(--lav2); }
+    .ring-line.inner { inset: 16%; } .ring-line.outer { inset: 3%; border-color: var(--line); }
+    .outer-spin { position: absolute; inset: 0; animation: spin 120s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @media (prefers-reduced-motion: reduce) { .outer-spin { animation: none; } }
+    .sat { position: absolute; transform: translate(-50%, -50%); }
+    .sat.far .ava { width: 26px; height: 26px; opacity: .65; }
+    .sat.near { z-index: 2; }
+    .sat.near .ava { width: 54px; height: 54px; box-shadow: 0 0 0 3px #fff, 0 4px 12px rgba(40,10,90,.15); transition: transform .2s; }
+    .sat.near.active .ava { transform: scale(1.15); box-shadow: 0 0 0 3px var(--purple), 0 4px 12px rgba(40,10,90,.25); }
+    .sat.near .dot { position: absolute; top: 0; right: 0; width: 14px; height: 14px; border-radius: 50%; background: var(--pink); border: 2px solid #fff; }
+    .sat.near .nm { position: absolute; left: 50%; top: 100%; transform: translateX(-50%); margin-top: 6px; font: 700 11px var(--display); text-transform: uppercase; letter-spacing: .06em; color: var(--muted); white-space: nowrap; }
+    .center { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 34%; aspect-ratio: 1; border-radius: 50%; padding: 6px; background: conic-gradient(var(--purple) 0 75%, var(--lav) 75% 100%); z-index: 3; }
+    .center .ava { width: 100%; height: 100%; border: 4px solid #fff; }
+    .center .badge { position: absolute; left: 50%; bottom: -10px; transform: translateX(-50%); background: var(--purple); color: #fff; font: 700 12px var(--display); text-transform: uppercase; letter-spacing: .06em; padding: 3px 10px; border-radius: 99px; white-space: nowrap; }
+
+    /* spotlight */
+    .spot { margin-top: 10px; background: var(--lav); border-radius: 20px; padding: 14px; display: flex; gap: 12px; align-items: flex-start; min-height: 96px; }
+    .spot .ava { width: 44px; height: 44px; flex: none; }
+    .spot .k { font: 700 12px var(--display); text-transform: uppercase; letter-spacing: .08em; color: var(--purple); }
+    .spot p { margin: 2px 0 8px; }
+    .spot button { background: var(--purple); color: #fff; font: 700 13px var(--display); text-transform: uppercase; letter-spacing: .06em; padding: 6px 12px; border-radius: 99px; }
+    .spot button.done { background: #fff; color: var(--purple); }
+    .hint { text-align: center; font-size: 12px; color: var(--muted); margin: 6px 0 0; }
+
+    h2 { font-size: 22px; margin: 30px 0 12px; display: flex; justify-content: space-between; align-items: baseline; }
+    h2 small { font: 700 12px var(--body); color: var(--muted); text-transform: none; letter-spacing: 0; }
+
+    /* sessions as seats */
+    .ses { border: 1px solid var(--line); border-radius: 20px; padding: 14px; margin-bottom: 12px; }
+    .ses.mine { background: var(--purple); color: #fff; border-color: var(--purple); }
+    .ses .head { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
+    .ses .head .d { font-size: 19px; line-height: 1.05; display: block; }
+    .ses small { color: var(--muted); font-size: 13px; }
+    .ses.mine small { color: var(--lav2); }
+    .ses .tag { font: 700 11px var(--display); text-transform: uppercase; letter-spacing: .06em; padding: 3px 8px; border-radius: 6px; background: var(--lav); color: var(--purple); white-space: nowrap; }
+    .ses .tag.hot { background: var(--pink); color: #fff; }
+    .ses.mine .tag { background: #fff; }
+    .seats { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 12px; }
+    .seat { width: 30px; height: 30px; border-radius: 50%; }
+    .seat .ava { width: 100%; height: 100%; }
+    .seat.empty { border: 2px dashed var(--lav2); display: grid; place-items: center; color: var(--purple); font-weight: 700; font-size: 16px; transition: background .2s; }
+    .seat.empty:hover { background: var(--lav); }
+    .seat.me .ava { box-shadow: 0 0 0 2px var(--pink); }
+    .more { width: 30px; height: 30px; border-radius: 50%; background: rgba(255,255,255,.18); color: #fff; display: grid; place-items: center; font: 700 11px var(--display); }
+    .ses .foot { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; font-size: 13px; }
+    .price { font: 700 16px var(--display); }
+
+    /* chapter */
+    .bubble { display: flex; gap: 10px; align-items: flex-end; margin-bottom: 12px; }
+    .bubble .ava { width: 36px; height: 36px; flex: none; }
+    .bubble .b { background: var(--lav); border-radius: 18px 18px 18px 4px; padding: 10px 14px; font-size: 14px; }
+    .bubble .b small { display: block; color: var(--muted); font-size: 12px; margin-top: 2px; }
+    .bubble.pin .b { background: #fff0f5; }
+    .million { background: var(--deep); color: #fff; border-radius: 20px; padding: 16px; }
+    .million .d { font-size: 26px; }
+    .million p { margin: 4px 0 10px; font-size: 14px; color: var(--lav2); }
+    .lifters { display: flex; flex-wrap: wrap; gap: 3px; }
+    .lifters i { width: 12px; height: 12px; border-radius: 50%; background: rgba(255,255,255,.15); }
+    .lifters i.on { background: var(--lav2); }
+    .lifters i.me { background: var(--pink); }
+
+    .tabs { position: sticky; bottom: 0; z-index: 5; display: flex; justify-content: space-around; background: rgba(255,255,255,.95); backdrop-filter: blur(8px); border-top: 1px solid var(--line); padding: 10px 0 14px; }
+    .tabs a { color: var(--muted); text-decoration: none; font: 700 12px var(--display); text-transform: uppercase; letter-spacing: .06em; }
+    .tabs a.on { color: var(--purple); }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <main>
+      <div class="top"><a href="../index.html">← Gallery</a><span class="d logo">Girls Lift Girls · HK</span><span style="width:52px"></span></div>
+      <h1 class="d">Morning, Jasmine.</h1>
+      <p class="sub">Your crew this week. Tap someone to catch up.</p>
+
+      <div class="orbit" id="orbit" aria-label="You and your crew">
+        <div class="ring-line outer"></div><div class="ring-line inner"></div>
+        <div class="outer-spin" id="far"></div>
+        <div class="center"><span class="ava" data-who="jasmine"></span><span class="badge">🔥 3-week streak</span></div>
+      </div>
+
+      <div class="spot" id="spot" aria-live="polite"></div>
+      <p class="hint">Pink dot = something new</p>
+
+      <h2 class="d">You're in <small>2 this week</small></h2>
+      <div class="ses mine">
+        <div class="head"><div><span class="d">Dragon's Back Sunrise Hike</span><small>Sun 11 · 6:15am · To Tei Wan</small></div><span class="tag">Going ✓</span></div>
+        <div class="seats" data-crew="jasmine,priya,hana,s11,s12,s13,s14,s15" data-more="+15"></div>
+      </div>
+      <div class="ses mine">
+        <div class="head"><div><span class="d">Harbourfront 5K</span><small>Wed 14 · 7:30pm · Star Ferry clock tower</small></div><span class="tag">Going ✓</span></div>
+        <div class="seats" data-crew="jasmine,aisha,s21,s22,s23,s24,s25,s26" data-more="+23"></div>
+      </div>
+
+      <h2 class="d">Grab a seat <small>Tap an empty one</small></h2>
+      <div class="ses" data-name="Barbell Basics">
+        <div class="head"><div><span class="d">Barbell Basics</span><small>Sat 10 · 8am · Kwun Tong · with Mei-Ling</small></div><span class="tag hot">2 seats left</span></div>
+        <div class="seats" data-crew="meiling,chloe,kiko,s31,s32,s33,s34,s35,s36,s37,s38,s39,s40,s41" data-total="16"></div>
+        <div class="foot"><span class="status">Chloe and Kiko are going</span><span class="price">HK$180</span></div>
+      </div>
+      <div class="ses" data-name="Boxing Fundamentals">
+        <div class="head"><div><span class="d">Boxing Fundamentals</span><small>Sat 17 · 10am · Sheung Wan · with Jess</small></div><span class="tag">3 first-timers</span></div>
+        <div class="seats" data-crew="jess,s51,s52,s53,s54,s55,s56,s57,s58" data-total="20"></div>
+        <div class="foot"><span class="status">11 seats open</span><span class="price">HK$250</span></div>
+      </div>
+      <div class="ses" data-name="Paddle &amp; Brunch">
+        <div class="head"><div><span class="d">Paddle &amp; Brunch</span><small>Sun 25 · 9am · Sai Kung · brunch included</small></div><span class="tag">6 seats open</span></div>
+        <div class="seats" data-crew="sara,s61,s62,s63,s64,s65" data-total="12"></div>
+        <div class="foot"><span class="status">Sara's going</span><span class="price">HK$420</span></div>
+      </div>
+
+      <h2 class="d">From the chapter</h2>
+      <div class="bubble pin"><span class="ava" data-who="hana"></span><div class="b">📌 Run club now starts at the Star Ferry clock tower. Look for the pink flag!<small>Hana · chapter lead · 2d</small></div></div>
+      <div class="bubble"><span class="ava" data-seed="90"></span><div class="b">🌏 Global Lift Day, Sat 7 Nov: all seven chapters lift at the same hour. HK lifts at 5pm.<small>GLG HQ · yesterday</small></div></div>
+      <div class="million">
+        <span class="d">Lift a Million</span>
+        <p>412,000 / 1,000,000 kg. Every dot is 10,000 kg lifted together: 41 down, 59 to go. Your share so far: 2,140 kg.</p>
+        <div class="lifters" id="lifters"></div>
+      </div>
+    </main>
+
+    <nav class="tabs"><a class="on" href="#">Home</a><a href="#">Events</a><a href="#">Community</a><a href="#">Profile</a></nav>
+  </div>
+
+  <script>
+    // Illustrated avatars (fictional members, no photos). <span class="ava" data-who="chloe"></span>
+    const Avatar = (() => {
+      const SKIN = ["#f3d2b8", "#e8b48f", "#c98e66", "#a26a44", "#7a4a2c", "#5a3520"];
+      const HAIR = ["#1b1210", "#3a2418", "#6b4226", "#b07a3f", "#2a1a2e", "#8a3a2a"];
+      const BG = ["#e9e1ff", "#ffd9e8", "#d9ecff", "#dff5ea", "#fff0c9", "#efe2ff", "#ffe2d1"];
+      const TOP = ["#4a1fb8", "#7b4fe0", "#ff7aa8", "#24104f", "#5fd0c0", "#ffb44d", "#ffffff"];
+      // Fixed looks for named members so they stay recognisable across the page: [skin, hair, style, bg, top]
+      const PEOPLE = {
+        jasmine: [1, 0, "bun", 0, 0], priya: [3, 0, "long", 3, 4], chloe: [0, 1, "pony", 1, 1], hana: [5, 0, "curly", 4, 3],
+        meiling: [1, 0, "bob", 2, 2], aisha: [4, 0, "curly", 1, 5], mandy: [0, 2, "long", 6, 0], kiko: [1, 0, "bob", 5, 2],
+        sara: [3, 0, "pony", 2, 1], jess: [2, 3, "short", 0, 3]
+      };
+      const STYLES = ["bun", "long", "pony", "curly", "bob", "short"];
+      const rng = seed => () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+
+      function svg(look) {
+        const [si, hi, style, bi, ti] = look, skin = SKIN[si], hair = HAIR[hi], bg = BG[bi], top = TOP[ti];
+        let back = "", front = "";
+        if (style === "long") back = `<path d="M17 30 Q16 54 22 58 H42 Q48 54 47 30 Q47 12 32 12 Q17 12 17 30Z" fill="${hair}"/>`;
+        if (style === "bob") back = `<path d="M17 30 Q16 46 20 47 H44 Q48 46 47 30 Q47 13 32 13 Q17 13 17 30Z" fill="${hair}"/>`;
+        if (style === "curly") back = [[18, 24], [22, 16], [30, 12], [38, 13], [45, 19], [47, 28], [16, 33], [48, 36], [18, 41], [46, 43]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="7" fill="${hair}"/>`).join("");
+        if (style === "pony") back = `<ellipse cx="48" cy="34" rx="5" ry="11" fill="${hair}" transform="rotate(-18 48 34)"/>`;
+        if (style === "bun") front = `<circle cx="32" cy="11" r="6.5" fill="${hair}"/>`;
+        const fringe = style === "short"
+          ? `<path d="M19 28 Q19 14 32 14 Q45 14 45 28 Q40 20 32 21 Q24 21 19 28Z" fill="${hair}"/>`
+          : `<path d="M19 30 Q18 14 32 14 Q46 14 45 30 Q42 21 34 20 Q27 23 19 30Z" fill="${hair}"/>`;
+        return `<svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="32" fill="${bg}"/>${back}
+          <path d="M8 66 Q10 49 32 49 Q54 49 56 66Z" fill="${top}"/><rect x="28" y="40" width="8" height="10" fill="${skin}"/>
+          <ellipse cx="32" cy="31" rx="13" ry="14.5" fill="${skin}"/>${fringe}${front}
+          <ellipse cx="27" cy="32" rx="1.6" ry="2" fill="#2a1a1a"/><ellipse cx="37" cy="32" rx="1.6" ry="2" fill="#2a1a1a"/>
+          <circle cx="24" cy="37" r="2.4" fill="#ff8fb0" opacity=".35"/><circle cx="40" cy="37" r="2.4" fill="#ff8fb0" opacity=".35"/>
+          <path d="M28.5 38.5 Q32 41.5 35.5 38.5" stroke="#5a2a2a" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>`;
+      }
+      function lookFor(el) {
+        if (PEOPLE[el.dataset.who]) return PEOPLE[el.dataset.who];
+        const r = rng(+el.dataset.seed || 7);
+        return [Math.floor(r() * 6), Math.floor(r() * 6), STYLES[Math.floor(r() * 6)], Math.floor(r() * 7), Math.floor(r() * 7)];
+      }
+      const draw = el => { el.innerHTML = svg(lookFor(el)); };
+      return { draw, drawAll: (root = document) => root.querySelectorAll(".ava").forEach(draw), svgFor: who => svg(PEOPLE[who]) };
+    })();
+    Avatar.drawAll();
+    const ava = who => /^s\d+$/.test(who) ? `<span class="ava" data-seed="${who.slice(1)}"></span>` : `<span class="ava" data-who="${who}"></span>`;
+
+    // Inner ring: the crew, with their latest news.
+    const crew = [
+      { who: "chloe", name: "Chloe", k: "Member win · Saturday", t: "Pulled a 100 kg deadlift. Two years ago I couldn't lift the empty bar.", a: "💜 Lift her up · 34", done: "Lifted · 35", news: true },
+      { who: "priya", name: "Priya", k: "Chapter chat · 6 replies", t: "Splitting a taxi to To Tei Wan on Sunday, 5:40am from Quarry Bay. You're on this hike too.", a: "Join the taxi", done: "You're in the taxi 🚕", news: true },
+      { who: "hana", name: "Hana", k: "Chapter lead · 2d", t: "Run club now starts at the Star Ferry clock tower. Same time, 7:30pm.", a: "Got it", done: "See you Wednesday", news: true },
+      { who: "kiko", name: "Kiko", k: "New this week", t: "Just joined with Mandy and Sara. Barbell Basics on Saturday is her first session.", a: "👋 Wave", done: "Waved 👋", news: true },
+      { who: "aisha", name: "Aisha", k: "Last Wednesday", t: "Ran her first ever 5K at run club. She'll be there again on Wednesday.", a: "Run with her", done: "She'll look out for you", news: false },
+      { who: "meiling", name: "Mei-Ling", k: "Coach · Barbell Basics", t: "Two seats left on Saturday. No experience needed, I'll show you set-up and bracing.", a: "Grab a seat", done: "Scroll to seats ↓", news: false }
+    ];
+    const orbit = document.getElementById("orbit"), spot = document.getElementById("spot");
+    crew.forEach((c, i) => {
+      const ang = -Math.PI / 2 + i * 2 * Math.PI / crew.length, r = 34;
+      const b = document.createElement("button");
+      b.className = "sat near"; b.style.left = 50 + r * Math.cos(ang) + "%"; b.style.top = 50 + r * Math.sin(ang) + "%";
+      b.innerHTML = ava(c.who) + (c.news ? '<span class="dot"></span>' : "") + `<span class="nm">${c.name}</span>`;
+      b.setAttribute("aria-label", c.name);
+      b.addEventListener("click", () => show(i));
+      orbit.appendChild(b);
+    });
+    // Outer ring: the wider chapter.
+    const far = document.getElementById("far");
+    for (let i = 0; i < 14; i++) {
+      const ang = i * 2 * Math.PI / 14 + .2, r = 47;
+      far.insertAdjacentHTML("beforeend", `<span class="sat far" style="left:${50 + r * Math.cos(ang)}%;top:${50 + r * Math.sin(ang)}%">${ava("s" + (70 + i))}</span>`);
+    }
+    function show(i) {
+      const c = crew[i];
+      document.querySelectorAll(".sat.near").forEach((el, j) => el.classList.toggle("active", j === i));
+      document.querySelectorAll(".sat.near")[i].querySelector(".dot")?.remove();
+      spot.innerHTML = `${ava(c.who)}<div><span class="k">${c.name} · ${c.k}</span><p>${c.t}</p><button>${c.a}</button></div>`;
+      Avatar.drawAll(spot);
+      spot.querySelector("button").addEventListener("click", e => {
+        e.currentTarget.textContent = c.done; e.currentTarget.classList.add("done");
+        if (c.who === "meiling") document.querySelector('.ses[data-name="Barbell Basics"]').scrollIntoView({ behavior: "smooth", block: "center" });
+      });
+    }
+
+    // Seats: filled with avatars, empty ones are tappable.
+    document.querySelectorAll(".seats").forEach(s => {
+      const people = s.dataset.crew.split(","), total = +s.dataset.total || people.length;
+      let html = people.map(p => `<span class="seat${p === "jasmine" ? " me" : ""}">${ava(p)}</span>`).join("");
+      for (let i = people.length; i < total; i++) html += `<button class="seat empty" aria-label="Take this seat">+</button>`;
+      if (s.dataset.more) html += `<span class="more">${s.dataset.more}</span>`;
+      s.innerHTML = html;
+    });
+    document.querySelectorAll(".seat.empty").forEach(b => b.addEventListener("click", () => {
+      const ses = b.closest(".ses");
+      if (ses.querySelector(".seat.me")) return;
+      b.outerHTML = `<span class="seat me">${ava("jasmine")}</span>`;
+      Avatar.drawAll(ses);
+      ses.querySelector(".status").textContent = "You're in ✓ See you there 💪";
+      ses.querySelectorAll(".seat.empty").forEach(e => e.disabled = true);
+    }));
+
+    // Lift a Million: 100 dots of 10,000 kg, 41 lifted.
+    document.getElementById("lifters").innerHTML = Array.from({ length: 100 }, (_, i) => `<i class="${i < 41 ? "on" : ""}"></i>`).join("");
+
+    Avatar.drawAll();
+    show(0);
+  </script>
+</body>
+</html>
