@@ -51,7 +51,7 @@ Every version (v01–v25) uses exactly this content so that differences between 
 2. **Dragon's Back Sunrise Hike** — 8.5 km, easy–moderate. Bring water and a headlamp. Coffee at Shek O afterwards (pay your own). Led by Hana Okafor.
 3. **Harbourfront 5K Run Club** — Conversational pace with a 6:30/km and a 5:30/km group. Nobody gets left behind. Bag drop available.
 4. **Boxing Fundamentals Workshop** — Stance, jab-cross, footwork and pad work in pairs. Gloves and wraps provided. Coach: Jess Albano.
-5. **Paddle & Brunch: Sai Kung SUP** — Two hours on the water with an instructor, then brunch at a harbourside café. Beginners welcome; you must be able to swim.
+5. **Paddle & Brunch: Sai Kung SUP** — Two hours on the water with instructor Tash Wong, then brunch at a harbourside café. Beginners welcome; you must be able to swim.
 
 ### Booking
 

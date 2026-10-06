@@ -98,8 +98,11 @@
     .ticket .photo, .ev .photo { height: 118px; }
     .tag { position: absolute; z-index: 2; top: 10px; left: 10px; font: 700 11px var(--display); letter-spacing: .06em; text-transform: uppercase; padding: 4px 9px; border-radius: 6px; background: #fff; color: var(--purple); }
     .tag.hot { background: var(--pink); color: #fff; }
-    .info { position: absolute; z-index: 4; top: 8px; right: 8px; width: 28px; height: 28px; border-radius: 50%; background: rgba(255,255,255,.92); color: var(--purple); font: italic 700 15px Georgia, serif; display: grid; place-items: center; box-shadow: 0 2px 8px rgba(0,0,0,.15); }
-    .info[aria-expanded="true"] { background: var(--purple); color: #fff; }
+    .info { position: absolute; z-index: 4; top: 8px; right: 8px; width: 38px; height: 38px; border-radius: 50%; padding: 0; background: #fff; box-shadow: 0 0 0 2px #fff, 0 3px 10px rgba(0,0,0,.25); transition: box-shadow .2s; }
+    .info .ava { width: 100%; height: 100%; }
+    .info::after { content: "i"; position: absolute; right: -3px; bottom: -3px; width: 15px; height: 15px; border-radius: 50%; background: var(--purple); color: #fff; font: italic 700 10px/15px Georgia, serif; text-align: center; box-shadow: 0 0 0 2px #fff; }
+    .info[aria-expanded="true"] { box-shadow: 0 0 0 3px var(--purple), 0 3px 10px rgba(0,0,0,.25); }
+    .info[aria-expanded="true"]::after { content: "×"; font-style: normal; }
     .details { position: absolute; z-index: 3; left: 8px; right: 8px; bottom: 8px; background: rgba(255,255,255,.96); border-radius: 12px; padding: 8px 10px; font-size: 12px; line-height: 1.4; color: var(--ink); opacity: 0; transform: translateY(6px); pointer-events: none; transition: opacity .2s, transform .2s; }
     .details.open { opacity: 1; transform: none; pointer-events: auto; }
     .ticket .body, .ev .body { padding: 10px 12px 12px; }
@@ -136,12 +139,12 @@
     .psst.joined .yes { background: var(--mint); color: #1f6b52; }
 
     /* from the community: compact snippets */
-    .post { display: flex; gap: 12px; align-items: flex-start; padding: 12px; border: 1px solid var(--line); border-radius: 18px; margin-bottom: 8px; }
+    .post { display: block; padding: 12px; border: 1px solid var(--line); border-radius: 18px; margin-bottom: 8px; }
     .post .pb { flex: 1; min-width: 0; }
     .post .head { display: flex; align-items: center; gap: 7px; margin-bottom: 6px; font-size: 12px; }
     .post .head .ava { width: 26px; height: 26px; }
     .post .head small { color: var(--muted); }
-    .post .kind { margin-left: auto; font: 700 10px var(--display); letter-spacing: .08em; text-transform: uppercase; padding: 2px 8px; border-radius: 6px; white-space: nowrap; background: var(--lav); color: var(--purple); }
+    .post .kind { margin-left: 2px; font: 700 10px var(--display); letter-spacing: .08em; text-transform: uppercase; padding: 2px 8px; border-radius: 6px; white-space: nowrap; background: var(--lav); color: var(--purple); }
     .post .kind.announcements { background: var(--purple); color: #fff; }
     .post .kind.challenges { background: #ffe3ee; color: #c2185b; }
     .post .t { display: block; font: 700 16px/1.1 var(--display); text-transform: uppercase; letter-spacing: .01em; }
@@ -168,7 +171,10 @@
     .post .add input { flex: 1; min-width: 0; font: 12px inherit; border: 1px solid var(--line); border-radius: 99px; padding: 6px 10px; outline: none; }
     .post .add input:focus { border-color: var(--purple); }
     .post .add button { font-size: 12px; font-weight: 700; color: var(--purple); }
-    .post .chrow { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+    .post .chrow { display: flex; align-items: center; gap: 10px; }
+    .post .chrow .members { margin-left: auto; }
+    .post .main { display: flex; gap: 12px; align-items: flex-start; }
+    .post .main + .react, .post .main + .pbar, .post .main + .chrow { margin-top: 2px; }
     .post .members { font-size: 11px; color: var(--muted); }
     .post .chrow .act { background: var(--purple); color: #fff; }
     .post .chrow .act.done { background: var(--lav); color: var(--purple); }
@@ -214,12 +220,12 @@
         <h2 class="sec-head" id="h-going"><span class="ic"><svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/><path d="m9 15 2 2 4-4"/></svg></span><span class="d">You're going</span><span class="count">2</span><a href="#">Calendar</a></h2>
   <div class="rail">
           <div class="ticket">
-          <div class="photo" data-scene="trail" data-people="6" data-seed="31" data-tone="color" data-alt="Members hiking Dragon's Back"><span class="tag">In 5 days</span><button class="info" aria-expanded="false" aria-label="Details">i</button><div class="details">8.5 km, easy to moderate. Bring water and a headlamp. Coffee at Shek O after. Led by Hana.</div></div>
+          <div class="photo" data-scene="trail" data-people="6" data-seed="31" data-tone="color" data-alt="Members hiking Dragon's Back"><span class="tag">In 5 days</span><button class="info" aria-expanded="false" aria-label="Details, with Hana"><span class="ava" data-who="hana"></span></button><div class="details">Led by Hana Okafor. 8.5 km, easy to moderate. Bring water and a headlamp. Coffee at Shek O after. Led by Hana.</div></div>
           <div class="body"><span class="d ttl">Dragon's Back Sunrise Hike</span><p class="meta">Sun 11 Oct · 6:15am · To Tei Wan</p>
             <div class="row"><div class="people"><span class="avs"><span class="ava" data-who="jasmine"></span><span class="ava" data-who="priya"></span><span class="ava" data-who="hana"></span></span><span class="who">You, Priya + 21</span></div><span class="going">Going ✓</span></div></div>
         </div>
         <div class="ticket">
-          <div class="photo" data-scene="harbour" data-people="7" data-seed="8" data-tone="color" data-alt="Run club at the harbour"><span class="tag">In 8 days</span><button class="info" aria-expanded="false" aria-label="Details">i</button><div class="details">New start: Star Ferry clock tower (look for the pink flag). 6:30 and 5:30/km pace groups. Bag drop available.</div></div>
+          <div class="photo" data-scene="harbour" data-people="7" data-seed="8" data-tone="color" data-alt="Run club at the harbour"><span class="tag">In 8 days</span><button class="info" aria-expanded="false" aria-label="Details, with Hana"><span class="ava" data-who="hana"></span></button><div class="details">Hosted by Hana Okafor. New start: Star Ferry clock tower (look for the pink flag). 6:30 and 5:30/km pace groups. Bag drop available.</div></div>
           <div class="body"><span class="d ttl">Harbourfront 5K Run Club</span><p class="meta">Wed 14 Oct · 7:30pm · Tsim Sha Tsui</p>
             <div class="row"><div class="people"><span class="avs"><span class="ava" data-who="jasmine"></span><span class="ava" data-who="aisha"></span><span class="ava" data-seed="24"></span></span><span class="who">You, Aisha + 29</span></div><span class="going">Going ✓</span></div></div>
         </div>
@@ -239,17 +245,17 @@
         </div>
 
         <div class="ev" id="ev-barbell">
-          <div class="photo" data-scene="gym" data-people="6" data-seed="3" data-tone="color" data-alt="Barbell session at Iron Harbour"><span class="tag hot">Only 2 spots left</span><button class="info" aria-expanded="false" aria-label="Details">i</button><div class="details">Squat and deadlift with Coach Mei-Ling Ho: set-up, bracing and safe bailing. No experience needed.</div></div>
+          <div class="photo" data-scene="gym" data-people="6" data-seed="3" data-tone="color" data-alt="Barbell session at Iron Harbour"><span class="tag hot">Only 2 spots left</span><button class="info" aria-expanded="false" aria-label="Details, with Mei-Ling"><span class="ava" data-who="meiling"></span></button><div class="details">Squat and deadlift with Coach Mei-Ling Ho: set-up, bracing and safe bailing. No experience needed.</div></div>
           <div class="body"><span class="d ttl">Barbell Basics</span><p class="meta">Sat 10 Oct · 8:00am · Kwun Tong</p>
             <div class="row"><div class="people"><span class="avs"><span class="ava" data-who="chloe"></span><span class="ava" data-who="kiko"></span><span class="ava" data-seed="33"></span></span><span class="who">Chloe, Kiko + 12</span></div><span class="price">HK$180</span><button class="join">Join</button></div></div>
         </div>
         <div class="ev">
-          <div class="photo" data-scene="studio" data-people="5" data-seed="9" data-tone="color" data-alt="Boxing workshop in the studio"><span class="tag">3 first-timers</span><button class="info" aria-expanded="false" aria-label="Details">i</button><div class="details">With Coach Jess Albano at Left Hook Studio. Stance, jab-cross, footwork and pad work. Gloves and wraps provided.</div></div>
+          <div class="photo" data-scene="studio" data-people="5" data-seed="9" data-tone="color" data-alt="Boxing workshop in the studio"><span class="tag">3 first-timers</span><button class="info" aria-expanded="false" aria-label="Details, with Jess"><span class="ava" data-who="jess"></span></button><div class="details">With Coach Jess Albano at Left Hook Studio. Stance, jab-cross, footwork and pad work. Gloves and wraps provided.</div></div>
           <div class="body"><span class="d ttl">Boxing Fundamentals</span><p class="meta">Sat 17 Oct · 10:00am · Sheung Wan</p>
             <div class="row"><div class="people"><span class="avs"><span class="ava" data-who="mandy"></span><span class="ava" data-seed="52"></span><span class="ava" data-seed="54"></span></span><span class="who">Mandy + 8</span></div><span class="price">HK$250</span><button class="join">Join</button></div></div>
         </div>
         <div class="ev">
-          <div class="photo" data-scene="beach" data-people="6" data-seed="5" data-tone="color" data-alt="Paddleboarding at Sai Kung"><span class="tag">Brunch included</span><button class="info" aria-expanded="false" aria-label="Details">i</button><div class="details">Two hours on the water with an instructor, then brunch by the harbour. Board hire included. You must be able to swim.</div></div>
+          <div class="photo" data-scene="beach" data-people="6" data-seed="5" data-tone="color" data-alt="Paddleboarding at Sai Kung"><span class="tag">Brunch included</span><button class="info" aria-expanded="false" aria-label="Details, with Tash"><span class="ava" data-seed="47"></span></button><div class="details">With instructor Tash Wong. Two hours on the water with an instructor, then brunch by the harbour. Board hire included. You must be able to swim.</div></div>
           <div class="body"><span class="d ttl">Paddle &amp; Brunch</span><p class="meta">Sun 25 Oct · 9:00am · Sai Kung</p>
             <div class="row"><div class="people"><span class="avs"><span class="ava" data-who="sara"></span><span class="ava" data-seed="62"></span><span class="ava" data-seed="64"></span></span><span class="who">Sara + 5</span></div><span class="price">HK$420</span><button class="join">Join</button></div></div>
         </div>
@@ -426,7 +432,7 @@
     document.querySelectorAll(".info").forEach(b => b.addEventListener("click", e => {
       e.stopPropagation();
       const d = b.nextElementSibling, open = !d.classList.contains("open");
-      d.classList.toggle("open", open); b.setAttribute("aria-expanded", open); b.textContent = open ? "×" : "i";
+      d.classList.toggle("open", open); b.setAttribute("aria-expanded", open);
     }));
     const toast = document.getElementById("toast");
     function say(msg) { toast.textContent = msg; toast.classList.add("show"); clearTimeout(say.t); say.t = setTimeout(() => toast.classList.remove("show"), 2400); }
@@ -465,7 +471,7 @@
     // Posts and announcements can be hearted and commented on; challenges are community challenges you can join.
     const tx = s => LOWER ? s.toLowerCase() : s;
     const feedItems = [
-      { type: "posts", age: 14, when: "Yesterday", who: "priya", name: "Priya Raman", title: "Taxi to Dragon's Back?", text: "Splitting a taxi to To Tei Wan on Sunday, 5:40am from Quarry Bay. You're on this hike too 🚕", hearts: 5, comments: 6, sample: [{ who: "hana", name: "Hana", text: "Save me a seat!" }] },
+      { type: "posts", age: 14, when: "Yesterday", who: "priya", name: "Priya Raman", title: "Taxi to Dragon's Back?", text: "Splitting a taxi to To Tei Wan on Sunday, 5:40am from Quarry Bay. You're on this hike too 🚕", photo: { scene: "trail", people: 4, seed: 35 }, hearts: 5, comments: 6, sample: [{ who: "hana", name: "Hana", text: "Save me a seat!" }] },
       { type: "announcements", age: 20, when: "Yesterday", seed: 90, name: "GLG HQ", title: "Global Lift Day · Sat 7 Nov", text: "All seven chapters lift at the same hour for the first time. Hong Kong lifts at 5pm at Iron Harbour.", photo: { scene: "gym", people: 8, seed: 77 }, hearts: 112, comments: 23, sample: [{ who: "meiling", name: "Mei-Ling", text: "HK is going to be loud 💜" }] },
       { type: "challenges", age: 22, when: "Yesterday", who: "hana", name: "Sunrise Club", title: "October Sunrise Club: 4 sunrises", text: "Hike, run or stretch at sunrise with the chapter. Sunday's Dragon's Back would count as your first.", photo: { scene: "trail", people: 6, seed: 44 }, members: 38, joined: false },
       { type: "posts", age: 40, when: "2 days ago", who: "kiko", name: "Kiko Sato", title: "Hi everyone 👋", text: "Just joined with Mandy and Sara. Barbell Basics on Saturday is my first ever session!", photo: { scene: "studio", people: 3, seed: 40 }, hearts: 18, comments: 5, sample: [{ who: "chloe", name: "Chloe", text: "See you Saturday!" }] },
@@ -479,7 +485,7 @@
       if (i.type === "challenges") {
         const status = i.joined ? (i.mine ? `You're in · ${i.mine}` : "You're in ✓") : "Join challenge";
         return `${i.progress ? `<div class="pbar"><i style="width:${i.progress}%"></i></div>` : ""}
-          <div class="chrow"><span class="members">${i.members} ${tx("members in")}</span><button class="act join-ch${i.joined ? " done" : ""}"${i.joined ? " disabled" : ""}>${tx(status)}</button></div>`;
+          <div class="chrow"><button class="act join-ch${i.joined ? " done" : ""}"${i.joined ? " disabled" : ""}>${tx(status)}</button><span class="members">${i.members} ${tx("members in")}</span></div>`;
       }
       return `<div class="react"><button class="heart" aria-pressed="false" aria-label="Heart">♡ <span>${i.hearts}</span></button><button class="cmt" aria-expanded="false" aria-label="Comments">💬 <span>${i.comments}</span></button></div>
         <div class="comments" hidden>
@@ -492,11 +498,12 @@
       const list = feedItems.slice().sort((a, b) => a.age - b.age).slice(0, 3);
       const feed = document.getElementById("feed");
       feed.innerHTML = list.map(i => `<article class="post">
-        <div class="pb">
-          <div class="head">${avaFor(i)}<b>${tx(i.name)}</b><small>· ${tx(i.when)}</small><span class="kind ${i.type}">${tx(kindLabel[i.type])}</span></div>
-          <span class="t">${tx(i.title)}</span><p>${tx(i.text)}</p>${footFor(i)}
+        <div class="head">${avaFor(i)}<b>${tx(i.name)}</b><small>· ${tx(i.when)}</small><span class="kind ${i.type}">${tx(kindLabel[i.type])}</span></div>
+        <div class="main">
+          <div class="pb"><span class="t">${tx(i.title)}</span><p>${tx(i.text)}</p></div>
+          ${i.photo ? `<div class="photo" data-scene="${i.photo.scene}" data-people="${i.photo.people}" data-seed="${i.photo.seed}" data-tone="color"></div>` : ""}
         </div>
-        ${i.photo ? `<div class="photo" data-scene="${i.photo.scene}" data-people="${i.photo.people}" data-seed="${i.photo.seed}" data-tone="color"></div>` : ""}
+        ${footFor(i)}
       </article>`).join("");
       feed.querySelectorAll(".photo").forEach(Photo.draw);
       Avatar.drawAll(feed);
