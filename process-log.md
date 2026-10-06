@@ -85,3 +85,7 @@
 ## v11: Strong
 - **Asked for:** a "strong" theme.
 - **Made:** a speckled concrete background with black and red, Arial Black caps, monospace details, no rounded corners and 3px rules. The tone is a coach's ("Jasmine. Saturday. 2 spots.", "Book it or miss it."). Has a PR board (squat 60 kg → next target 65, sessions, streak, your share of the million), "Your program" as a numbered training log, "Load the week" with intensity bars and square red BOOK buttons, Lift a Million drawn as a barbell loaded with plates, and "The floor" community feed with RESPECT buttons.
+
+## v12: Girly
+- **Asked for:** a "girly" theme.
+- **Made:** a pink gingham background with Snell Roundhand script headings, rounded UI type, a 🎀 and "Hi Jasmine!". The streak is a beating heart with sticker badges on a washi-taped card. Booked events are dashed "You're going ♡" invitation cards. Bookable events are tilted polaroids with "Save my spot" buttons, and the community is "Girl talk" chat bubbles with ✨ reactions and a candy-striped Lift a Million meter.
