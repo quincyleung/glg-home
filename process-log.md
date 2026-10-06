@@ -93,3 +93,7 @@
 ## v13: Community
 - **Asked for:** a community-focused theme.
 - **Made:** teal and mustard with Gill Sans, in a "we" voice. The hero is "48 of us moved together" as a mosaic of dots with Jasmine in gold. Then: "New faces" (three new members, Wave button), a cork noticeboard with pinned notes, "Who's going" (every event shown by its people: "You, Priya + 21 others", "Join them"), "Talking about" threads with Cheer buttons, "You in the community" stats, and the global update with chapter chips. Added the new members and chapter size to `content.md`.
+
+## v14: Cool
+- **Asked for:** a "cool" theme.
+- **Made:** cool grey with ink and one electric blue, Helvetica with tight tracking plus monospace, all lowercase ("morning jasmine. here's what's dropping."). There's a holographic animated member card (member #0412, sessions, streak, PB). Booked events are "claimed", and the bookable ones are numbered "drops" with live ticking countdowns (from a fixed prototype "now" of 07:42 Tue 6 Oct), fill meters and "claim spot". The community is a terse lowercase feed with ↑ reactions.

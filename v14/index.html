@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>v14 · Cool — GLG Home</title>
+  <style>
+    :root {
+      --bg: #efefec;
+      --ink: #0f0f10;
+      --grey: #8b8b8f;
+      --line: #d6d6d2;
+      --blue: #2f5bff;
+      --mono: "SF Mono", Menlo, Consolas, monospace;
+      --sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #d9d9d5; color: var(--ink); font: 14px/1.45 var(--sans); }
+    button { font: inherit; cursor: pointer; border: 0; color: inherit; }
+    .app { max-width: 430px; margin: 0 auto; min-height: 100vh; background: var(--bg); position: relative; }
+    @media (min-width: 600px) { .app { margin: 24px auto; min-height: 0; border-radius: 6px; overflow: clip; box-shadow: 0 20px 60px rgba(0,0,0,.15); } }
+    main { padding: 14px 16px 24px; }
+
+    .top { display: flex; justify-content: space-between; font: 11px var(--mono); color: var(--grey); text-transform: lowercase; }
+    .top a { color: var(--ink); text-decoration: none; }
+    .logo { font: 700 13px var(--mono); letter-spacing: .3em; color: var(--ink); }
+    h1 { font: 500 34px/1 var(--sans); letter-spacing: -.045em; margin: 26px 0 4px; text-transform: lowercase; }
+    h1 span { color: var(--grey); }
+    .lede { font: 12px var(--mono); color: var(--grey); margin: 0 0 18px; }
+    h2 { font: 11px var(--mono); text-transform: lowercase; color: var(--grey); letter-spacing: .04em; margin: 26px 0 8px; display: flex; justify-content: space-between; }
+    h2 a { color: var(--ink); text-decoration: none; }
+
+    /* member card */
+    .card { position: relative; border-radius: 16px; padding: 16px; color: #111; overflow: hidden; aspect-ratio: 1.7; display: flex; flex-direction: column; justify-content: space-between;
+      background: linear-gradient(115deg, #e8e8f0 0%, #c9f0ff 22%, #f6d5ff 44%, #fff4c9 62%, #c8ffe7 80%, #e8e8f0 100%); background-size: 220% 220%; animation: holo 8s ease-in-out infinite alternate; box-shadow: inset 0 0 0 1px rgba(255,255,255,.6), 0 10px 30px rgba(0,0,0,.12); }
+    @keyframes holo { to { background-position: 100% 100%; } }
+    .card .row { display: flex; justify-content: space-between; align-items: flex-start; font: 10px var(--mono); text-transform: uppercase; letter-spacing: .12em; }
+    .card .name { font: 500 26px var(--sans); letter-spacing: -.03em; text-transform: lowercase; }
+    .card .nums { display: flex; gap: 18px; font: 10px var(--mono); text-transform: uppercase; letter-spacing: .08em; }
+    .card .nums b { display: block; font: 500 20px var(--sans); letter-spacing: -.02em; }
+
+    /* claimed */
+    .claimed { border-top: 1px solid var(--ink); }
+    .cl { display: grid; grid-template-columns: 52px 1fr auto; gap: 10px; align-items: center; padding: 11px 0; border-bottom: 1px solid var(--line); }
+    .cl .d { font: 11px var(--mono); }
+    .cl b { font-weight: 500; text-transform: lowercase; letter-spacing: -.01em; font-size: 15px; }
+    .cl small { display: block; font: 11px var(--mono); color: var(--grey); }
+    .tag { font: 10px var(--mono); padding: 3px 7px; border: 1px solid var(--ink); border-radius: 99px; text-transform: lowercase; white-space: nowrap; }
+    .tag.blue { background: var(--blue); color: #fff; border-color: var(--blue); }
+
+    /* drops */
+    .drops { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .drop { background: #fff; border-radius: 10px; padding: 12px; display: flex; flex-direction: column; gap: 6px; min-height: 196px; }
+    .drop.wide { grid-column: span 2; min-height: 0; }
+    .drop .no { font: 10px var(--mono); color: var(--grey); display: flex; justify-content: space-between; }
+    .drop .art { font-size: 36px; line-height: 1; filter: grayscale(1) contrast(1.2); }
+    .drop b { font: 500 17px/1.05 var(--sans); letter-spacing: -.03em; text-transform: lowercase; }
+    .drop small { font: 11px var(--mono); color: var(--grey); }
+    .count { font: 12px var(--mono); }
+    .meter { height: 3px; background: var(--line); }
+    .meter i { display: block; height: 100%; background: var(--ink); }
+    .meter.hot i { background: var(--blue); }
+    .claim { margin-top: auto; background: var(--ink); color: #fff; font: 12px var(--mono); padding: 9px; border-radius: 99px; text-transform: lowercase; }
+    .claim.done { background: var(--blue); }
+    .drop.wide .inner { display: flex; gap: 12px; align-items: center; }
+    .drop.wide .inner > div { flex: 1; }
+    .drop.wide .claim { margin-top: 0; padding: 9px 16px; }
+
+    /* feed */
+    .feed { border-top: 1px solid var(--ink); }
+    .fi { display: grid; grid-template-columns: 58px 1fr; gap: 10px; padding: 11px 0; border-bottom: 1px solid var(--line); font-size: 14px; }
+    .fi .who { font: 11px var(--mono); color: var(--grey); text-transform: lowercase; padding-top: 2px; }
+    .fi .rx { margin-top: 6px; font: 11px var(--mono); border: 1px solid var(--ink); border-radius: 99px; padding: 2px 8px; background: none; }
+    .fi .rx[aria-pressed="true"] { background: var(--ink); color: #fff; }
+
+    .tabs { position: sticky; bottom: 0; display: flex; justify-content: space-between; padding: 12px 16px 16px; background: rgba(239,239,236,.92); backdrop-filter: blur(8px); border-top: 1px solid var(--line); }
+    .tabs a { font: 11px var(--mono); color: var(--grey); text-decoration: none; text-transform: lowercase; }
+    .tabs a.on { color: var(--ink); text-decoration: underline; text-underline-offset: 4px; }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <main>
+      <div class="top"><a href="../index.html">← gallery</a><span class="logo">GLG</span><span>hk / 07:42</span></div>
+
+      <h1>morning jasmine.<br><span>here's what's dropping.</span></h1>
+      <p class="lede">3 drops open · 2 claimed · 1 almost gone</p>
+
+      <div class="card" aria-label="Membership card">
+        <div class="row"><span>girls lift girls<br>hong kong</span><span>member<br>#0412</span></div>
+        <div class="name">jasmine tran</div>
+        <div class="nums"><div><b>27</b>sessions</div><div><b>3wk</b>streak</div><div><b>60kg</b>squat pb</div><div><b>2025</b>since</div></div>
+      </div>
+
+      <h2><span>claimed (2)</span><a href="#">calendar →</a></h2>
+      <div class="claimed">
+        <div class="cl"><span class="d">sun 11<br>06:15</span><div><b>dragon's back sunrise hike</b><small>to tei wan · in <span data-to="2026-10-11T06:15:00+08:00" data-short>5d</span></small></div><span class="tag">claimed</span></div>
+        <div class="cl"><span class="d">wed 14<br>19:30</span><div><b>harbourfront 5k</b><small>star ferry clock tower · new spot</small></div><span class="tag">claimed</span></div>
+      </div>
+
+      <h2><span>this week's drops</span><a href="#">all →</a></h2>
+      <div class="drops">
+        <div class="drop">
+          <div class="no"><span>drop 003</span><span class="tag blue">2 left</span></div>
+          <span class="art">🏋️‍♀️</span>
+          <b>barbell basics</b>
+          <small>sat 10 · kwun tong · hk$180</small>
+          <span class="count" data-to="2026-10-10T08:00:00+08:00">--</span>
+          <div class="meter hot"><i style="width:87.5%"></i></div>
+          <button class="claim">claim spot</button>
+        </div>
+        <div class="drop">
+          <div class="no"><span>drop 004</span><span>9/20</span></div>
+          <span class="art">🥊</span>
+          <b>boxing fundamentals</b>
+          <small>sat 17 · sheung wan · hk$250</small>
+          <span class="count" data-to="2026-10-17T10:00:00+08:00">--</span>
+          <div class="meter"><i style="width:45%"></i></div>
+          <button class="claim">claim spot</button>
+        </div>
+        <div class="drop wide">
+          <div class="no"><span>drop 005</span><span>6/12</span></div>
+          <div class="inner"><span class="art">🏄‍♀️</span><div><b>paddle &amp; brunch</b><br><small>sun 25 · sai kung · hk$420</small><br><span class="count" data-to="2026-10-25T09:00:00+08:00">--</span></div><button class="claim">claim</button></div>
+          <div class="meter"><i style="width:50%"></i></div>
+        </div>
+      </div>
+
+      <h2><span>on the feed</span><a href="#">community →</a></h2>
+      <div class="feed">
+        <div class="fi"><span class="who">hana</span><div>run club moved to the star ferry clock tower. look for the pink flag.</div></div>
+        <div class="fi"><span class="who">chloe</span><div>100 kg deadlift. pr.<br><button class="rx" aria-pressed="false" data-n="34">↑ 34</button></div></div>
+        <div class="fi"><span class="who">priya</span><div>taxi to to tei wan sun 05:40 from quarry bay. 6 in thread.</div></div>
+        <div class="fi"><span class="who">challenge</span><div>lift a million: 412,000 / 1,000,000 kg. you: 2,140.</div></div>
+        <div class="fi"><span class="who">glg hq</span><div>global lift day, sat 7 nov. 7 cities, same hour. hk 17:00.</div></div>
+      </div>
+    </main>
+
+    <nav class="tabs"><a class="on" href="#">home</a><a href="#">events</a><a href="#">community</a><a href="#">profile</a></nav>
+  </div>
+
+  <script>
+    // The prototype's "now" is fixed at Tue 6 Oct 2026, 07:42 HKT; the clock ticks from page load.
+    const base = new Date("2026-10-06T07:42:00+08:00").getTime(), loaded = Date.now();
+    const pad = n => String(n).padStart(2, "0");
+    function tick() {
+      const now = base + (Date.now() - loaded);
+      document.querySelectorAll(".count").forEach(el => {
+        let s = Math.max(0, Math.floor((new Date(el.dataset.to) - now) / 1000));
+        const d = Math.floor(s / 86400); s %= 86400;
+        el.textContent = `starts in ${d}d ${pad(Math.floor(s / 3600))}:${pad(Math.floor(s % 3600 / 60))}:${pad(s % 60)}`;
+      });
+    }
+    tick(); setInterval(tick, 1000);
+
+    document.querySelectorAll(".claim").forEach(b => b.addEventListener("click", () => {
+      b.textContent = "claimed ✓"; b.classList.add("done"); b.disabled = true;
+    }));
+    document.querySelectorAll(".rx").forEach(r => r.addEventListener("click", () => {
+      const on = r.getAttribute("aria-pressed") !== "true";
+      r.setAttribute("aria-pressed", on);
+      r.textContent = `↑ ${+r.dataset.n + (on ? 1 : 0)}`;
+    }));
+  </script>
+</body>
+</html>
