@@ -127,3 +127,8 @@
 ## v17: Lavender Drop
 - **Made:** a cross of v14 (cool drops, lowercase, mono details, live countdowns) and v7 (pastels, no black), kept in the purple family. "morning, jasmine." with a pink→purple gradient, then a holographic pastel member card that holds the streak ring, this week's day tiles and stats. "Claimed" sessions have square photo thumbnails, countdowns and "you + 22". "This week's drops" are photo cards in pastel duotones with fill meters and "claim spot". "The feed" is a 3-column photo mosaic (run club "31 of us" big tile, Chloe's PR, new faces, sunrises) with ♡ reactions, plus pastel announcement notes (pinned run club update, Lift a Million, chapter chat, Global Lift Day).
 - **Fix:** the photo generator was replacing badges and date chips placed inside photos. It now inserts the drawing underneath. v16 is patched too.
+
+## v18: Night Session
+- **Made:** a cross of v8 (loud hype, story viewer) and v13 (photos, together) in a dark GLG-purple night mode. Story rings are circular photos and open a full-screen photo story with progress bars and actions ("👋 Wave", "💜 Lift her up", "Remind me"). Then "MORNING, JASMINE." in big condensed caps, a pink streak ring ("3-week streak. Make it 4."), "Locked in" as full-bleed photo cards with who's going, "Up next" as a swipeable deck of tall photo cards with Join buttons, and "The squad": a pinned update, two photo moments, Lift a Million, chapter chat and Global Lift Day.
+- **Pushback:** "please make sure you are committing and pushing changes to github as you go." v16 and v17 had been committed but not pushed. Pushed straight away, and from now on every commit is pushed in the same step.
+- Updated the gallery story text to cover v16–v18.
