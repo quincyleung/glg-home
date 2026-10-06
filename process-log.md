@@ -278,3 +278,7 @@
   - Accessibility polish: visible focus rings, and all animation off under prefers-reduced-motion.
   - An empty-state preview at `v25/index.html?empty`: "Nothing booked yet" with friend chips that open the friend sheet.
 - **Gallery:** v25 is highlighted as the final pick, with a "why it won" section mapped to the brief and a one-paragraph story of the process.
+
+## v25 refined
+- **Asked for:** remove the shimmer from both sides and keep the card as in v22. Remove the number next to "psst, your friends are going" and show only 1 (several felt cluttered). Add a fun motivational quote at the bottom. Show time as days and hours (minutes only within a day).
+- **Made:** the shimmer border and holographic back are gone (v22's white card and white check-in pass). There's a single psst card (Chloe & Kiko → Barbell) with no count pill. Countdowns read "In 4d 22h" and switch to "In 5h 12m" on the last day. A closing quote card has original lines in GLG's voice ("Strong looks different on everyone. That's the point.", "Lift heavy. Laugh loud. Bring a friend." …) and "Another one ↻" to cycle.
