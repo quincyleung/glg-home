@@ -285,3 +285,4 @@
 - **Follow-up:** "get rid of 'another one' and just have one quote there every time the page is opened." Removed the button. One quote is now picked at random each time the page loads.
 - **Follow-up:** "make sure there are end quotes for the quote at the bottom." Added a matching pink closing ” under the quote, spaced to mirror the opening “.
 - **Follow-up:** "make the opening quote in the top left and ending quote bottom right." The pink “ is now pinned to the card's top-left corner and the ” to its bottom-right, with the quote centred between them.
+- **Follow-up:** remove the number next to "Join a session", and stop the section headers sticking while scrolling. The count pill on "Join a session" is gone, and headers now scroll with the page (sticky positioning and the pinned-title script removed).
