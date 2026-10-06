@@ -201,3 +201,10 @@
 ## v22: who's going on "coming up"
 - **Asked for:** show who's going (just 3 icons, like her booked events) on the coming-up events.
 - **Made:** each coming-up card has an avatar row like the "you're going" tickets: Barbell Basics "Chloe, Kiko + 12", Boxing "Mandy + 8", Paddle & Brunch "Sara + 5" (matching the spot counts). Joining a session (from its card or the psst nudge) puts Jasmine's avatar first and changes the line to "You, Chloe, Kiko + 12".
+
+## v22: compact cards, clear sections
+- **Asked for:** condense the coming-up cards (price on the same line as who's going, left of Join; one info line under the title (date, time, location); extra instructions behind a circle on the top right of the photo), consistently throughout. Also: remove the moving "redefining norms" banner (distracting), and make each section more defined so it's clear where you've scrolled to.
+- **Made:**
+  - "You're going" and "coming up" now share one card: a 118px photo with a label top-left ("In 5 days", "Only 2 spots left") and an ⓘ circle top-right that slides up a details panel (coach, gear, pace groups, brunch). Below it, the title, one line of date · time · place, and one row with who's going on the left and price + Join (or Going ✓) on the right.
+  - Removed the values band.
+  - Grouped the page into three full-width sections in alternating bands (lavender "You're going", white "Coming up", lavender "From the community"). Each has a sticky header (purple icon tile, title, count pill, link) that pins to the top while you're in that section. The psst nudge moved into "Coming up". Checked the sticky headers by script (the Coming up header sits at 0px mid-section).
