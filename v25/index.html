@@ -248,9 +248,7 @@
     /* v25: a fun motivational line to end on */
     .quote { margin: 8px 0 18px; padding: 22px 18px 18px; text-align: center; border-radius: 22px; background: #fff; box-shadow: 0 0 0 1px #e6defa; position: relative; }
     .quote .qmark { display: block; font: 700 54px/.6 var(--display); color: var(--pink); margin-top: 6px; }
-    .quote p { margin: 6px 0 12px; font-size: 24px; line-height: 1.1; color: var(--purple); }
-    .qnext { font: 700 12px var(--display); text-transform: uppercase; letter-spacing: .08em; color: var(--muted); padding: 4px 10px; border-radius: 99px; }
-    .qnext:hover { background: var(--lav); color: var(--purple); }
+    .quote p { margin: 6px 0 4px; font-size: 24px; line-height: 1.1; color: var(--purple); }
   </style>
 </head>
 <body>
@@ -336,7 +334,6 @@
       <section class="quote" aria-label="Today's motivation">
         <span class="qmark" aria-hidden="true">“</span>
         <p class="d" id="quote-text">Strong looks different on everyone. That's the point.</p>
-        <button class="qnext" id="quote-next">Another one ↻</button>
       </section>
     </main>
 
@@ -587,7 +584,7 @@
       Avatar.drawAll(document.querySelector(".empty-going"));
     }
 
-    // v25: motivational quotes (original lines, in GLG's voice); tap for another.
+    // v25: one motivational quote (original lines, in GLG's voice), picked fresh each time the page opens.
     const quotes = [
       "Strong looks different on everyone. That's the point.",
       "Lift heavy. Laugh loud. Bring a friend.",
@@ -596,11 +593,7 @@
       "Sunrise hikes > snooze buttons.",
       "Stronger together. Literally: 412,000 kg and counting."
     ];
-    let qi = 0;
-    document.getElementById("quote-next").addEventListener("click", () => {
-      qi = (qi + 1) % quotes.length;
-      document.getElementById("quote-text").textContent = quotes[qi];
-    });
+    document.getElementById("quote-text").textContent = quotes[Math.floor(Math.random() * quotes.length)];
     const toast = document.getElementById("toast");
     function say(msg) { toast.textContent = msg; toast.classList.add("show"); clearTimeout(say.t); say.t = setTimeout(() => toast.classList.remove("show"), 2400); }
 
