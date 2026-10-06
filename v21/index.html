@@ -76,6 +76,24 @@
     .claim-card small { display: block; font: 11px var(--mono); color: var(--muted); }
     .pill { font: 10px var(--mono); padding: 4px 8px; border-radius: 99px; background: var(--lilac); color: var(--purple); white-space: nowrap; }
 
+    /* psst: friends are going */
+    .psst { margin-top: 18px; background: #fff; border-radius: 20px; padding: 14px; position: relative; box-shadow: 0 0 0 1.5px #e6defa, 0 6px 18px rgba(107,69,224,.1); transition: opacity .35s, transform .35s, max-height .45s .2s, margin .45s .2s, padding .45s .2s; max-height: 400px; overflow: hidden; }
+    .psst::before { content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1.5px; background: linear-gradient(115deg, #ff9fcb, #b9a3ff, #9fd2ff); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none; }
+    .psst.gone { opacity: 0; transform: translateY(-6px) scale(.98); max-height: 0; margin-top: 0; padding-top: 0; padding-bottom: 0; }
+    .psst .kick { font: 12px var(--mono); color: var(--purple); }
+    .psst .row2 { display: flex; align-items: center; gap: 12px; margin: 10px 0 12px; }
+    .psst .faces { display: flex; flex: none; }
+    .psst .faces .ava { width: 44px; height: 44px; border-radius: 50%; overflow: hidden; box-shadow: 0 0 0 3px #fff; }
+    .psst .faces .ava + .ava { margin-left: -12px; }
+    .psst .faces .ava svg { display: block; width: 100%; height: 100%; }
+    .psst b { display: block; font: 700 16px/1.25 var(--sans); letter-spacing: -.02em; }
+    .psst small { display: block; font: 11px var(--mono); color: var(--muted); margin-top: 3px; }
+    .psst .hot { color: #e2468f; }
+    .psst .btns { display: flex; gap: 8px; }
+    .psst .btns button { flex: 1; font: 12px var(--mono); padding: 10px; border-radius: 99px; }
+    .psst .yes { background: var(--purple); color: #fff; }
+    .psst .no { background: var(--lilac); color: var(--purple); }
+    .psst.joined .yes { background: var(--mint); color: #1f6b52; }
     /* coming up */
     .drops { display: flex; gap: 10px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: 16px; margin: 0 -16px; padding: 2px 16px 8px; scrollbar-width: none; }
     .drops::-webkit-scrollbar { display: none; }
@@ -168,6 +186,15 @@
         <div class="info"><b>dragon's back sunrise hike</b><small>sun 11 · 06:15 · to tei wan</small><small><span class="count" data-to="2026-10-11T06:15:00+08:00"></span></small></div><span class="pill">you + 22</span></div>
       <div class="claim-card"><div class="photo" data-scene="harbour" data-people="5" data-seed="8" data-duo="#3a2a8a,#e6f2ff" data-alt="Run club at the harbour"></div>
         <div class="info"><b>harbourfront 5k</b><small>wed 14 · 19:30 · star ferry (new spot)</small><small><span class="count" data-to="2026-10-14T19:30:00+08:00"></span></small></div><span class="pill">you + 30</span></div>
+
+      <div class="psst" id="psst" role="region" aria-label="Your friends are going">
+        <span class="kick">psst, your friends are going →</span>
+        <div class="row2">
+          <span class="faces"><span class="ava" data-who="chloe"></span><span class="ava" data-who="kiko"></span></span>
+          <div><b>chloe and kiko are going to barbell basics</b><small>sat 10 · 8am · kwun tong · <span class="hot">only 2 spots left</span></small></div>
+        </div>
+        <div class="btns"><button class="yes" id="psst-yes">join them · hk$180</button><button class="no" id="psst-no">it's okay</button></div>
+      </div>
 
       <h2><span>coming up</span><a href="#">all →</a></h2>
       <div class="drops">
@@ -289,6 +316,18 @@
       });
     }
     tick(); setInterval(tick, 1000);
+    // psst nudge: join friends, or dismiss.
+    const psst = document.getElementById("psst");
+    document.getElementById("psst-yes").addEventListener("click", e => {
+      psst.classList.add("joined");
+      e.currentTarget.textContent = "you're in with chloe & kiko ✓"; e.currentTarget.disabled = true;
+      document.getElementById("psst-no").remove();
+      const barbell = document.querySelector(".drop .claim");
+      if (barbell && !barbell.disabled) { barbell.textContent = "you're going ✓"; barbell.classList.add("done"); barbell.disabled = true; }
+      setTimeout(() => psst.classList.add("gone"), 2200);
+    });
+    document.getElementById("psst-no").addEventListener("click", () => psst.classList.add("gone"));
+    document.querySelector(".drop .claim").addEventListener("click", () => psst.classList.add("gone"));
     document.querySelectorAll(".claim").forEach(b => b.addEventListener("click", () => {
       b.textContent = "you're going ✓"; b.classList.add("done"); b.disabled = true;
     }));
