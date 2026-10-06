@@ -184,3 +184,7 @@
   - "Coming up" as three equal photo cards.
   - "From the community" as three compact snippets with small thumbnails and no filters.
 - Avatars come from the illustrated avatar generator (same looks as v19 and v20).
+
+## v21 + v22: hearts, comments, community challenges
+- **Asked for:** community content (posts and announcements) should be heartable and commentable. Challenges should be community challenges, not personal ones, with a "join challenge" button or a sign that you're part of it.
+- **Made (both v21 and v22, same code with v21 lowercased):** each post and announcement has a ♡ heart (toggles, count +1) and a 💬 comment count. Tapping 💬 opens the latest comment, "view all N comments" and an "add a comment" box with Jasmine's avatar. Posting adds the comment and bumps the count. Removed the personal streak challenge. Challenges are now the October Sunrise Club (4 sunrise sessions before 31 Oct, 38 members, "Join challenge" → "You're in ✓", members +1) and Lift a Million (progress bar, 164 members, "You're in · 2,140 kg"). The 3 latest are Priya's taxi post, Global Lift Day and the Sunrise Club. Added the new challenge and sample comments to `content.md`.

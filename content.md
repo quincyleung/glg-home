@@ -78,7 +78,9 @@ Short items for a "community" area on the home page. Mix of types so it doesn't 
 - **Member win:** Chloe Ng hit a 100 kg deadlift PR at Iron Harbour on Saturday. 34 hypes.
 - **Member win:** Aisha Lam finished her first ever 5K at last week's run club. 21 hypes.
 - **Chat thread:** Priya Raman: "Anyone want to split a taxi to To Tei Wan for Sunday's hike? Leaving Quarry Bay 5:40am." 6 replies.
-- **Challenge:** Lift a Million — 412,000 / 1,000,000 kg (41%), 25 days left.
+- **Challenge:** Lift a Million — 412,000 / 1,000,000 kg (41%), 25 days left. Jasmine is part of it (2,140 kg).
+- **Challenge:** October Sunrise Club — do 4 sunrise sessions before 31 Oct. 38 members in. Jasmine hasn't joined yet (her Sunday hike would count as #1).
+- **Sample comments:** Hana on Priya's taxi post: "Save me a seat!" · Mei-Ling on Global Lift Day: "HK is going to be loud 💜" · Chloe on Kiko's intro: "See you Saturday!" · Aisha on the run club update: "Pink flag gang 🚩" · Mei-Ling on Chloe's PR: "So proud of you."
 - **Buddy match:** Chloe Ng is going to Barbell Basics solo too.
 - **New members this week:** Mandy Wong, Kiko Sato, Sara Ahmed. Barbell Basics is Kiko's first session.
 - **Activity stats (for feed-style versions):** last week's Harbourfront 5K: 31 members, 5.0 km, avg 6:12/km, 48 kudos. Chloe's PR session: top set 100 kg × 1, volume 3,450 kg, 58 min, 34 kudos. Lift a Million leaderboard: Mei-Ling Ho 18,920 kg, Chloe Ng 15,300 kg, Priya Raman 11,780 kg … Jasmine #38 with 2,140 kg.

@@ -138,6 +138,24 @@
     .post .pbar i { display: block; height: 100%; border-radius: 99px; background: linear-gradient(90deg, #ff9fcb, var(--purple)); }
     .post .act { background: var(--lilac); color: var(--purple); font: 11px var(--mono); padding: 5px 10px; border-radius: 99px; }
     .post .act.done { background: var(--purple); color: #fff; }
+    .post .react { display: flex; gap: 6px; }
+    .post .react button, .post .chrow .act { font: 11px var(--mono); padding: 5px 10px; border-radius: 99px; background: var(--lilac); color: var(--purple); }
+    .post .heart[aria-pressed="true"] { background: #ffe3ee; color: #d6336c; }
+    .post .cmt[aria-expanded="true"] { background: var(--purple); color: #fff; }
+    .post .comments { margin-top: 8px; padding-top: 8px; border-top: 1px solid #ece5fb; }
+    .post .c { display: flex; gap: 6px; align-items: flex-start; margin-bottom: 6px; }
+    .post .c .ava, .post .add .ava { width: 20px; height: 20px; border-radius: 50%; overflow: hidden; flex: none; }
+    .post .c .ava svg, .post .add .ava svg { display: block; width: 100%; height: 100%; }
+    .post .c p { margin: 0; font-size: 12px; line-height: 1.35; display: block; -webkit-line-clamp: unset; }
+    .post .all { display: block; font: 10px var(--mono); color: var(--muted); margin: 0 0 6px 26px; text-decoration: none; }
+    .post .add { display: flex; gap: 6px; align-items: center; }
+    .post .add input { flex: 1; min-width: 0; font: 12px var(--sans); border: 1px solid #e6defa; border-radius: 99px; padding: 6px 10px; outline: none; background: #fff; }
+    .post .add input:focus { border-color: var(--purple); }
+    .post .add button { font: 11px var(--mono); color: var(--purple); }
+    .post .chrow { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+    .post .members { font: 10px var(--mono); color: var(--muted); }
+    .post .chrow .act { background: var(--purple); color: #fff; }
+    .post .chrow .act.done { background: var(--mint); color: #1f6b52; }
     .filters { display: flex; gap: 6px; overflow-x: auto; margin: 0 -16px 12px; padding: 0 16px; scrollbar-width: none; }
     .filters::-webkit-scrollbar { display: none; }
     .filters button { flex: none; font: 12px var(--mono); padding: 7px 12px; border-radius: 99px; background: #fff; color: var(--muted); box-shadow: inset 0 0 0 1px #e6defa; }
@@ -391,40 +409,79 @@
     flip.addEventListener("click", toggleFlip);
     flip.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggleFlip(); } });
 
+    const LOWER = true;
     // From the community: a small snippet of the 3 most recent items (filters live on the Community tab).
+    // Posts and announcements can be hearted and commented on; challenges are community challenges you can join.
+    const tx = s => LOWER ? s.toLowerCase() : s;
     const feedItems = [
-      { type: "posts", age: 14, when: "yesterday", who: "priya", name: "priya raman", title: "taxi to dragon's back?", text: "splitting a taxi to to tei wan on sunday, 5:40am from quarry bay. you're on this hike too 🚕 · 6 replies", act: "join the taxi", done: "you're in the taxi ✓" },
-      { type: "announcements", age: 20, when: "yesterday", seed: 90, name: "glg hq", title: "global lift day · sat 7 nov 🌏", text: "all seven chapters lift at the same hour for the first time. hong kong lifts at 5pm at iron harbour.", photo: { scene: "gym", people: 8, seed: 77 }, act: "remind me", done: "reminder set ✓" },
-      { type: "challenges", age: 30, when: "monday", who: "jasmine", name: "your streak", title: "make it 4 weeks 🔥", text: "3 weeks in a row. wednesday's 5k makes it 4.", progress: 75, act: "on track ✓", done: "on track ✓" },
-      { type: "posts", age: 40, when: "2 days ago", who: "kiko", name: "kiko sato", title: "hi everyone 👋", text: "just joined with mandy and sara. barbell basics on saturday is my first ever session, be nice!", photo: { scene: "studio", people: 3, seed: 40 }, act: "👋 wave", done: "waved 👋" },
-      { type: "announcements", age: 48, when: "2 days ago", who: "hana", name: "hana okafor", pin: true, title: "run club has a new start line", text: "from wednesday we meet at the star ferry clock tower. same time, 7:30pm. look for the pink flag!", photo: { scene: "harbour", people: 6, seed: 8 }, act: "got it", done: "see you wednesday ✓" },
-      { type: "posts", age: 72, when: "saturday", who: "chloe", name: "chloe ng", title: "100 kg deadlift. new pr 🔥", text: "two years ago i couldn't lift the empty bar. thank you mei-ling and the saturday crew.", photo: { scene: "gym", people: 5, seed: 21 }, act: "💜 lift her up · 34", done: "💜 lifted · 35" },
-      { type: "challenges", age: 120, when: "5 days ago", who: "meiling", name: "lift a million", title: "412,000 / 1,000,000 kg", text: "hit a million by 31 oct and hk$5,000 goes to a local women's shelter. your share: 2,140 kg.", progress: 41, act: "log a lift", done: "logged ✓" }
+      { type: "posts", age: 14, when: "Yesterday", who: "priya", name: "Priya Raman", title: "Taxi to Dragon's Back?", text: "Splitting a taxi to To Tei Wan on Sunday, 5:40am from Quarry Bay. You're on this hike too 🚕", hearts: 5, comments: 6, sample: [{ who: "hana", name: "Hana", text: "Save me a seat!" }] },
+      { type: "announcements", age: 20, when: "Yesterday", seed: 90, name: "GLG HQ", title: "Global Lift Day · Sat 7 Nov", text: "All seven chapters lift at the same hour for the first time. Hong Kong lifts at 5pm at Iron Harbour.", photo: { scene: "gym", people: 8, seed: 77 }, hearts: 112, comments: 23, sample: [{ who: "meiling", name: "Mei-Ling", text: "HK is going to be loud 💜" }] },
+      { type: "challenges", age: 22, when: "Yesterday", who: "hana", name: "Sunrise Club", title: "October Sunrise Club: 4 sunrises", text: "Hike, run or stretch at sunrise with the chapter. Sunday's Dragon's Back would count as your first.", photo: { scene: "trail", people: 6, seed: 44 }, members: 38, joined: false },
+      { type: "posts", age: 40, when: "2 days ago", who: "kiko", name: "Kiko Sato", title: "Hi everyone 👋", text: "Just joined with Mandy and Sara. Barbell Basics on Saturday is my first ever session!", photo: { scene: "studio", people: 3, seed: 40 }, hearts: 18, comments: 5, sample: [{ who: "chloe", name: "Chloe", text: "See you Saturday!" }] },
+      { type: "announcements", age: 48, when: "2 days ago", who: "hana", name: "Hana Okafor", title: "Run club has a new start line", text: "From Wednesday we meet at the Star Ferry clock tower. Same time, 7:30pm. Look for the pink flag!", photo: { scene: "harbour", people: 6, seed: 8 }, hearts: 27, comments: 4, sample: [{ who: "aisha", name: "Aisha", text: "Pink flag gang 🚩" }] },
+      { type: "posts", age: 72, when: "Saturday", who: "chloe", name: "Chloe Ng", title: "100 kg deadlift. New PR 🔥", text: "Two years ago I couldn't lift the empty bar. Thank you, Mei-Ling and the Saturday crew.", photo: { scene: "gym", people: 5, seed: 21 }, hearts: 34, comments: 9, sample: [{ who: "meiling", name: "Mei-Ling", text: "So proud of you." }] },
+      { type: "challenges", age: 120, when: "5 days ago", who: "meiling", name: "Lift a Million", title: "412,000 / 1,000,000 kg", text: "Hit a million by 31 Oct and HK$5,000 goes to a local women's shelter.", progress: 41, members: 164, joined: true, mine: "2,140 kg" }
     ];
-    const kindLabel = { posts: "post", challenges: "challenge", announcements: "announcement" };
-    function renderFeed(f) {
-      const list = feedItems.filter(i => f === "all" || i.type === f).sort((a, b) => a.age - b.age).slice(0, 3);
+    const kindLabel = { posts: "Post", challenges: "Challenge", announcements: "Announcement" };
+    const avaFor = i => `<span class="ava" ${i.who ? `data-who="${i.who}"` : `data-seed="${i.seed}"`}></span>`;
+    function footFor(i) {
+      if (i.type === "challenges") {
+        const status = i.joined ? (i.mine ? `You're in · ${i.mine}` : "You're in ✓") : "Join challenge";
+        return `${i.progress ? `<div class="pbar"><i style="width:${i.progress}%"></i></div>` : ""}
+          <div class="chrow"><span class="members">${i.members} ${tx("members in")}</span><button class="act join-ch${i.joined ? " done" : ""}"${i.joined ? " disabled" : ""}>${tx(status)}</button></div>`;
+      }
+      return `<div class="react"><button class="heart" aria-pressed="false" aria-label="Heart">♡ <span>${i.hearts}</span></button><button class="cmt" aria-expanded="false" aria-label="Comments">💬 <span>${i.comments}</span></button></div>
+        <div class="comments" hidden>
+          ${i.sample.map(c => `<div class="c">${avaFor(c)}<p><b>${tx(c.name)}</b> ${tx(c.text)}</p></div>`).join("")}
+          ${i.comments > i.sample.length ? `<a class="all" href="#">${tx(`View all ${i.comments} comments`)}</a>` : ""}
+          <form class="add"><span class="ava" data-who="jasmine"></span><input type="text" placeholder="${tx("Add a comment…")}" aria-label="Add a comment"><button>${tx("Post")}</button></form>
+        </div>`;
+    }
+    (function renderFeed() {
+      const list = feedItems.slice().sort((a, b) => a.age - b.age).slice(0, 3);
       const feed = document.getElementById("feed");
       feed.innerHTML = list.map(i => `<article class="post">
         <div class="pb">
-          <div class="head"><span class="ava" ${i.who ? `data-who="${i.who}"` : `data-seed="${i.seed}"`}></span><b>${i.name}</b><small>· ${i.when}</small><span class="kind ${i.type}">${i.pin ? "📌 " : ""}${kindLabel[i.type]}</span></div>
-          <span class="t">${i.title}</span><p>${i.text}</p>${i.progress ? `<div class="pbar"><i style="width:${i.progress}%"></i></div>` : ""}<button class="act${i.act === i.done ? " done" : ""}">${i.act}</button>
+          <div class="head">${avaFor(i)}<b>${tx(i.name)}</b><small>· ${tx(i.when)}</small><span class="kind ${i.type}">${tx(kindLabel[i.type])}</span></div>
+          <span class="t">${tx(i.title)}</span><p>${tx(i.text)}</p>${footFor(i)}
         </div>
         ${i.photo ? `<div class="photo" data-scene="${i.photo.scene}" data-people="${i.photo.people}" data-seed="${i.photo.seed}" data-tone="color"></div>` : ""}
       </article>`).join("");
       feed.querySelectorAll(".photo").forEach(Photo.draw);
       Avatar.drawAll(feed);
-      feed.querySelectorAll(".act").forEach((b, n) => b.addEventListener("click", () => {
-        const i = list[n], on = !b.classList.contains("done");
-        b.classList.toggle("done", on); b.textContent = on ? i.done : i.act;
-      }));
-    }
-    renderFeed("all");
-    document.querySelectorAll(".heart").forEach(h => h.addEventListener("click", () => {
-      const on = h.getAttribute("aria-pressed") !== "true";
-      h.setAttribute("aria-pressed", on);
-      h.textContent = `${on ? "♥" : "♡"} ${+h.dataset.n + (on ? 1 : 0)}`;
-    }));
+
+      feed.querySelectorAll(".post").forEach((post, n) => {
+        const i = list[n];
+        const heart = post.querySelector(".heart");
+        heart?.addEventListener("click", () => {
+          const on = heart.getAttribute("aria-pressed") !== "true";
+          heart.setAttribute("aria-pressed", on);
+          heart.innerHTML = `${on ? "♥" : "♡"} <span>${i.hearts + (on ? 1 : 0)}</span>`;
+        });
+        const cmt = post.querySelector(".cmt"), box = post.querySelector(".comments");
+        cmt?.addEventListener("click", () => {
+          const open = box.hidden; box.hidden = !open; cmt.setAttribute("aria-expanded", open);
+          if (open) box.querySelector("input").focus();
+        });
+        post.querySelector(".add")?.addEventListener("submit", e => {
+          e.preventDefault();
+          const input = e.currentTarget.querySelector("input"), text = input.value.trim();
+          if (!text) return;
+          const div = document.createElement("div");
+          div.className = "c";
+          div.innerHTML = `<span class="ava" data-who="jasmine"></span><p><b>${tx("Jasmine")}</b> </p>`;
+          div.querySelector("p").append(text);
+          e.currentTarget.before(div); Avatar.drawAll(div);
+          input.value = "";
+          cmt.querySelector("span").textContent = ++i.comments;
+        });
+        post.querySelector(".join-ch:not([disabled])")?.addEventListener("click", e => {
+          const b = e.currentTarget;
+          b.textContent = tx("You're in ✓"); b.classList.add("done"); b.disabled = true;
+          post.querySelector(".members").textContent = `${i.members + 1} ${tx("members in")}`;
+        });
+      });
+    })();
   </script>
 </body>
 </html>
