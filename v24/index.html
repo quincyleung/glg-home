@@ -105,7 +105,8 @@
     .sec.tint { background: transparent; }
     .flip-wrap + .sec { margin-top: 8px; }
     .sec + .sec { border-top: 1px solid rgba(74,31,184,.08); }
-    .sec-head { position: sticky; top: 0; z-index: 6; display: flex; align-items: center; gap: 10px; margin: 0 -16px 12px; padding: 16px 16px 12px; background: rgba(255,255,255,.55); -webkit-backdrop-filter: blur(14px) saturate(1.4); backdrop-filter: blur(14px) saturate(1.4); }
+    .sec-head { position: sticky; top: 0; z-index: 6; display: flex; align-items: center; gap: 10px; margin: 0 -16px 12px; padding: 16px 16px 12px; background: transparent; transition: background .2s, box-shadow .2s; }
+    .sec-head.stuck { background: rgba(247,244,255,.92); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); box-shadow: 0 6px 14px -10px rgba(40,10,90,.35); }
     .sec-head .ic { width: 34px; height: 34px; border-radius: 11px; background: var(--purple); display: grid; place-items: center; flex: none; }
     .sec-head .ic svg { width: 19px; height: 19px; fill: none; stroke: #fff; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
     .sec-head .d { font-size: 22px; line-height: 1; }
@@ -489,6 +490,13 @@
       far.insertAdjacentHTML("beforeend", `<span class="sat far" style="left:${50 + r * Math.cos(ang)}%;top:${50 + r * Math.sin(ang)}%">${ava("s" + (70 + i))}</span>`);
     }
     function show(i) {
+      const tapped = document.querySelectorAll(".sat.near")[i];
+      if (spot.classList.contains("on") && tapped.classList.contains("active")) {
+        spot.classList.remove("on"); tapped.classList.remove("active"); tapped.setAttribute("aria-expanded", "false");
+        return;
+      }
+      document.querySelectorAll(".sat.near").forEach(el => el.setAttribute("aria-expanded", "false"));
+      tapped.setAttribute("aria-expanded", "true");
       const c = crew[i], booked = isBooked(c);
       document.querySelectorAll(".sat.near").forEach((el, j) => el.classList.toggle("active", j === i));
       spot.classList.add("on");
@@ -554,6 +562,15 @@
       const d = b.nextElementSibling, open = !d.classList.contains("open");
       d.classList.toggle("open", open); b.setAttribute("aria-expanded", open);
     }));
+    // Section titles sit on the page colour; they only get a frosted backing while pinned over scrolling cards.
+    const heads = [...document.querySelectorAll(".sec-head")];
+    function markStuck() {
+      heads.forEach(h => {
+        const top = parseFloat(getComputedStyle(h).top) || 0, r = h.getBoundingClientRect(), sec = h.parentElement.getBoundingClientRect();
+        h.classList.toggle("stuck", Math.abs(r.top - top) < 1 && sec.top < top - 1);
+      });
+    }
+    addEventListener("scroll", markStuck, { passive: true }); markStuck();
     const toast = document.getElementById("toast");
     function say(msg) { toast.textContent = msg; toast.classList.add("show"); clearTimeout(say.t); say.t = setTimeout(() => toast.classList.remove("show"), 2400); }
 

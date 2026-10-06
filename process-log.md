@@ -253,3 +253,7 @@
 - **Asked for:** when scrolling, the tab bar sometimes disappears and isn't constant.
 - **Cause:** it was a sticky element at the end of the app container. Browsers can drop or repaint sticky elements mid-scroll, especially under the frosted sticky section headers.
 - **Made:** the tab bar is now pinned to the bottom of the viewport at the app's width, on its own layer above everything, with a spacer at the end of the page so the last cards aren't hidden behind it. On desktop it floats as a rounded bar 16px above the edge, matching the framed phone. Checked by script at five scroll positions per version on phone and desktop widths: always 0px (phone) or 16px (desktop) from the bottom.
+
+## v22–v24: one background colour behind titles; v24 tap-to-close
+- **Asked for:** in v24, tapping any friend again should close the pop-up. In v22–v24, the background should be one colour, including behind the section titles (there was a lighter shade behind them).
+- **Made:** section titles are now transparent on the page colour. They only get a frosted backing (plus a soft shadow) while actually pinned over scrolling cards, detected on scroll, so they stay readable. In v24 a second tap on the same friend closes her pop-up (verified by script: open → closed).
