@@ -48,3 +48,8 @@
 - **Asked for:** Zine Feed as the fourth version, the other round 1 direction you liked.
 - **Made:** a dotted-paper, neo-brutalist zine. "GIRLS LIFT" as a ransom-note headline and "Issue #41 · hey Jasmine". Barbell Basics is the cover story, with a "2 LEFT!" sticker and highlighter. The other events are chunky cards with offset shadows and "YOU'RE IN" stickers. News is taped-on "Cut-outs", with a striped Lift a Million meter.
 - **Pushback:** none yet.
+
+## v05: Morning Briefing
+- **Asked for:** Morning Briefing as the fifth version.
+- **Made:** an editorial "Morning Brief" masthead and a short letter from Hana with a drop cap. "save me a spot" in the text books Barbell Basics inline. Then a calm "At a glance" list of all five events and "Also in the brief" news. Still event-first, but the first version with a personal voice, which leads into v06+ adding personal stats and community.
+- **Pushback:** none yet.
