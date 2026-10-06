@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>v11 · Strong — GLG Home</title>
+  <style>
+    :root {
+      --concrete: #e9e7e3;
+      --ink: #0d0d0d;
+      --red: #d7261e;
+      --grey: #6d6a66;
+      --rule: 3px solid var(--ink);
+      --heavy: "Arial Black", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      --mono: Menlo, "SF Mono", Consolas, monospace;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #c9c6c0; color: var(--ink); font: 15px/1.4 "Helvetica Neue", Helvetica, Arial, sans-serif; }
+    button { font: inherit; cursor: pointer; border: 0; }
+    .app { max-width: 430px; margin: 0 auto; min-height: 100vh; position: relative;
+      background-color: var(--concrete);
+      background-image: radial-gradient(rgba(0,0,0,.05) 1px, transparent 1.5px), radial-gradient(rgba(255,255,255,.5) 1px, transparent 1.5px);
+      background-size: 7px 7px, 11px 11px; }
+    @media (min-width: 600px) { .app { margin: 24px auto; min-height: 0; overflow: clip; box-shadow: 0 20px 60px rgba(0,0,0,.3); } }
+
+    .bar-top { background: var(--ink); color: #fff; display: flex; justify-content: space-between; align-items: center; padding: 10px 16px; font: 700 11px var(--mono); letter-spacing: .1em; }
+    .bar-top a { color: #fff; text-decoration: none; }
+    .bar-top b { color: var(--red); }
+    main { padding: 18px 16px 24px; }
+
+    h1 { font: 900 44px/.9 var(--heavy); text-transform: uppercase; letter-spacing: -.03em; margin: 4px 0 12px; }
+    h1 span { color: var(--red); }
+    .order { font: 700 13px var(--mono); text-transform: uppercase; border-left: 6px solid var(--red); padding: 4px 0 4px 10px; margin: 0 0 18px; }
+    h2 { font: 900 18px var(--heavy); text-transform: uppercase; letter-spacing: -.01em; margin: 26px 0 0; padding-bottom: 6px; border-bottom: var(--rule); display: flex; justify-content: space-between; align-items: baseline; }
+    h2 small { font: 700 11px var(--mono); color: var(--grey); letter-spacing: .06em; }
+
+    /* PR board */
+    .board { display: grid; grid-template-columns: 1fr 1fr; border: var(--rule); border-top: 0; background: #fff; }
+    .cell { padding: 12px; border-top: 1px solid var(--ink); }
+    .cell:nth-child(odd) { border-right: 1px solid var(--ink); }
+    .cell:nth-child(-n+2) { border-top: 0; }
+    .cell .k { font: 700 10px var(--mono); letter-spacing: .1em; color: var(--grey); text-transform: uppercase; }
+    .cell .v { font: 900 34px/1 var(--heavy); letter-spacing: -.03em; margin-top: 4px; }
+    .cell .v small { font-size: 15px; }
+    .cell .n { font: 700 11px var(--mono); color: var(--red); margin-top: 4px; }
+
+    /* program (booked) */
+    .row { display: grid; grid-template-columns: 34px 62px 1fr auto; gap: 10px; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--ink); }
+    .row .no { font: 900 16px var(--heavy); color: var(--red); }
+    .row .d { font: 700 12px var(--mono); line-height: 1.2; }
+    .row b { display: block; text-transform: uppercase; font-weight: 800; letter-spacing: -.01em; }
+    .row small { font: 12px var(--mono); color: var(--grey); }
+    .check { width: 26px; height: 26px; border: 3px solid var(--ink); display: grid; place-items: center; font-weight: 900; background: var(--ink); color: #fff; }
+
+    /* sessions to book */
+    .load { display: inline-flex; gap: 2px; vertical-align: -2px; margin-left: 6px; }
+    .load i { width: 5px; height: 14px; background: var(--ink); }
+    .load i.s { height: 9px; margin-top: 2.5px; }
+    .book { background: var(--red); color: #fff; font: 900 13px var(--heavy); text-transform: uppercase; padding: 10px 12px; letter-spacing: .02em; box-shadow: 3px 3px 0 var(--ink); transition: transform .1s, box-shadow .1s; }
+    .book:active { transform: translate(3px, 3px); box-shadow: 0 0 0 var(--ink); }
+    .book.done { background: var(--ink); box-shadow: none; }
+    .alert { background: var(--red); color: #fff; font: 900 11px var(--mono); padding: 1px 5px; margin-left: 4px; }
+
+    /* lift a million barbell */
+    .million { margin-top: 14px; background: var(--ink); color: #fff; padding: 16px; }
+    .million .top { display: flex; justify-content: space-between; font: 700 11px var(--mono); letter-spacing: .08em; color: #aaa; }
+    .million .big { font: 900 36px/1 var(--heavy); letter-spacing: -.03em; margin: 8px 0 12px; }
+    .million .big span { color: var(--red); }
+    .barbell { position: relative; height: 54px; display: flex; align-items: center; }
+    .barbell::before { content: ""; position: absolute; left: 0; right: 0; height: 6px; background: #777; }
+    .plate { position: relative; width: 12px; margin-right: 3px; background: var(--red); border: 2px solid #000; }
+    .plate.l { height: 54px; } .plate.m { height: 42px; background: #fff; } .plate.s { height: 30px; background: #f2c500; }
+    .collar { position: relative; width: 8px; height: 22px; background: #bbb; margin-right: 6px; }
+    .million p { margin: 10px 0 0; font: 12px var(--mono); color: #ccc; }
+
+    /* the floor */
+    .floor { font: 13px/1.45 var(--mono); }
+    .floor div { padding: 10px 0; border-bottom: 1px dashed var(--ink); display: flex; gap: 10px; }
+    .floor .who { font-weight: 700; flex: none; width: 74px; text-transform: uppercase; }
+    .respect { margin-top: 6px; background: none; border: 2px solid var(--ink); font: 700 11px var(--mono); padding: 3px 8px; }
+    .respect[aria-pressed="true"] { background: var(--ink); color: #fff; }
+
+    .tabs { position: sticky; bottom: 0; display: flex; background: var(--ink); }
+    .tabs a { flex: 1; text-align: center; padding: 14px 0 16px; color: #999; text-decoration: none; font: 900 11px var(--heavy); text-transform: uppercase; letter-spacing: .04em; border-top: 4px solid transparent; }
+    .tabs a.on { color: #fff; border-top-color: var(--red); }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <div class="bar-top"><a href="../index.html">← GALLERY</a><span>GLG <b>HK</b> · STRENGTH IN COMMUNITY</span></div>
+    <main>
+      <h1>Jasmine.<br>Saturday.<br><span>2 spots.</span></h1>
+      <p class="order">Barbell Basics fills fast. Book it or miss it.</p>
+
+      <h2>PR board <small>UPDATED 19 SEP</small></h2>
+      <div class="board">
+        <div class="cell"><div class="k">Back squat</div><div class="v">60<small>KG</small></div><div class="n">NEXT TARGET → 65</div></div>
+        <div class="cell"><div class="k">Sessions</div><div class="v">27</div><div class="n">SINCE MAR 2025</div></div>
+        <div class="cell"><div class="k">Streak</div><div class="v">3<small>WKS</small></div><div class="n">KEEP IT ALIVE</div></div>
+        <div class="cell"><div class="k">Moved for the million</div><div class="v">2,140<small>KG</small></div><div class="n">YOUR SHARE</div></div>
+      </div>
+
+      <h2>Your program <small>2 LOCKED</small></h2>
+      <div class="row"><span class="no">01</span><span class="d">SUN 11<br>06:15</span><div><b>Dragon's Back hike</b><small>8.5 KM · TO TEI WAN</small></div><span class="check">✓</span></div>
+      <div class="row"><span class="no">02</span><span class="d">WED 14<br>19:30</span><div><b>Harbourfront 5K</b><small>STAR FERRY CLOCK TOWER</small></div><span class="check">✓</span></div>
+
+      <h2>Load the week <small>INTENSITY ▮▮▮</small></h2>
+      <div class="row"><span class="no">03</span><span class="d">SAT 10<br>08:00</span><div><b>Barbell Basics<span class="load"><i></i><i></i><i></i></span></b><small>KWUN TONG · HK$180</small><span class="alert">2 LEFT</span></div><button class="book">Book</button></div>
+      <div class="row"><span class="no">04</span><span class="d">SAT 17<br>10:00</span><div><b>Boxing<span class="load"><i></i><i></i><i></i></span></b><small>SHEUNG WAN · HK$250</small></div><button class="book">Book</button></div>
+      <div class="row"><span class="no">05</span><span class="d">SUN 25<br>09:00</span><div><b>Paddle &amp; brunch<span class="load"><i></i><i class="s"></i></span></b><small>SAI KUNG · HK$420</small></div><button class="book">Book</button></div>
+
+      <div class="million">
+        <div class="top"><span>LIFT A MILLION</span><span>25 DAYS LEFT</span></div>
+        <div class="big">412,000 <span>/ 1M KG</span></div>
+        <div class="barbell" aria-label="41% loaded">
+          <span class="collar"></span><span class="plate l"></span><span class="plate l"></span><span class="plate l"></span><span class="plate m"></span><span class="plate m"></span><span class="plate s"></span>
+        </div>
+        <p>Hit a million by 31 Oct → HK$5,000 to a women's shelter.</p>
+      </div>
+
+      <h2>The floor <small>LATEST</small></h2>
+      <div class="floor">
+        <div><span class="who">Chloe N.</span><span>Deadlift 100 kg. New PR. ✓<br><button class="respect" aria-pressed="false" data-n="34">RESPECT +34</button></span></div>
+        <div><span class="who">Hana O.</span><span>Run club now starts at the Star Ferry clock tower. Pink flag.</span></div>
+        <div><span class="who">Priya R.</span><span>Taxi to To Tei Wan, Sun 05:40, Quarry Bay. 6 in thread.</span></div>
+        <div><span class="who">GLG HQ</span><span>Global Lift Day. Sat 7 Nov. Every chapter, same hour. HK 17:00.</span></div>
+      </div>
+    </main>
+
+    <nav class="tabs"><a class="on" href="#">Home</a><a href="#">Events</a><a href="#">Community</a><a href="#">Profile</a></nav>
+  </div>
+
+  <script>
+    document.querySelectorAll(".book").forEach(b => b.addEventListener("click", () => {
+      b.textContent = "In ✓"; b.classList.add("done"); b.disabled = true;
+    }));
+    document.querySelectorAll(".respect").forEach(r => r.addEventListener("click", () => {
+      const on = r.getAttribute("aria-pressed") !== "true";
+      r.setAttribute("aria-pressed", on);
+      r.textContent = `RESPECT +${+r.dataset.n + (on ? 1 : 0)}`;
+    }));
+  </script>
+</body>
+</html>

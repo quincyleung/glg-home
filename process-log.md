@@ -81,3 +81,7 @@
 
 ## v10 restyled: warm and sisterly
 - **Made:** cream lined paper with terracotta, italic Hoefler/Baskerville headings and Bradley Hand notes ("Morning, Jasmine ♡", "psst, a buddy match →"). The crew card is dashed and slightly tilted, and the buddy match is a taped-on note. The copy is softer ("You never have to lift alone.", "Cheer your girls on").
+
+## v11: Strong
+- **Asked for:** a "strong" theme.
+- **Made:** a speckled concrete background with black and red, Arial Black caps, monospace details, no rounded corners and 3px rules. The tone is a coach's ("Jasmine. Saturday. 2 spots.", "Book it or miss it."). Has a PR board (squat 60 kg → next target 65, sessions, streak, your share of the million), "Your program" as a numbered training log, "Load the week" with intensity bars and square red BOOK buttons, Lift a Million drawn as a barbell loaded with plates, and "The floor" community feed with RESPECT buttons.
