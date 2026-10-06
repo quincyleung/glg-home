@@ -53,3 +53,8 @@
 - **Asked for:** Morning Briefing as the fifth version.
 - **Made:** an editorial "Morning Brief" masthead and a short letter from Hana with a drop cap. "save me a spot" in the text books Barbell Basics inline. Then a calm "At a glance" list of all five events and "Also in the brief" news. Still event-first, but the first version with a personal voice, which leads into v06+ adding personal stats and community.
 - **Pushback:** none yet.
+
+## v08: Stories
+- **Asked for:** develop the Stories direction (Nike Training Club / Instagram).
+- **Made:** a white page with story rings at the top for Hana, Chloe, Priya, the challenge and GLG HQ. Tapping one opens a full-screen story viewer with progress bars, tap-to-advance and an action ("Hype her", "I'm in 🚕", "Remind me"). Below that: a streak ring and stats, a swipeable deck of gradient event cards with dots, "Your tickets" as perforated stubs, and two community tiles.
+- **Pushback:** none yet.
