@@ -55,6 +55,19 @@
     .nums { display: flex; gap: 18px; margin-top: 14px; font: 10px var(--mono); text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
     .nums b { display: block; font: 700 18px var(--sans); color: var(--ink); letter-spacing: -.02em; text-transform: none; }
 
+    .flip-wrap { perspective: 1200px; }
+    .flip { position: relative; transform-style: preserve-3d; transition: transform .7s cubic-bezier(.2,.75,.25,1); cursor: pointer; border-radius: 22px; outline: none; }
+    .flip:focus-visible { box-shadow: 0 0 0 3px var(--purple); }
+    .flip.on { transform: rotateY(180deg); }
+    .face { -webkit-backface-visibility: hidden; backface-visibility: hidden; }
+    .back { position: absolute; inset: 0; transform: rotateY(180deg); display: flex; align-items: center; gap: 14px; }
+    .qr { width: 132px; height: 132px; flex: none; background: #fff; border-radius: 14px; padding: 8px; box-shadow: 0 4px 14px rgba(107,69,224,.18); }
+    .qr svg { display: block; width: 100%; height: 100%; }
+    .qr-txt b { display: block; font: 700 20px var(--sans); letter-spacing: -.03em; margin: 2px 0; }
+    .qr-txt .k { font: 10px var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+    .qr-txt p { margin: 8px 0 6px; font-size: 13px; }
+    .hint { font: 10px var(--mono); color: var(--purple); margin-left: auto; align-self: flex-end; }
+    .nums { align-items: flex-end; }
     /* you're going */
     .claim-card { display: flex; gap: 12px; align-items: center; background: #fff; border-radius: 18px; padding: 8px; margin-bottom: 8px; box-shadow: 0 2px 10px rgba(107,69,224,.06); }
     .claim-card .photo { width: 74px; height: 74px; border-radius: 14px; flex: none; }
@@ -64,11 +77,10 @@
     .pill { font: 10px var(--mono); padding: 4px 8px; border-radius: 99px; background: var(--lilac); color: var(--purple); white-space: nowrap; }
 
     /* coming up */
-    .drops { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-    .drop { background: #fff; border-radius: 18px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 2px 10px rgba(107,69,224,.06); }
+    .drops { display: flex; gap: 10px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: 16px; margin: 0 -16px; padding: 2px 16px 8px; scrollbar-width: none; }
+    .drops::-webkit-scrollbar { display: none; }
+    .drop { flex: 0 0 47%; scroll-snap-align: start; background: #fff; border-radius: 18px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 2px 10px rgba(107,69,224,.06); }
     .drop .photo { height: 112px; }
-    .drop.wide { grid-column: span 2; }
-    .drop.wide .photo { height: 150px; }
     .drop .badge { position: absolute; top: 8px; left: 8px; z-index: 2; font: 10px var(--mono); padding: 3px 8px; border-radius: 99px; background: #fff; color: var(--purple); }
     .drop .badge.hot { background: #ff7ab8; color: #fff; }
     .drop .body { padding: 10px 12px 12px; display: flex; flex-direction: column; gap: 4px; flex: 1; }
@@ -90,6 +102,24 @@
     .mosaic .heart { position: absolute; top: 6px; right: 6px; z-index: 2; font: 10px var(--mono); background: rgba(255,255,255,.85); color: var(--purple); border-radius: 99px; padding: 2px 7px; }
     .mosaic .heart[aria-pressed="true"] { background: var(--purple); color: #fff; }
 
+    /* from the community: v16-style post cards */
+    .post { background: #fff; border-radius: 20px; overflow: hidden; margin-bottom: 12px; box-shadow: 0 2px 10px rgba(107,69,224,.07); animation: rise .35s ease both; }
+    @keyframes rise { from { opacity: 0; transform: translateY(6px); } }
+    .post .head { display: flex; align-items: center; gap: 10px; padding: 12px 14px; }
+    .post .head .ava { width: 36px; height: 36px; border-radius: 50%; overflow: hidden; flex: none; }
+    .post .head .ava svg { display: block; width: 100%; height: 100%; }
+    .post .head b { display: block; font-size: 14px; }
+    .post .head small { font: 11px var(--mono); color: var(--muted); }
+    .post .kind { margin-left: auto; font: 10px var(--mono); padding: 3px 9px; border-radius: 99px; white-space: nowrap; }
+    .kind.posts { background: var(--pink); } .kind.challenges { background: var(--lilac); color: var(--purple); } .kind.announcements { background: var(--butter); }
+    .post .photo { height: 190px; }
+    .post .txt { padding: 12px 14px 14px; }
+    .post .t { display: block; font: 700 17px/1.2 var(--sans); letter-spacing: -.02em; }
+    .post p { margin: 4px 0 10px; font-size: 14px; color: #4a3d6e; }
+    .post .pbar { height: 8px; border-radius: 99px; background: var(--lilac); overflow: hidden; margin: 2px 0 10px; }
+    .post .pbar i { display: block; height: 100%; border-radius: 99px; background: linear-gradient(90deg, #ff9fcb, var(--purple)); }
+    .post .act { background: var(--lilac); color: var(--purple); font: 12px var(--mono); padding: 7px 12px; border-radius: 99px; }
+    .post .act.done { background: var(--purple); color: #fff; }
     .filters { display: flex; gap: 6px; overflow-x: auto; margin: 0 -16px 12px; padding: 0 16px; scrollbar-width: none; }
     .filters::-webkit-scrollbar { display: none; }
     .filters button { flex: none; font: 12px var(--mono); padding: 7px 12px; border-radius: 99px; background: #fff; color: var(--muted); box-shadow: inset 0 0 0 1px #e6defa; }
@@ -113,16 +143,24 @@
 
       <h1>morning, <span>jasmine.</span></h1>
 
-      <div class="card" aria-label="Your member card and streak">
-        <div class="row"><span>girls lift girls · hong kong</span><span>#0412</span></div>
-        <div class="name">jasmine tran</div>
-        <div class="streak">
-          <div class="ring"><b>3<br>wks</b></div>
-          <div class="dots">
-            <span><i class="done">✓</i>m</span><span><i></i>t</span><span><i class="plan">5k</i>w</span><span><i></i>t</span><span><i></i>f</span><span><i></i>s</span><span><i class="plan">⛰</i>s</span>
+      <div class="flip-wrap">
+        <div class="flip" id="flip" role="button" tabindex="0" aria-pressed="false" aria-label="Member card. Tap to show your check-in QR code">
+      <div class="card face front">
+          <div class="row"><span>girls lift girls · hong kong</span><span>#0412</span></div>
+          <div class="name">jasmine tran</div>
+          <div class="streak">
+            <div class="ring"><b>3<br>wks</b></div>
+            <div class="dots">
+              <span><i class="done">✓</i>m</span><span><i></i>t</span><span><i class="plan">5k</i>w</span><span><i></i>t</span><span><i></i>f</span><span><i></i>s</span><span><i class="plan">⛰</i>s</span>
+            </div>
+          </div>
+          <div class="nums"><div><b>27</b>sessions</div><div><b>34h</b>total time</div><span class="hint">tap for check-in ↻</span></div>
+        </div>
+          <div class="card face back" aria-hidden="true">
+            <div class="qr" id="qr"></div>
+            <div class="qr-txt"><span class="k">check-in pass</span><b>jasmine tran</b><span class="k">member #0412 · hong kong</span><p>show this at the door to sign in to any glg session.</p><span class="hint">tap to flip back ↻</span></div>
           </div>
         </div>
-        <div class="nums"><div><b>27</b>sessions</div><div><b>60kg</b>squat pb</div><div><b>2,140kg</b>for the million</div></div>
       </div>
 
       <h2><span>you're going (2)</span><a href="#">calendar →</a></h2>
@@ -137,29 +175,15 @@
           <div class="body"><b>barbell basics</b><small>sat 10 · kwun tong · hk$180</small><span class="count" data-to="2026-10-10T08:00:00+08:00"></span><div class="meter"><i style="width:87.5%"></i></div><button class="claim">join</button></div></div>
         <div class="drop"><div class="photo" data-scene="studio" data-people="4" data-seed="9" data-duo="#4b2fa8,#fff4c9" data-alt="Boxing workshop"><span class="badge">9/20</span></div>
           <div class="body"><b>boxing fundamentals</b><small>sat 17 · sheung wan · hk$250</small><span class="count" data-to="2026-10-17T10:00:00+08:00"></span><div class="meter"><i style="width:45%"></i></div><button class="claim">join</button></div></div>
-        <div class="drop wide"><div class="photo" data-scene="beach" data-people="6" data-seed="5" data-duo="#3a2a8a,#dcfff1" data-alt="Paddle and brunch at Sai Kung"><span class="badge">6/12 · brunch incl.</span></div>
-          <div class="body"><b>paddle &amp; brunch</b><small>sun 25 · sai kung · hk$420</small><span class="count" data-to="2026-10-25T09:00:00+08:00"></span><div class="meter"><i style="width:50%"></i></div><button class="claim">join</button></div></div>
+        <div class="drop"><div class="photo" data-scene="beach" data-people="6" data-seed="5" data-duo="#3a2a8a,#dcfff1" data-alt="Paddle and brunch at Sai Kung"><span class="badge">6/12</span></div>
+          <div class="body"><b>paddle &amp; brunch</b><small>sun 25 · sai kung · hk$420 · brunch incl.</small><span class="count" data-to="2026-10-25T09:00:00+08:00"></span><div class="meter"><i style="width:50%"></i></div><button class="claim">join</button></div></div>
       </div>
 
       <h2><span>from the community</span><a href="#">see all →</a></h2>
       <div class="filters" role="group" aria-label="Filter community">
         <button aria-pressed="true" data-f="all">all</button><button aria-pressed="false" data-f="posts">posts</button><button aria-pressed="false" data-f="challenges">challenges</button><button aria-pressed="false" data-f="announcements">announcements</button>
       </div>
-      <div class="mosaic" data-type="posts">
-        <div class="tile big"><div class="photo" data-scene="harbour" data-people="9" data-seed="14" data-tone="color" data-alt="31 members at last week's run club"></div><button class="heart" aria-pressed="false" data-n="48">♡ 48</button><span class="cap">last wed · 31 of us at run club. aisha's first 5k!</span></div>
-        <div class="tile"><div class="photo" data-scene="gym" data-people="3" data-seed="21" data-duo="#5b2bd6,#ffe3f1"></div><button class="heart" aria-pressed="false" data-n="34">♡ 34</button><span class="cap">chloe · 100kg pr</span></div>
-        <div class="tile"><div class="photo" data-scene="studio" data-people="3" data-seed="40" data-duo="#4b2fa8,#e6f2ff"></div><span class="cap">new: mandy, kiko, sara 👋</span></div>
-        <div class="tile"><div class="photo" data-scene="trail" data-people="4" data-seed="44" data-duo="#3a2a8a,#fff4c9"></div><span class="cap">6 sunrises for you</span></div>
-        <div class="tile"><div class="photo" data-scene="beach" data-people="4" data-seed="52" data-duo="#4b2fa8,#dcfff1"></div><span class="cap">sai kung, last month</span></div>
-        <div class="tile"><div class="photo" data-scene="gym" data-people="4" data-seed="61" data-duo="#5b2bd6,#efe8ff"></div><span class="cap">saturday crew</span></div>
-      </div>
-      <div class="notes">
-        <div class="note" data-type="announcements" style="background:var(--pink)"><small>📌 hana · chapter lead · 2d</small>run club now starts at the star ferry clock tower. look for the pink flag.</div>
-        <div class="note" data-type="challenges" style="background:var(--lilac)"><small>🏋️ lift a million · 25 days left</small>412,000 / 1,000,000 kg together. you've added 2,140.<div class="bar"><i></i></div></div>
-        <div class="note" data-type="challenges" style="background:var(--sky)"><small>🔥 your streak · this week</small>3 weeks in a row. wednesday's 5k makes it 4. <span class="mono" style="color:var(--purple)">on track ✓</span></div>
-        <div class="note" data-type="posts" style="background:var(--mint)"><small>💬 chapter chat · 6 replies</small>priya: taxi to to tei wan sun 05:40 from quarry bay? 🚕</div>
-        <div class="note" data-type="announcements" style="background:var(--butter)"><small>🌏 glg hq · yesterday</small>global lift day, sat 7 nov. seven cities, same hour. hk lifts at 17:00.</div>
-      </div>
+      <div id="feed" aria-live="polite"></div>
     </main>
 
     <nav class="tabs"><a class="on" href="#">home</a><a href="#">events</a><a href="#">community</a><a href="#">profile</a></nav>
@@ -268,10 +292,100 @@
     document.querySelectorAll(".claim").forEach(b => b.addEventListener("click", () => {
       b.textContent = "you're going ✓"; b.classList.add("done"); b.disabled = true;
     }));
+    // Illustrated avatars (fictional members, no photos). <span class="ava" data-who="chloe"></span>
+    const Avatar = (() => {
+      const SKIN = ["#f3d2b8", "#e8b48f", "#c98e66", "#a26a44", "#7a4a2c", "#5a3520"];
+      const HAIR = ["#1b1210", "#3a2418", "#6b4226", "#b07a3f", "#2a1a2e", "#8a3a2a"];
+      const BG = ["#e9e1ff", "#ffd9e8", "#d9ecff", "#dff5ea", "#fff0c9", "#efe2ff", "#ffe2d1"];
+      const TOP = ["#4a1fb8", "#7b4fe0", "#ff7aa8", "#24104f", "#5fd0c0", "#ffb44d", "#ffffff"];
+      // Fixed looks for named members so they stay recognisable across the page: [skin, hair, style, bg, top]
+      const PEOPLE = {
+        jasmine: [1, 0, "bun", 0, 0], priya: [3, 0, "long", 3, 4], chloe: [0, 1, "pony", 1, 1], hana: [5, 0, "curly", 4, 3],
+        meiling: [1, 0, "bob", 2, 2], aisha: [4, 0, "curly", 1, 5], mandy: [0, 2, "long", 6, 0], kiko: [1, 0, "bob", 5, 2],
+        sara: [3, 0, "pony", 2, 1], jess: [2, 3, "short", 0, 3]
+      };
+      const STYLES = ["bun", "long", "pony", "curly", "bob", "short"];
+      const rng = seed => () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+
+      function svg(look) {
+        const [si, hi, style, bi, ti] = look, skin = SKIN[si], hair = HAIR[hi], bg = BG[bi], top = TOP[ti];
+        let back = "", front = "";
+        if (style === "long") back = `<path d="M17 30 Q16 54 22 58 H42 Q48 54 47 30 Q47 12 32 12 Q17 12 17 30Z" fill="${hair}"/>`;
+        if (style === "bob") back = `<path d="M17 30 Q16 46 20 47 H44 Q48 46 47 30 Q47 13 32 13 Q17 13 17 30Z" fill="${hair}"/>`;
+        if (style === "curly") back = [[18, 24], [22, 16], [30, 12], [38, 13], [45, 19], [47, 28], [16, 33], [48, 36], [18, 41], [46, 43]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="7" fill="${hair}"/>`).join("");
+        if (style === "pony") back = `<ellipse cx="48" cy="34" rx="5" ry="11" fill="${hair}" transform="rotate(-18 48 34)"/>`;
+        if (style === "bun") front = `<circle cx="32" cy="11" r="6.5" fill="${hair}"/>`;
+        const fringe = style === "short"
+          ? `<path d="M19 28 Q19 14 32 14 Q45 14 45 28 Q40 20 32 21 Q24 21 19 28Z" fill="${hair}"/>`
+          : `<path d="M19 30 Q18 14 32 14 Q46 14 45 30 Q42 21 34 20 Q27 23 19 30Z" fill="${hair}"/>`;
+        return `<svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="32" fill="${bg}"/>${back}
+          <path d="M8 66 Q10 49 32 49 Q54 49 56 66Z" fill="${top}"/><rect x="28" y="40" width="8" height="10" fill="${skin}"/>
+          <ellipse cx="32" cy="31" rx="13" ry="14.5" fill="${skin}"/>${fringe}${front}
+          <ellipse cx="27" cy="32" rx="1.6" ry="2" fill="#2a1a1a"/><ellipse cx="37" cy="32" rx="1.6" ry="2" fill="#2a1a1a"/>
+          <circle cx="24" cy="37" r="2.4" fill="#ff8fb0" opacity=".35"/><circle cx="40" cy="37" r="2.4" fill="#ff8fb0" opacity=".35"/>
+          <path d="M28.5 38.5 Q32 41.5 35.5 38.5" stroke="#5a2a2a" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>`;
+      }
+      function lookFor(el) {
+        if (PEOPLE[el.dataset.who]) return PEOPLE[el.dataset.who];
+        const r = rng(+el.dataset.seed || 7);
+        return [Math.floor(r() * 6), Math.floor(r() * 6), STYLES[Math.floor(r() * 6)], Math.floor(r() * 7), Math.floor(r() * 7)];
+      }
+      const draw = el => { el.innerHTML = svg(lookFor(el)); };
+      return { draw, drawAll: (root = document) => root.querySelectorAll(".ava").forEach(draw), svgFor: who => svg(PEOPLE[who]) };
+    })();
+    Avatar.drawAll();
+
+    // Member card flips to a check-in QR code (decorative pattern for the prototype, not a real code).
+    (function qr() {
+      const N = 25, r = (seed => () => (seed = (seed * 16807) % 2147483647) / 2147483647)(412);
+      const finder = (x, y) => `<rect x="${x}" y="${y}" width="7" height="7" rx="1.6" fill="#2b1a5a"/><rect x="${x + 1}" y="${y + 1}" width="5" height="5" rx="1.1" fill="#fff"/><rect x="${x + 2}" y="${y + 2}" width="3" height="3" rx=".8" fill="#6b45e0"/>`;
+      const inFinder = (x, y) => (x < 8 && y < 8) || (x > N - 9 && y < 8) || (x < 8 && y > N - 9);
+      const inLogo = (x, y) => x > 8 && x < 16 && y > 8 && y < 16;
+      let cells = "";
+      for (let y = 0; y < N; y++) for (let x = 0; x < N; x++) {
+        if (inFinder(x, y) || inLogo(x, y)) continue;
+        const on = (x === 6 || y === 6) ? (x + y) % 2 === 0 : r() > .52;
+        if (on) cells += `<rect x="${x + .08}" y="${y + .08}" width=".84" height=".84" rx=".25" fill="#2b1a5a"/>`;
+      }
+      document.getElementById("qr").innerHTML = `<svg viewBox="0 0 ${N} ${N}" role="img" aria-label="Check-in QR code">${cells}${finder(0, 0)}${finder(N - 7, 0)}${finder(0, N - 7)}
+        <rect x="9.3" y="9.3" width="6.4" height="6.4" rx="1.6" fill="#6b45e0"/><text x="12.5" y="13.6" text-anchor="middle" font-family="Arial" font-weight="700" font-size="2.5" fill="#fff">GLG</text></svg>`;
+    })();
+    const flip = document.getElementById("flip");
+    function toggleFlip() { const on = !flip.classList.contains("on"); flip.classList.toggle("on", on); flip.setAttribute("aria-pressed", on); flip.querySelector(".back").setAttribute("aria-hidden", !on); flip.querySelector(".front").setAttribute("aria-hidden", on); }
+    flip.addEventListener("click", toggleFlip);
+    flip.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggleFlip(); } });
+
+    // From the community: newest first, show the 3 most recent for the chosen filter.
+    const feedItems = [
+      { type: "posts", age: 14, when: "yesterday", who: "priya", name: "priya raman", title: "taxi to dragon's back?", text: "splitting a taxi to to tei wan on sunday, 5:40am from quarry bay. you're on this hike too 🚕 · 6 replies", act: "join the taxi", done: "you're in the taxi ✓" },
+      { type: "announcements", age: 20, when: "yesterday", seed: 90, name: "glg hq", title: "global lift day · sat 7 nov 🌏", text: "all seven chapters lift at the same hour for the first time. hong kong lifts at 5pm at iron harbour.", photo: { scene: "gym", people: 8, seed: 77 }, act: "remind me", done: "reminder set ✓" },
+      { type: "challenges", age: 30, when: "monday", who: "jasmine", name: "your streak", title: "make it 4 weeks 🔥", text: "3 weeks in a row. wednesday's 5k makes it 4.", progress: 75, act: "on track ✓", done: "on track ✓" },
+      { type: "posts", age: 40, when: "2 days ago", who: "kiko", name: "kiko sato", title: "hi everyone 👋", text: "just joined with mandy and sara. barbell basics on saturday is my first ever session, be nice!", photo: { scene: "studio", people: 3, seed: 40 }, act: "👋 wave", done: "waved 👋" },
+      { type: "announcements", age: 48, when: "2 days ago", who: "hana", name: "hana okafor", pin: true, title: "run club has a new start line", text: "from wednesday we meet at the star ferry clock tower. same time, 7:30pm. look for the pink flag!", photo: { scene: "harbour", people: 6, seed: 8 }, act: "got it", done: "see you wednesday ✓" },
+      { type: "posts", age: 72, when: "saturday", who: "chloe", name: "chloe ng", title: "100 kg deadlift. new pr 🔥", text: "two years ago i couldn't lift the empty bar. thank you mei-ling and the saturday crew.", photo: { scene: "gym", people: 5, seed: 21 }, act: "💜 lift her up · 34", done: "💜 lifted · 35" },
+      { type: "challenges", age: 120, when: "5 days ago", who: "meiling", name: "lift a million", title: "412,000 / 1,000,000 kg", text: "hit a million by 31 oct and hk$5,000 goes to a local women's shelter. your share: 2,140 kg.", progress: 41, act: "log a lift", done: "logged ✓" }
+    ];
+    const kindLabel = { posts: "post", challenges: "challenge", announcements: "announcement" };
+    function renderFeed(f) {
+      const list = feedItems.filter(i => f === "all" || i.type === f).sort((a, b) => a.age - b.age).slice(0, 3);
+      const feed = document.getElementById("feed");
+      feed.innerHTML = list.map(i => `<article class="post">
+        <div class="head"><span class="ava" ${i.who ? `data-who="${i.who}"` : `data-seed="${i.seed}"`}></span><div><b>${i.name}</b><small>${i.when}</small></div><span class="kind ${i.type}">${i.pin ? "📌 " : ""}${kindLabel[i.type]}</span></div>
+        ${i.photo ? `<div class="photo" data-scene="${i.photo.scene}" data-people="${i.photo.people}" data-seed="${i.photo.seed}" data-tone="color"></div>` : ""}
+        <div class="txt"><span class="t">${i.title}</span><p>${i.text}</p>${i.progress ? `<div class="pbar"><i style="width:${i.progress}%"></i></div>` : ""}<button class="act${i.act === i.done ? " done" : ""}">${i.act}</button></div>
+      </article>`).join("");
+      feed.querySelectorAll(".photo").forEach(Photo.draw);
+      Avatar.drawAll(feed);
+      feed.querySelectorAll(".act").forEach((b, n) => b.addEventListener("click", () => {
+        const i = list[n], on = !b.classList.contains("done");
+        b.classList.toggle("done", on); b.textContent = on ? i.done : i.act;
+      }));
+    }
     document.querySelectorAll(".filters button").forEach(b => b.addEventListener("click", () => {
       document.querySelectorAll(".filters button").forEach(x => x.setAttribute("aria-pressed", x === b));
-      document.querySelectorAll("[data-type]").forEach(el => el.classList.toggle("hide", b.dataset.f !== "all" && el.dataset.type !== b.dataset.f));
+      renderFeed(b.dataset.f);
     }));
+    renderFeed("all");
     document.querySelectorAll(".heart").forEach(h => h.addEventListener("click", () => {
       const on = h.getAttribute("aria-pressed") !== "true";
       h.setAttribute("aria-pressed", on);

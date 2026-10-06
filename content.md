@@ -27,6 +27,7 @@ Every version (v01–v25) uses exactly this content so that differences between 
 - **This month:** 2 sessions done, 2 booked
 - **Personal best:** Back squat 60 kg (set 19 Sep 2026)
 - **Lift a Million contribution:** 2,140 kg
+- **Total time moved with GLG:** 34 hours
 - **Badge:** Early Riser (6 sunrise hikes)
 - **Buddies:** has trained most with Priya Raman (8 sessions together) and Chloe Ng (5)
 - **Districts moved in:** 6 (Kwun Tong, Shek O, Tsim Sha Tsui, Sheung Wan, Sai Kung, Central)
