@@ -246,10 +246,11 @@
     @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
 
     /* v25: a fun motivational line to end on */
-    .quote { margin: 8px 0 18px; padding: 22px 18px 18px; text-align: center; border-radius: 22px; background: #fff; box-shadow: 0 0 0 1px #e6defa; position: relative; }
-    .quote .qmark { display: block; font: 700 54px/.6 var(--display); color: var(--pink); margin-top: 6px; }
-    .quote .qmark.end { margin: 22px 0 -2px; }
-    .quote p { margin: 6px 0 4px; font-size: 24px; line-height: 1.1; color: var(--purple); }
+    .quote { margin: 8px 0 18px; padding: 34px 40px; text-align: center; border-radius: 22px; background: #fff; box-shadow: 0 0 0 1px #e6defa; position: relative; }
+    .quote .qmark { position: absolute; font: 700 64px/1 var(--display); color: var(--pink); }
+    .quote .qmark:not(.end) { top: 10px; left: 16px; }
+    .quote .qmark.end { bottom: -14px; right: 16px; }
+    .quote p { margin: 0; font-size: 24px; line-height: 1.1; color: var(--purple); }
   </style>
 </head>
 <body>
