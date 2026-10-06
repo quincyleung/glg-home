@@ -293,3 +293,4 @@
 - **Follow-up:** "I like the v22 background aesthetic more, where it is light purple with a shadow under the card, instead of the ombré of v25." v25's page is now a flat light purple (#f5f1ff, the lavender v22 used before the rollback) with the deeper soft purple shadow back under the streak card. The psst card is white so it still reads as a card on the lavender.
 - **Follow-up:** "remove the lines dividing the sections." Removed the hairline between sections in v25. The section headers (icon tile and title) now do the separating on the flat lavender.
 - **Follow-up:** make the psst card background the same as v22. Reverted it to v22's lavender (var(--lav)) with the pink left border.
+- **Follow-up:** "make it a bit darker so it stands out." The psst card is now a deeper lavender (#e4d8ff) that clearly separates from the page's #f5f1ff.
