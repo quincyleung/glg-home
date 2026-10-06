@@ -73,6 +73,7 @@
 
     /* sections: alternating bands with sticky headers so you always know where you are */
     .sec { margin: 0 -16px; padding: 0 16px 24px; position: relative; }
+    .sec:not(.tint) { background: #fff; }
     .sec.tint { background: #f5f1ff; }
     .flip-wrap + .sec { margin-top: 8px; }
     .sec + .sec { border-top: 1px solid var(--line); }
@@ -232,8 +233,8 @@
 
       </section>
 
-      <section class="sec" aria-labelledby="h-coming">
-        <h2 class="sec-head" id="h-coming"><span class="ic"><svg viewBox="0 0 24 24"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/></svg></span><span class="d">Coming up</span><span class="count">3</span><a href="#">All events</a></h2>
+      <section class="sec" aria-labelledby="h-join">
+        <h2 class="sec-head" id="h-join"><span class="ic"><svg viewBox="0 0 24 24"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/></svg></span><span class="d">Join a session</span><span class="count">3</span><a href="#">All events</a></h2>
         <div class="psst" id="psst" role="region" aria-label="Your friends are going">
           <span class="d kick">Psst, your friends are going →</span>
           <div class="row2">
