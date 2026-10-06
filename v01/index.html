@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>v01 · Energy Check-in — GLG Home</title>
+  <style>
+    :root {
+      --ink: #2b2140;
+      --muted: #7a6d96;
+      --line: #ebe5f7;
+      --card: #fff;
+      --accent: #6f4ad8;
+      --accent-soft: #efe8fd;
+      --green: #1f8a4c;
+      --green-soft: #e8f7ee;
+      --shadow: 0 2px 10px rgba(60, 30, 120, .08);
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #e6e0f3; color: var(--ink); font: 15px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; }
+    button { font: inherit; cursor: pointer; border: 0; }
+    .app { max-width: 430px; margin: 0 auto; min-height: 100vh; background: linear-gradient(#efe8fd, #faf8ff 340px, #faf8ff); position: relative; }
+    @media (min-width: 600px) { .app { margin: 24px auto; min-height: 0; border-radius: 28px; overflow: hidden; box-shadow: 0 20px 60px rgba(60,30,120,.18); } }
+    main { padding: 16px 18px 24px; }
+
+    .top { display: flex; align-items: center; justify-content: space-between; }
+    .back { color: var(--muted); text-decoration: none; font-size: 13px; font-weight: 600; }
+    .avatar { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; background: var(--accent); color: #fff; font-weight: 700; font-size: 13px; }
+    .date { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 700; margin: 18px 0 2px; }
+    h1 { font-size: 26px; line-height: 1.15; margin: 0 0 14px; letter-spacing: -.02em; }
+    h2 { font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin: 26px 0 10px; display: flex; justify-content: space-between; align-items: baseline; }
+    h2 a { font-size: 13px; letter-spacing: 0; text-transform: none; color: var(--accent); text-decoration: none; }
+
+    /* energy */
+    .seg { display: flex; background: #fff; border-radius: 99px; padding: 4px; box-shadow: var(--shadow); }
+    .seg button { flex: 1; padding: 10px 0; border-radius: 99px; background: none; color: var(--muted); font-weight: 600; transition: background .25s, color .25s; }
+    .seg button[aria-pressed="true"] { background: var(--accent); color: #fff; }
+    .mood { margin: 10px 2px 0; color: var(--muted); font-size: 14px; min-height: 20px; }
+
+    /* stats */
+    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 18px; }
+    .stat { background: #fff; border-radius: 16px; padding: 10px 12px; box-shadow: var(--shadow); }
+    .stat b { display: block; font-size: 18px; }
+    .stat span { font-size: 12px; color: var(--muted); }
+
+    /* event cards */
+    .ev { background: var(--card); border-radius: 18px; padding: 14px; box-shadow: var(--shadow); display: flex; gap: 12px; align-items: center; margin-bottom: 10px; animation: rise .35s ease both; }
+    @keyframes rise { from { opacity: 0; transform: translateY(6px); } }
+    .ev .when { width: 46px; flex: none; text-align: center; border-radius: 12px; background: var(--accent-soft); padding: 6px 0; }
+    .ev .when b { display: block; font-size: 18px; line-height: 1.1; }
+    .ev .when span { font-size: 11px; text-transform: uppercase; font-weight: 700; color: var(--accent); }
+    .ev .info { flex: 1; min-width: 0; }
+    .ev .info b { display: block; }
+    .ev .info small { color: var(--muted); font-size: 13px; }
+    .intensity { display: inline-flex; gap: 2px; vertical-align: 1px; margin-left: 4px; }
+    .intensity i { width: 5px; height: 9px; border-radius: 2px; background: #ddd5ef; }
+    .intensity i.on { background: var(--accent); }
+    .hot { color: #d6336c; font-weight: 700; }
+    .book { background: var(--accent); color: #fff; padding: 9px 14px; border-radius: 99px; font-weight: 700; font-size: 13px; white-space: nowrap; transition: transform .15s; }
+    .book:active { transform: scale(.95); }
+    .going { background: var(--green-soft); color: var(--green); padding: 7px 11px; border-radius: 99px; font-weight: 700; font-size: 12px; white-space: nowrap; }
+    .rest { background: #fff; border: 1.5px dashed #d8cff0; border-radius: 18px; padding: 14px; color: var(--muted); font-size: 14px; }
+
+    /* cycle toggle */
+    .cycle { display: flex; align-items: center; gap: 10px; margin-top: 4px; padding: 12px 14px; background: #fff; border-radius: 16px; box-shadow: var(--shadow); }
+    .cycle div { flex: 1; font-size: 14px; }
+    .cycle small { display: block; color: var(--muted); font-size: 12px; }
+    .switch { width: 44px; height: 26px; border-radius: 99px; background: #d9d2ea; position: relative; transition: background .2s; flex: none; }
+    .switch::after { content: ""; position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; border-radius: 50%; background: #fff; transition: transform .2s; box-shadow: 0 1px 3px rgba(0,0,0,.2); }
+    .switch[aria-checked="true"] { background: var(--accent); }
+    .switch[aria-checked="true"]::after { transform: translateX(18px); }
+    .cycle-tip { display: none; margin-top: 8px; font-size: 13px; color: var(--muted); padding: 0 4px; }
+    .cycle-tip.show { display: block; }
+
+    /* community */
+    .feed { background: #fff; border-radius: 20px; box-shadow: var(--shadow); padding: 4px 14px; }
+    .item { display: flex; gap: 10px; padding: 12px 0; border-bottom: 1px solid var(--line); }
+    .item:last-child { border-bottom: 0; }
+    .ico { width: 34px; height: 34px; flex: none; border-radius: 12px; display: grid; place-items: center; font-size: 16px; }
+    .item .txt { flex: 1; font-size: 14px; }
+    .item .kind { display: block; font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+    .hype { margin-top: 6px; background: #ffe9ef; color: #d6336c; padding: 4px 10px; border-radius: 99px; font-weight: 700; font-size: 12px; }
+    .hype[aria-pressed="true"] { background: #d6336c; color: #fff; }
+    .bar { height: 7px; border-radius: 4px; background: var(--accent-soft); margin-top: 6px; overflow: hidden; }
+    .bar i { display: block; height: 100%; width: 41%; background: linear-gradient(90deg, #a98bf0, var(--accent)); border-radius: 4px; }
+
+    /* tabs + toast */
+    .tabs { position: sticky; bottom: 0; display: flex; justify-content: space-around; background: rgba(255,255,255,.92); backdrop-filter: blur(10px); border-top: 1px solid var(--line); padding: 8px 0 14px; }
+    .tabs a { text-decoration: none; color: #a99cc4; font-size: 11px; font-weight: 600; display: flex; flex-direction: column; align-items: center; gap: 2px; }
+    .tabs a span { font-size: 18px; line-height: 1; }
+    .tabs a.on { color: var(--accent); }
+    .toast { position: fixed; left: 50%; bottom: 90px; transform: translate(-50%, 20px); background: var(--ink); color: #fff; padding: 12px 18px; border-radius: 14px; font-size: 14px; opacity: 0; pointer-events: none; transition: .3s; max-width: 90vw; }
+    .toast.show { opacity: 1; transform: translate(-50%, 0); }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <main>
+      <div class="top">
+        <a class="back" href="../">← Gallery</a>
+        <div class="avatar" aria-label="Jasmine's profile">JT</div>
+      </div>
+
+      <p class="date">Tuesday 6 October · Hong Kong</p>
+      <h1>Morning, Jasmine.<br>How's your energy today?</h1>
+
+      <div class="seg" role="group" aria-label="Energy today">
+        <button data-e="low" aria-pressed="false">😴 Low</button>
+        <button data-e="steady" aria-pressed="false">🙂 Steady</button>
+        <button data-e="high" aria-pressed="true">⚡ High</button>
+      </div>
+      <p class="mood" id="mood"></p>
+
+      <div class="stats">
+        <div class="stat"><b>🔥 3 wks</b><span>Streak</span></div>
+        <div class="stat"><b>27</b><span>Sessions</span></div>
+        <div class="stat"><b>60 kg</b><span>Squat PB</span></div>
+      </div>
+
+      <h2 id="match-title">Made for high energy</h2>
+      <div id="matches"></div>
+
+      <div class="cycle">
+        <div>Cycle-aware suggestions<small>Optional. Tune picks to your cycle phase.</small></div>
+        <button class="switch" role="switch" aria-checked="false" aria-label="Cycle-aware suggestions"></button>
+      </div>
+      <p class="cycle-tip" id="cycle-tip">On. Log your cycle in Profile and we'll tune suggestions to each phase. It stays private to you.</p>
+
+      <h2>Your upcoming <a href="#">See all</a></h2>
+      <div class="ev">
+        <div class="when"><span>Sun</span><b>11</b></div>
+        <div class="info"><b>Dragon's Back Sunrise Hike</b><small>6:15am · To Tei Wan · in 5 days</small></div>
+        <span class="going">Going ✓</span>
+      </div>
+      <div class="ev">
+        <div class="when"><span>Wed</span><b>14</b></div>
+        <div class="info"><b>Harbourfront 5K Run Club</b><small>7:30pm · Star Ferry clock tower</small></div>
+        <span class="going">Going ✓</span>
+      </div>
+
+      <h2>Community <a href="#">Open</a></h2>
+      <div class="feed">
+        <div class="item">
+          <div class="ico" style="background:#fff2d6">📣</div>
+          <div class="txt"><span class="kind">Chapter · Hana Okafor</span>Run club now starts at the Star Ferry clock tower. Look for the pink flag!</div>
+        </div>
+        <div class="item">
+          <div class="ico" style="background:#ffe9ef">🏆</div>
+          <div class="txt"><span class="kind">Member win</span>Chloe Ng hit a 100 kg deadlift PR on Saturday.<br><button class="hype" aria-pressed="false" data-n="34">🙌 Hype her · 34</button></div>
+        </div>
+        <div class="item">
+          <div class="ico" style="background:var(--accent-soft)">💬</div>
+          <div class="txt"><span class="kind">Chat · 6 replies</span>Priya: "Anyone splitting a taxi to To Tei Wan on Sunday? Leaving Quarry Bay 5:40am."</div>
+        </div>
+        <div class="item">
+          <div class="ico" style="background:#e8f7ee">🏋️</div>
+          <div class="txt"><span class="kind">Lift a Million · 25 days left</span>412,000 / 1,000,000 kg. You've added 2,140 kg.<div class="bar"><i></i></div></div>
+        </div>
+        <div class="item">
+          <div class="ico" style="background:#e3f0ff">🌏</div>
+          <div class="txt"><span class="kind">GLG Global</span>Global Lift Day, Sat 7 Nov: all seven chapters lift at the same hour. HK is at 5pm.</div>
+        </div>
+      </div>
+    </main>
+
+    <nav class="tabs">
+      <a class="on" href="#"><span>⌂</span>Home</a>
+      <a href="#"><span>▦</span>Events</a>
+      <a href="#"><span>♡</span>Community</a>
+      <a href="#"><span>◯</span>Profile</a>
+    </nav>
+  </div>
+  <div class="toast" id="toast" role="status"></div>
+
+  <script>
+    const events = {
+      barbell: { d: "Sat", n: 10, name: "Barbell Basics", meta: "8:00am · Kwun Tong", note: '<span class="hot">2 left</span>', price: "HK$180", lvl: 3 },
+      boxing:  { d: "Sat", n: 17, name: "Boxing Fundamentals", meta: "10:00am · Sheung Wan", note: "9 / 20 taken", price: "HK$250", lvl: 3 },
+      paddle:  { d: "Sun", n: 25, name: "Paddle & Brunch", meta: "9:00am · Sai Kung", note: "6 / 12 taken", price: "HK$420", lvl: 1 }
+    };
+    const plan = {
+      high:   { title: "Made for high energy", mood: "Big energy. Here's where to spend it.", picks: ["barbell", "boxing"] },
+      steady: { title: "Good for a steady day", mood: "Nice and even. A mix of strength and fresh air.", picks: ["barbell", "paddle"] },
+      low:    { title: "Gentle picks", mood: "Low is fine. Easy movement counts too.", picks: ["paddle"], rest: true }
+    };
+    const booked = new Set();
+
+    function render(e) {
+      const p = plan[e];
+      document.getElementById("match-title").textContent = p.title;
+      document.getElementById("mood").textContent = p.mood;
+      let html = p.picks.map(k => {
+        const v = events[k];
+        const lvl = [1, 2, 3].map(i => `<i class="${i <= v.lvl ? "on" : ""}"></i>`).join("");
+        const btn = booked.has(k) ? '<span class="going">Going ✓</span>' : `<button class="book" data-k="${k}">Book</button>`;
+        return `<div class="ev"><div class="when"><span>${v.d}</span><b>${v.n}</b></div>
+          <div class="info"><b>${v.name}<span class="intensity">${lvl}</span></b><small>${v.meta} · ${v.price} · ${v.note}</small></div>${btn}</div>`;
+      }).join("");
+      if (p.rest) html += '<div class="rest">Or take a rest day. Your Sunday hike is already booked 🌅</div>';
+      document.getElementById("matches").innerHTML = html;
+    }
+
+    document.querySelectorAll(".seg button").forEach(b => b.addEventListener("click", () => {
+      document.querySelectorAll(".seg button").forEach(x => x.setAttribute("aria-pressed", x === b));
+      render(b.dataset.e);
+    }));
+
+    const toast = document.getElementById("toast");
+    function say(msg) { toast.textContent = msg; toast.classList.add("show"); clearTimeout(say.t); say.t = setTimeout(() => toast.classList.remove("show"), 2400); }
+
+    document.getElementById("matches").addEventListener("click", ev => {
+      const b = ev.target.closest(".book"); if (!b) return;
+      booked.add(b.dataset.k);
+      b.outerHTML = '<span class="going">Going ✓</span>';
+      say("You're in! We've saved your spot. See you there 💪");
+    });
+
+    document.querySelector(".switch").addEventListener("click", e => {
+      const on = e.currentTarget.getAttribute("aria-checked") !== "true";
+      e.currentTarget.setAttribute("aria-checked", on);
+      document.getElementById("cycle-tip").classList.toggle("show", on);
+    });
+
+    document.querySelectorAll(".hype").forEach(h => h.addEventListener("click", () => {
+      const on = h.getAttribute("aria-pressed") !== "true";
+      h.setAttribute("aria-pressed", on);
+      h.textContent = `🙌 ${on ? "Hyped" : "Hype her"} · ${+h.dataset.n + (on ? 1 : 0)}`;
+    }));
+
+    render("high");
+  </script>
+</body>
+</html>

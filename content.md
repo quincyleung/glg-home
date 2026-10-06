@@ -18,8 +18,19 @@ Every version (v01–v25) uses exactly this content so that differences between 
 - **Chapter:** Hong Kong
 - **Member since:** March 2025
 - **Sessions attended:** 27
-- **Already booked:** Dragon's Back Sunrise Hike (Sun 11 Oct)
+- **Already booked:** Dragon's Back Sunrise Hike (Sun 11 Oct) and Harbourfront 5K Run Club (Wed 14 Oct)
 - **Greeting (if a version uses one):** "Morning, Jasmine" / "Hi Jasmine"
+
+### Personal (for the "about you" part of the home page)
+
+- **Streak:** 3 weeks in a row with at least one session
+- **This month:** 2 sessions done, 2 booked
+- **Personal best:** Back squat 60 kg (set 19 Sep 2026)
+- **Lift a Million contribution:** 2,140 kg
+- **Badge:** Early Riser (6 sunrise hikes)
+- **Buddies:** has trained most with Priya Raman (8 sessions together) and Chloe Ng (5)
+- **Districts moved in:** 6 (Kwun Tong, Shek O, Tsim Sha Tsui, Sheung Wan, Sai Kung, Central)
+- **Energy check-in (if a version uses one):** Low / Steady / High. Default: High
 
 ---
 
@@ -29,7 +40,7 @@ Every version (v01–v25) uses exactly this content so that differences between 
 |---|-------|-------|------|-------|-------|-------|
 | 1 | Barbell Basics: Squat & Deadlift | Strength | Sat 10 Oct, 8:00–9:30am | Iron Harbour Gym, Kwun Tong | HK$180 | **14 / 16 taken — 2 left** |
 | 2 | Dragon's Back Sunrise Hike | Hiking | Sun 11 Oct, 6:15–9:00am | Meet at To Tei Wan bus stop, Shek O Road | Free | 23 / 40 taken — *Jasmine is going* |
-| 3 | Harbourfront 5K Run Club | Running | Wed 14 Oct, 7:30–8:30pm | Star Ferry Pier, Tsim Sha Tsui | Free | 31 / 60 taken |
+| 3 | Harbourfront 5K Run Club | Running | Wed 14 Oct, 7:30–8:30pm | Star Ferry Pier, Tsim Sha Tsui | Free | 31 / 60 taken — *Jasmine is going* |
 | 4 | Boxing Fundamentals Workshop | Boxing | Sat 17 Oct, 10:00–11:30am | Left Hook Studio, Sheung Wan | HK$250 | 9 / 20 taken |
 | 5 | Paddle & Brunch: Sai Kung SUP | Paddleboarding | Sun 25 Oct, 9:00am–12:30pm | Sai Kung Waterfront Pier | HK$420 (board hire + brunch) | 6 / 12 taken |
 
@@ -44,7 +55,7 @@ Every version (v01–v25) uses exactly this content so that differences between 
 ### Booking
 
 - Primary action on every event: **Book a spot** (paid events: **Book · HK$180** etc.)
-- For an event she's already booked: **You're going ✓** (secondary: *Cancel*)
+- For an event she's already booked (Hike, 5K): **You're going ✓** (secondary: *Cancel*)
 - Nearly full label: **2 spots left**
 - Free events label: **Free**
 - Confirmation microcopy: "You're in! We've saved your spot. See you there 💪"
@@ -58,6 +69,16 @@ Every version (v01–v25) uses exactly this content so that differences between 
 
 2. **October Squad Challenge: Lift a Million** — *Posted 5 days ago by Mei-Ling Ho, Strength Coach*
    Log your squats at any GLG HK session this month. If we hit 1,000,000 kg moved as a chapter by 31 Oct, we're donating HK$5,000 to a local women's shelter. We're at 412,000 kg so far.
+
+## Community snippets
+
+Short items for a "community" area on the home page. Mix of types so it doesn't read like the events page.
+
+- **Member win:** Chloe Ng hit a 100 kg deadlift PR at Iron Harbour on Saturday. 34 hypes.
+- **Member win:** Aisha Lam finished her first ever 5K at last week's run club. 21 hypes.
+- **Chat thread:** Priya Raman: "Anyone want to split a taxi to To Tei Wan for Sunday's hike? Leaving Quarry Bay 5:40am." 6 replies.
+- **Challenge:** Lift a Million — 412,000 / 1,000,000 kg (41%), 25 days left.
+- **Buddy match:** Chloe Ng is going to Barbell Basics solo too.
 
 ## Global GLG update
 
