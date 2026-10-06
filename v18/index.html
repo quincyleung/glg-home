@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>v18 · Cover Story — GLG Home</title>
+  <style>
+    :root {
+      --purple: #4a1fb8;
+      --deep: #24104f;
+      --lav: #efe9ff;
+      --lav2: #c9b6ff;
+      --pink: #ff7aa8;
+      --ink: #1a1328;
+      --muted: #6e6585;
+      --line: #e6e0f2;
+      --paper: #fbfaff;
+      --display: Oswald, "Avenir Next Condensed", "Helvetica Neue", "Arial Narrow", sans-serif;
+      --body: Arimo, Arial, "Helvetica Neue", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #e4ddf3; color: var(--ink); font: 15px/1.5 var(--body); }
+    button { font: inherit; cursor: pointer; border: 0; color: inherit; background: none; }
+    .app { max-width: 430px; margin: 0 auto; min-height: 100vh; background: var(--paper); position: relative; overflow-x: clip; }
+    @media (min-width: 600px) { .app { margin: 24px auto; min-height: 0; border-radius: 28px; overflow: clip; box-shadow: 0 20px 60px rgba(40,10,90,.2); } }
+    .d { font-family: var(--display); font-weight: 700; text-transform: uppercase; font-stretch: condensed; letter-spacing: .01em; }
+    .photo { position: relative; overflow: hidden; background: var(--lav); }
+    .photo svg { display: block; width: 100%; height: 100%; }
+
+    .top { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; }
+    .top a { color: var(--muted); text-decoration: none; font-size: 13px; font-weight: 700; }
+    .top .logo { color: var(--purple); font-size: 15px; letter-spacing: .08em; }
+    .me { width: 30px; height: 30px; border-radius: 50%; background: var(--purple); color: #fff; display: grid; place-items: center; font-size: 11px; font-weight: 700; }
+
+    /* ticker */
+    .ticker { background: var(--purple); color: #fff; overflow: hidden; white-space: nowrap; padding: 8px 0; }
+    .ticker span { display: inline-block; font: 700 13px var(--display); text-transform: uppercase; letter-spacing: .08em; animation: run 30s linear infinite; }
+    @keyframes run { to { transform: translateX(-50%); } }
+
+    /* cover collage */
+    .cover { position: relative; display: grid; grid-template-columns: 1.3fr 1fr; grid-template-rows: 170px 170px; gap: 4px; }
+    .cover .a { grid-row: span 2; }
+    .issue { position: absolute; top: 10px; left: 10px; z-index: 3; font: 700 11px var(--display); text-transform: uppercase; letter-spacing: .14em; color: #fff; background: rgba(36,16,79,.75); padding: 4px 8px; }
+    .headline { position: absolute; left: 0; bottom: 18px; z-index: 3; }
+    .headline span { display: table; background: var(--purple); color: #fff; font: 700 52px/1 var(--display); text-transform: uppercase; padding: 2px 14px 6px; margin-top: 4px; }
+    .headline span:last-child { background: #fff; color: var(--purple); }
+    .dek { padding: 14px 16px 0; font-size: 16px; color: #3d3550; }
+    .dek b { color: var(--purple); }
+
+    /* streak */
+    .streak { display: grid; grid-template-columns: auto 1fr; gap: 16px; align-items: center; margin: 22px 16px 0; padding: 16px 0; border-top: 3px solid var(--ink); border-bottom: 1px solid var(--line); }
+    .big3 { font: 700 110px/.8 var(--display); color: var(--purple); }
+    .streak .lbl { font-size: 26px; line-height: .95; display: block; margin-bottom: 8px; }
+    .streak ul { list-style: none; margin: 0; padding: 0; font-size: 13px; color: var(--muted); }
+    .streak li { padding: 3px 0; border-top: 1px solid var(--line); display: flex; justify-content: space-between; }
+    .streak li b { color: var(--ink); }
+
+    h2 { font-size: 28px; line-height: 1; margin: 34px 16px 14px; display: flex; justify-content: space-between; align-items: baseline; }
+    h2 small { font: 700 12px var(--body); color: var(--muted); text-transform: none; letter-spacing: 0; }
+
+    /* you're in */
+    .ins { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 0 16px; }
+    .in-card .photo { height: 190px; }
+    .stamp { position: absolute; z-index: 2; right: 8px; bottom: 8px; width: 66px; height: 66px; border-radius: 50%; border: 3px solid #fff; background: var(--purple); color: #fff; display: grid; place-items: center; text-align: center; font: 700 12px/1 var(--display); text-transform: uppercase; transform: rotate(-12deg); box-shadow: 0 4px 12px rgba(0,0,0,.25); }
+    .in-card b { display: block; font: 700 17px/1.1 var(--display); text-transform: uppercase; margin-top: 8px; }
+    .in-card small { color: var(--muted); font-size: 12px; }
+
+    /* features */
+    .feat { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; align-items: center; padding: 18px 16px; border-top: 1px solid var(--line); }
+    .feat .photo { height: 190px; }
+    .feat.flip .photo { order: 2; }
+    .kick { display: block; font: 700 11px var(--display); text-transform: uppercase; letter-spacing: .16em; color: var(--pink); }
+    .num { font: 700 40px/1 var(--display); color: var(--lav2); }
+    .feat .t { font-size: 24px; line-height: 1; display: block; margin: 2px 0 6px; }
+    .feat p { margin: 0 0 10px; font-size: 13px; color: var(--muted); }
+    .hot { display: inline-block; background: var(--pink); color: #fff; font: 700 11px var(--display); text-transform: uppercase; letter-spacing: .08em; padding: 2px 8px; margin-bottom: 6px; }
+    .join { background: var(--purple); color: #fff; font: 700 14px var(--display); text-transform: uppercase; letter-spacing: .08em; padding: 9px 16px; }
+    .join.done { background: var(--lav); color: var(--purple); }
+
+    /* stronger together */
+    .together { background: var(--deep); color: #fff; margin-top: 30px; padding: 26px 16px 22px; }
+    .together h2 { margin: 0 0 18px; color: #fff; }
+    .quote { display: grid; grid-template-columns: 92px 1fr; gap: 14px; align-items: start; }
+    .portrait { width: 92px; height: 92px; border-radius: 50%; border: 3px solid var(--lav2); }
+    blockquote { margin: 0; font: 700 23px/1.1 var(--display); text-transform: uppercase; }
+    blockquote::before { content: "“"; display: block; font-size: 54px; line-height: .6; color: var(--pink); }
+    .quote small { display: block; margin-top: 8px; color: var(--lav2); font-size: 12px; }
+    .lift { margin-top: 10px; background: #fff; color: var(--purple); font: 700 13px var(--display); text-transform: uppercase; letter-spacing: .06em; padding: 6px 12px; }
+    .lift[aria-pressed="true"] { background: var(--pink); color: #fff; }
+    .also { margin-top: 22px; border-top: 1px solid rgba(255,255,255,.2); }
+    .also div { padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,.2); font-size: 14px; }
+    .also .k { display: block; font: 700 11px var(--display); text-transform: uppercase; letter-spacing: .14em; color: var(--lav2); margin-bottom: 2px; }
+    .million { margin-top: 18px; }
+    .million .n { font: 700 52px/1 var(--display); }
+    .million .n span { font-size: 22px; color: var(--lav2); }
+    .bar { height: 10px; background: rgba(255,255,255,.15); margin: 10px 0 6px; }
+    .bar i { display: block; height: 100%; width: 41%; background: linear-gradient(90deg, var(--pink), var(--lav2)); }
+    .million small { color: var(--lav2); font-size: 12px; }
+
+    .gld { margin: 0; padding: 22px 16px; background: var(--purple); color: #fff; text-align: center; }
+    .gld .k { font: 700 11px var(--display); text-transform: uppercase; letter-spacing: .2em; color: var(--lav2); }
+    .gld .t { font-size: 34px; line-height: 1; display: block; margin: 4px 0 6px; }
+    .gld p { margin: 0; font-size: 14px; }
+
+    .tabs { position: sticky; bottom: 0; z-index: 5; display: flex; justify-content: space-around; background: rgba(251,250,255,.95); backdrop-filter: blur(8px); border-top: 3px solid var(--ink); padding: 10px 0 14px; }
+    .tabs a { color: var(--muted); text-decoration: none; font: 700 12px var(--display); text-transform: uppercase; letter-spacing: .08em; }
+    .tabs a.on { color: var(--purple); }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <div class="top"><a href="../index.html">← Gallery</a><span class="d logo">Girls Lift Girls</span><span class="me" aria-label="Jasmine's profile">JT</span></div>
+    <div class="ticker" aria-label="Chapter announcement"><span>📌 Run club now starts at the Star Ferry clock tower · Look for the pink flag · Lift a Million: 412,000 kg · Global Lift Day Sat 7 Nov · 📌 Run club now starts at the Star Ferry clock tower · Look for the pink flag · Lift a Million: 412,000 kg · Global Lift Day Sat 7 Nov ·&nbsp;</span></div>
+
+    <section class="cover" aria-label="This week">
+      <div class="photo a" data-scene="harbour" data-people="7" data-seed="14" data-tone="color" data-alt="Members at run club"></div>
+      <div class="photo" data-scene="gym" data-people="4" data-seed="21" data-duo="#24104f,#efe9ff" data-alt="Saturday strength crew"></div>
+      <div class="photo" data-scene="trail" data-people="4" data-seed="44" data-duo="#4a1fb8,#ffe3ef" data-alt="Sunrise hike"></div>
+      <span class="issue">HK chapter · Week 41</span>
+      <div class="headline"><span>Morning,</span><span>Jasmine.</span></div>
+    </section>
+    <p class="dek">Two sessions booked, a barbell class nearly full, and 48 of us moved together last week. <b>Here's your week.</b></p>
+
+    <section class="streak" aria-label="Your streak">
+      <span class="big3">3</span>
+      <div><span class="d lbl">Weeks strong.<br>Make it four.</span>
+        <ul><li>Sessions <b>27</b></li><li>Squat PB <b>60 kg</b></li><li>Sunrise hikes <b>6</b></li></ul></div>
+    </section>
+
+    <h2 class="d">You're in <small>2 this week</small></h2>
+    <div class="ins">
+      <div class="in-card"><div class="photo" data-scene="trail" data-people="5" data-seed="31" data-tone="color" data-alt="Dragon's Back hike"><span class="stamp">You're<br>in</span></div><b>Dragon's Back Sunrise Hike</b><small>Sun 11 · 6:15am · with Priya + 21</small></div>
+      <div class="in-card"><div class="photo" data-scene="harbour" data-people="5" data-seed="8" data-tone="color" data-alt="Run club"><span class="stamp">You're<br>in</span></div><b>Harbourfront 5K</b><small>Wed 14 · 7:30pm · new start line</small></div>
+    </div>
+
+    <h2 class="d">This month at GLG <small>3 to join</small></h2>
+    <article class="feat">
+      <div class="photo" data-scene="gym" data-people="5" data-seed="3" data-tone="color" data-alt="Barbell Basics"></div>
+      <div><span class="num">01</span><span class="kick">Accepting challenges</span><span class="d t">Barbell Basics</span><span class="hot">2 spots left</span><p>Sat 10 · 8am · Kwun Tong · HK$180. Squat and deadlift with Coach Mei-Ling. No experience needed.</p><button class="join">Join</button></div>
+    </article>
+    <article class="feat flip">
+      <div class="photo" data-scene="studio" data-people="4" data-seed="9" data-tone="color" data-alt="Boxing Fundamentals"></div>
+      <div><span class="num">02</span><span class="kick">Redefining norms</span><span class="d t">Boxing Fundamentals</span><p>Sat 17 · 10am · Sheung Wan · HK$250. Stance, jab-cross and pad work. 3 first-timers going.</p><button class="join">Join</button></div>
+    </article>
+    <article class="feat">
+      <div class="photo" data-scene="beach" data-people="5" data-seed="5" data-tone="color" data-alt="Paddle and Brunch"></div>
+      <div><span class="num">03</span><span class="kick">Finding strength in</span><span class="d t">Paddle &amp; Brunch</span><p>Sun 25 · 9am · Sai Kung · HK$420. Two hours on the water, then brunch by the harbour.</p><button class="join">Join</button></div>
+    </article>
+
+    <section class="together">
+      <h2 class="d">Being stronger together</h2>
+      <div class="quote">
+        <div class="photo portrait" data-scene="gym" data-portrait="1" data-seed="23" data-tone="color" data-alt="Chloe Ng"></div>
+        <div><blockquote>Two years ago I couldn't lift the empty bar. Saturday I pulled 100 kg.</blockquote><small>Chloe Ng · new deadlift PR</small><button class="lift" aria-pressed="false" data-n="34">💜 Lift her up · 34</button></div>
+      </div>
+      <div class="also">
+        <div><span class="k">📌 Hana · chapter lead</span>Run club has a new start line: the Star Ferry clock tower. Same time, 7:30pm.</div>
+        <div><span class="k">👋 New faces</span>Mandy, Kiko and Sara joined this week. Say hi on Saturday.</div>
+        <div><span class="k">💬 Chapter chat · 6 replies</span>Priya's splitting a taxi to Sunday's hike, 5:40am from Quarry Bay.</div>
+      </div>
+      <div class="million"><span class="d n">412,000 <span>/ 1,000,000 kg</span></span><div class="bar"><i></i></div><small>Lift a Million · your share 2,140 kg · 25 days left · HK$5,000 to a women's shelter</small></div>
+    </section>
+
+    <section class="gld"><span class="k">Save the date · GLG HQ</span><span class="d t">Global Lift Day</span><p>Sat 7 Nov. Seven chapters, one hour. Hong Kong lifts at 5pm.</p></section>
+
+    <nav class="tabs"><a class="on" href="#">Home</a><a href="#">Events</a><a href="#">Community</a><a href="#">Profile</a></nav>
+  </div>
+
+  <script>
+    // Illustrated "photos": groups of women at GLG sessions, drawn as SVG so no real photos are used.
+    // <div class="photo" data-scene="gym|harbour|trail|beach|studio" data-people="6" data-seed="3" data-tone="duo|color"></div>
+    const Photo = (() => {
+      const SKIN = ["#f3d2b8", "#e8b48f", "#c98e66", "#a26a44", "#7a4a2c", "#5a3520"];
+      const HAIR = ["#1b1210", "#3a2418", "#6b4226", "#b07a3f", "#2a1a2e", "#1b1210"];
+      const TOPS = ["#7b4fe0", "#ff7aa8", "#ffffff", "#24202e", "#ffd23f", "#5fd0c0", "#b9a3ff", "#ff8a5c"];
+      const BOTS = ["#1d1d24", "#3a3350", "#4a1fb8", "#2b2b33", "#5b4a7a"];
+      let uid = 0;
+      const rng = seed => () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+      const pick = (r, a) => a[Math.floor(r() * a.length)];
+
+      function person(r, x, y, s) {
+        const skin = pick(r, SKIN), hair = pick(r, HAIR), top = pick(r, TOPS), bot = pick(r, BOTS);
+        const hr = 11 * s, hy = y - 118 * s + hr, sh = hy + hr + 5 * s, hip = sh + 40 * s;
+        const p = r(), pose = p < .28 ? "up" : p < .55 ? "hug" : p < .66 ? "flex" : "down";
+        const aw = 7 * s, st = `stroke="${skin}" stroke-width="${aw}" stroke-linecap="round" fill="none"`;
+        let g = "";
+        const style = Math.floor(r() * 4);
+        if (style === 2) g += `<path d="M${x - hr} ${hy} Q${x - hr * 1.3} ${sh + 14 * s} ${x - hr * .4} ${sh + 16 * s} L${x + hr * .4} ${sh + 16 * s} Q${x + hr * 1.3} ${sh + 14 * s} ${x + hr} ${hy}Z" fill="${hair}"/>`;
+        if (style === 1) g += `<ellipse cx="${x + hr * .9}" cy="${hy + hr * .6}" rx="${hr * .45}" ry="${hr * 1.1}" fill="${hair}" transform="rotate(-20 ${x + hr} ${hy})"/>`;
+        g += `<path d="M${x - 7 * s} ${hip} L${x - 10 * s} ${y + 4 * s} M${x + 7 * s} ${hip} L${x + 10 * s} ${y + 4 * s}" stroke="${bot}" stroke-width="${11 * s}" stroke-linecap="round"/>`;
+        if (pose === "up") g += `<path d="M${x - 11 * s} ${sh + 3 * s} L${x - 24 * s} ${hy - 26 * s} M${x + 11 * s} ${sh + 3 * s} L${x + 24 * s} ${hy - 26 * s}" ${st}/>`;
+        else if (pose === "hug") g += `<path d="M${x - 11 * s} ${sh + 3 * s} L${x - 15 * s} ${hip} M${x + 11 * s} ${sh + 3 * s} L${x + 34 * s} ${sh + 8 * s}" ${st}/>`;
+        else if (pose === "flex") g += `<path d="M${x - 11 * s} ${sh + 3 * s} L${x - 28 * s} ${sh + 4 * s} L${x - 28 * s} ${sh - 16 * s} M${x + 11 * s} ${sh + 3 * s} L${x + 15 * s} ${hip}" ${st}/>`;
+        else g += `<path d="M${x - 11 * s} ${sh + 3 * s} L${x - 15 * s} ${hip + 4 * s} M${x + 11 * s} ${sh + 3 * s} L${x + 15 * s} ${hip + 4 * s}" ${st}/>`;
+        g += `<rect x="${x - 14 * s}" y="${sh - 3 * s}" width="${28 * s}" height="${hip - sh + 8 * s}" rx="${10 * s}" fill="${top}"/>`;
+        g += `<rect x="${x - 3.5 * s}" y="${hy + hr - 2 * s}" width="${7 * s}" height="${8 * s}" fill="${skin}"/>`;
+        g += `<circle cx="${x}" cy="${hy}" r="${hr}" fill="${skin}"/>`;
+        g += `<path d="M${x - hr} ${hy + 1 * s} A${hr} ${hr} 0 0 1 ${x + hr} ${hy + 1 * s} Q${x} ${hy - hr * .35} ${x - hr} ${hy + 1 * s}Z" fill="${hair}"/>`;
+        if (style === 0) g += `<circle cx="${x}" cy="${hy - hr * 1.05}" r="${hr * .5}" fill="${hair}"/>`;
+        if (r() < .5) g += `<path d="M${x - 4 * s} ${hy + 4 * s} Q${x} ${hy + 7 * s} ${x + 4 * s} ${hy + 4 * s}" stroke="#3a1f1a" stroke-width="${1.4 * s}" fill="none" stroke-linecap="round"/>`;
+        return g;
+      }
+
+      function scene(type, r, W, H) {
+        const hz = H * .62;
+        switch (type) {
+          case "harbour": return `<defs><linearGradient id="sk${uid}" x2="0" y2="1"><stop offset="0" stop-color="#3b2a6b"/><stop offset=".6" stop-color="#f2785c"/><stop offset="1" stop-color="#ffc48a"/></linearGradient></defs>
+            <rect width="${W}" height="${H}" fill="url(#sk${uid})"/><circle cx="${W * .72}" cy="${hz - 30}" r="26" fill="#ffe0a8"/>
+            ${Array.from({ length: 16 }, (_, i) => { const w = 14 + r() * 22, h = 30 + r() * 90; return `<rect x="${i * W / 15 - 6}" y="${hz - h}" width="${w}" height="${h + 2}" fill="#1e1a33"/>`; }).join("")}
+            <rect y="${hz}" width="${W}" height="${H - hz}" fill="#2c3f6b"/>`;
+          case "trail": return `<defs><linearGradient id="sk${uid}" x2="0" y2="1"><stop offset="0" stop-color="#ffb37a"/><stop offset="1" stop-color="#ffe6c2"/></linearGradient></defs>
+            <rect width="${W}" height="${H}" fill="url(#sk${uid})"/><circle cx="${W * .3}" cy="${hz - 40}" r="30" fill="#fff3d6"/>
+            <path d="M0 ${hz - 30} Q${W * .25} ${hz - 90} ${W * .5} ${hz - 40} T${W} ${hz - 60} V${H} H0Z" fill="#8a9a6a"/>
+            <path d="M0 ${hz} Q${W * .3} ${hz - 40} ${W * .6} ${hz - 6} T${W} ${hz - 20} V${H} H0Z" fill="#5d7a48"/>
+            <path d="M${W * .45} ${H} Q${W * .5} ${hz + 20} ${W * .62} ${hz}" stroke="#d9c49a" stroke-width="18" fill="none"/>`;
+          case "beach": return `<defs><linearGradient id="sk${uid}" x2="0" y2="1"><stop offset="0" stop-color="#9fd8ff"/><stop offset="1" stop-color="#ffe3f0"/></linearGradient></defs>
+            <rect width="${W}" height="${H}" fill="url(#sk${uid})"/><circle cx="${W * .8}" cy="${hz - 60}" r="24" fill="#fff6c9"/>
+            <rect y="${hz - 30}" width="${W}" height="40" fill="#3aa0d8"/><rect y="${hz + 8}" width="${W}" height="${H}" fill="#f2dcb3"/>
+            <rect x="${W * .05}" y="${hz + 30}" width="120" height="16" rx="8" fill="#ff8fb8" transform="rotate(-6 ${W * .1} ${hz})"/>`;
+          case "studio": return `<rect width="${W}" height="${H}" fill="#efe7f7"/>
+            ${[0.1, 0.4, 0.7].map(f => `<rect x="${W * f}" y="${H * .08}" width="${W * .22}" height="${H * .4}" fill="#fffaf0"/><rect x="${W * f + W * .105}" y="${H * .08}" width="5" height="${H * .4}" fill="#dccdea"/>`).join("")}
+            <rect y="${hz + 6}" width="${W}" height="${H}" fill="#c9a77f"/>
+            ${[0, 1, 2, 3].map(i => `<rect x="${i * W / 4 + 8}" y="${hz + 40}" width="${W / 4 - 18}" height="22" rx="4" fill="${["#b9a3ff", "#ff9ec4", "#7bd3c4", "#ffd88a"][i]}"/>`).join("")}`;
+          default: return `<defs><radialGradient id="sk${uid}" cx=".5" cy="0" r="1"><stop offset="0" stop-color="#6b6b78"/><stop offset="1" stop-color="#18181c"/></radialGradient></defs>
+            <rect width="${W}" height="${H}" fill="url(#sk${uid})"/>
+            <rect x="${W * .06}" y="${H * .12}" width="8" height="${hz - H * .12}" fill="#444"/><rect x="${W * .3}" y="${H * .12}" width="8" height="${hz - H * .12}" fill="#444"/>
+            <rect x="${W * .04}" y="${H * .3}" width="${W * .3}" height="6" fill="#999"/>
+            ${[0, 1, 2, 3].map(i => `<circle cx="${W * .62 + i * 34}" cy="${H * .3}" r="${18 - i * 2}" fill="none" stroke="#7a1fe0" stroke-width="8"/>`).join("")}
+            <rect y="${hz}" width="${W}" height="${H}" fill="#2a2a30"/>`;
+        }
+      }
+
+      function hex(c) { return [1, 3, 5].map(i => (parseInt(c.slice(i, i + 2), 16) / 255).toFixed(3)); }
+
+      function draw(el) {
+        uid++;
+        const W = 400, H = 300, r = rng(+el.dataset.seed || 1), n = +el.dataset.people || 5;
+        const [d, l] = (el.dataset.duo || "#2a0f6b,#e6d9ff").split(",").map(hex);
+        let people = "";
+        const back = el.dataset.portrait ? 0 : Math.ceil(n / 2), front = el.dataset.portrait ? 0 : n - back;
+        if (el.dataset.portrait) people = person(r, W / 2, H * 2.4, 5.5);
+        for (let i = 0; i < back; i++) people += person(r, (i + .5) * W / back + (r() - .5) * 14, H * .98, 1.2);
+        for (let i = 0; i < front; i++) people += person(r, (i + .5) * W / front + (r() - .5) * 14 + W / back / 2 * (front < back ? 1 : .5) - (front < back ? 0 : 10), H * 1.28, 1.55);
+        const duo = el.dataset.tone !== "color";
+        el.insertAdjacentHTML("afterbegin", `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMax slice" role="img" aria-label="${el.dataset.alt || "GLG members together"}">
+          <defs>
+            <filter id="duo${uid}" color-interpolation-filters="sRGB"><feColorMatrix type="saturate" values="0"/><feComponentTransfer>
+              <feFuncR type="table" tableValues="${d[0]} ${l[0]}"/><feFuncG type="table" tableValues="${d[1]} ${l[1]}"/><feFuncB type="table" tableValues="${d[2]} ${l[2]}"/></feComponentTransfer></filter>
+            <filter id="gr${uid}"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
+          </defs>
+          <g ${duo ? `filter="url(#duo${uid})"` : ""}>${scene(el.dataset.scene, r, W, H)}${people}</g>
+          <rect width="${W}" height="${H}" filter="url(#gr${uid})" opacity=".09"/>
+        </svg>`);
+      }
+      return { drawAll: (root = document) => root.querySelectorAll(".photo[data-scene]").forEach(draw), draw };
+    })();
+    Photo.drawAll();
+    document.querySelectorAll(".join").forEach(b => b.addEventListener("click", () => {
+      b.textContent = "You're in ✓"; b.classList.add("done"); b.disabled = true;
+    }));
+    document.querySelectorAll(".lift").forEach(h => h.addEventListener("click", () => {
+      const on = h.getAttribute("aria-pressed") !== "true";
+      h.setAttribute("aria-pressed", on);
+      h.textContent = `💜 ${on ? "Lifted" : "Lift her up"} · ${+h.dataset.n + (on ? 1 : 0)}`;
+    }));
+  </script>
+</body>
+</html>
