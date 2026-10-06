@@ -39,3 +39,7 @@
 - **Asked for:** Tape Shelf as the third version, a direction you liked from round 1.
 - **Made:** the polished round 2 take. A purple night gradient with a "GLG GET PHYSICAL!" header. The next bookable event is a cassette (handwritten label, "Only 2 spots left") whose reels start spinning when you book. Other events are tapes on a swipeable shelf. News is "Liner notes" as numbered tracks.
 - **Pushback:** none yet.
+
+## Fix: direct links
+- **Asked for:** clicking a gallery tile should open the page, not a folder listing.
+- **Made:** gallery links, preview iframes and every version's "← Gallery" link now point at `index.html` files directly, so they work when opened locally.
