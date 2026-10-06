@@ -110,3 +110,7 @@
 ## v07 recoloured: full pastel
 - **Pushback:** "make v7 more colorful… fully embody the pastel colorful theme (feel like the black doesn't quite fit)."
 - **Made:** replaced every black surface. Text is now a deep grape, the headline is a pink→lilac→blue gradient, and the stats card is a peach→pink→lilac gradient. Book buttons are white pills tinted to match their tile, the tab bar is white with a pastel active pill, and the page has a soft rainbow wash.
+
+## v13 tweaked: less Strava, purple
+- **Pushback:** remove the feed posts (Hana, Chloe) and the planned km, since GLG isn't only running. It looked too similar to Strava. Change the colourway to purple.
+- **Made:** removed both activity posts and their styles and scripts. Replaced "planned km" with a sport-agnostic "Activities: Hike · Run" and "Hours: 3h 45m". Swapped orange for purple (#6c3ce0) throughout, including routes, badges, the chart, buttons and the leaderboard. Kept the week chart, route thumbnails, photo cards for group sessions, the challenge leaderboard and club news.
