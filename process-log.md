@@ -169,3 +169,7 @@
 ## v21: "psst, your friends are going"
 - **Asked for:** bring in v10's feature of showing what friends are doing, as "psst, your friends are going". Show a friend going, with a "join them" button including the price and an "it's okay" button that removes it.
 - **Made:** a nudge card between "you're going" and "coming up", with a pastel holographic gradient border, the "psst, your friends are going →" kicker in mono, Chloe's and Kiko's avatars, "chloe and kiko are going to barbell basics" and "sat 10 · 8am · kwun tong · only 2 spots left". "join them · hk$180" books her (the button turns mint, "you're in with chloe & kiko ✓", the matching coming-up card flips to "you're going ✓", and the nudge folds away after a moment). "it's okay" folds it away straight away. Joining Barbell from its own card also clears the nudge.
+
+## v21: compact community snippet
+- **Asked for:** smaller images and posts in "from the community", and remove the filter buttons ("I'll just save it for the community page. This is just a small snippet people can see").
+- **Made:** removed the posts / challenges / announcements chips from the home. The 3 latest items are now compact snippets: a 24px avatar, name · time and type tag on one line, a 14px title, the text clamped to two lines, a small action pill, and a 68px square photo thumbnail on the right when there's a photo. Updated my saved preferences: the filters belong on the Community tab, not the home.

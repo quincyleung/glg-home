@@ -120,23 +120,23 @@
     .mosaic .heart { position: absolute; top: 6px; right: 6px; z-index: 2; font: 10px var(--mono); background: rgba(255,255,255,.85); color: var(--purple); border-radius: 99px; padding: 2px 7px; }
     .mosaic .heart[aria-pressed="true"] { background: var(--purple); color: #fff; }
 
-    /* from the community: v16-style post cards */
-    .post { background: #fff; border-radius: 20px; overflow: hidden; margin-bottom: 12px; box-shadow: 0 2px 10px rgba(107,69,224,.07); animation: rise .35s ease both; }
+    /* from the community: compact v16-style snippets */
+    .post { display: flex; gap: 12px; align-items: flex-start; background: #fff; border-radius: 18px; padding: 12px; margin-bottom: 8px; box-shadow: 0 2px 10px rgba(107,69,224,.07); animation: rise .35s ease both; }
     @keyframes rise { from { opacity: 0; transform: translateY(6px); } }
-    .post .head { display: flex; align-items: center; gap: 10px; padding: 12px 14px; }
-    .post .head .ava { width: 36px; height: 36px; border-radius: 50%; overflow: hidden; flex: none; }
+    .post .pb { flex: 1; min-width: 0; }
+    .post .head { display: flex; align-items: center; gap: 7px; margin-bottom: 6px; }
+    .post .head .ava { width: 24px; height: 24px; border-radius: 50%; overflow: hidden; flex: none; }
     .post .head .ava svg { display: block; width: 100%; height: 100%; }
-    .post .head b { display: block; font-size: 14px; }
-    .post .head small { font: 11px var(--mono); color: var(--muted); }
-    .post .kind { margin-left: auto; font: 10px var(--mono); padding: 3px 9px; border-radius: 99px; white-space: nowrap; }
+    .post .head b { font-size: 12px; }
+    .post .head small { font: 10px var(--mono); color: var(--muted); }
+    .post .kind { margin-left: auto; font: 9px var(--mono); padding: 2px 7px; border-radius: 99px; white-space: nowrap; }
     .kind.posts { background: var(--pink); } .kind.challenges { background: var(--lilac); color: var(--purple); } .kind.announcements { background: var(--butter); }
-    .post .photo { height: 190px; }
-    .post .txt { padding: 12px 14px 14px; }
-    .post .t { display: block; font: 700 17px/1.2 var(--sans); letter-spacing: -.02em; }
-    .post p { margin: 4px 0 10px; font-size: 14px; color: #4a3d6e; }
-    .post .pbar { height: 8px; border-radius: 99px; background: var(--lilac); overflow: hidden; margin: 2px 0 10px; }
+    .post .photo { width: 68px; height: 68px; flex: none; border-radius: 12px; }
+    .post .t { display: block; font: 700 14px/1.25 var(--sans); letter-spacing: -.01em; }
+    .post p { margin: 2px 0 8px; font-size: 12.5px; line-height: 1.4; color: #4a3d6e; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .post .pbar { height: 6px; border-radius: 99px; background: var(--lilac); overflow: hidden; margin: 0 0 8px; }
     .post .pbar i { display: block; height: 100%; border-radius: 99px; background: linear-gradient(90deg, #ff9fcb, var(--purple)); }
-    .post .act { background: var(--lilac); color: var(--purple); font: 12px var(--mono); padding: 7px 12px; border-radius: 99px; }
+    .post .act { background: var(--lilac); color: var(--purple); font: 11px var(--mono); padding: 5px 10px; border-radius: 99px; }
     .post .act.done { background: var(--purple); color: #fff; }
     .filters { display: flex; gap: 6px; overflow-x: auto; margin: 0 -16px 12px; padding: 0 16px; scrollbar-width: none; }
     .filters::-webkit-scrollbar { display: none; }
@@ -207,9 +207,6 @@
       </div>
 
       <h2><span>from the community</span><a href="#">see all →</a></h2>
-      <div class="filters" role="group" aria-label="Filter community">
-        <button aria-pressed="true" data-f="all">all</button><button aria-pressed="false" data-f="posts">posts</button><button aria-pressed="false" data-f="challenges">challenges</button><button aria-pressed="false" data-f="announcements">announcements</button>
-      </div>
       <div id="feed" aria-live="polite"></div>
     </main>
 
@@ -394,7 +391,7 @@
     flip.addEventListener("click", toggleFlip);
     flip.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggleFlip(); } });
 
-    // From the community: newest first, show the 3 most recent for the chosen filter.
+    // From the community: a small snippet of the 3 most recent items (filters live on the Community tab).
     const feedItems = [
       { type: "posts", age: 14, when: "yesterday", who: "priya", name: "priya raman", title: "taxi to dragon's back?", text: "splitting a taxi to to tei wan on sunday, 5:40am from quarry bay. you're on this hike too 🚕 · 6 replies", act: "join the taxi", done: "you're in the taxi ✓" },
       { type: "announcements", age: 20, when: "yesterday", seed: 90, name: "glg hq", title: "global lift day · sat 7 nov 🌏", text: "all seven chapters lift at the same hour for the first time. hong kong lifts at 5pm at iron harbour.", photo: { scene: "gym", people: 8, seed: 77 }, act: "remind me", done: "reminder set ✓" },
@@ -409,9 +406,11 @@
       const list = feedItems.filter(i => f === "all" || i.type === f).sort((a, b) => a.age - b.age).slice(0, 3);
       const feed = document.getElementById("feed");
       feed.innerHTML = list.map(i => `<article class="post">
-        <div class="head"><span class="ava" ${i.who ? `data-who="${i.who}"` : `data-seed="${i.seed}"`}></span><div><b>${i.name}</b><small>${i.when}</small></div><span class="kind ${i.type}">${i.pin ? "📌 " : ""}${kindLabel[i.type]}</span></div>
+        <div class="pb">
+          <div class="head"><span class="ava" ${i.who ? `data-who="${i.who}"` : `data-seed="${i.seed}"`}></span><b>${i.name}</b><small>· ${i.when}</small><span class="kind ${i.type}">${i.pin ? "📌 " : ""}${kindLabel[i.type]}</span></div>
+          <span class="t">${i.title}</span><p>${i.text}</p>${i.progress ? `<div class="pbar"><i style="width:${i.progress}%"></i></div>` : ""}<button class="act${i.act === i.done ? " done" : ""}">${i.act}</button>
+        </div>
         ${i.photo ? `<div class="photo" data-scene="${i.photo.scene}" data-people="${i.photo.people}" data-seed="${i.photo.seed}" data-tone="color"></div>` : ""}
-        <div class="txt"><span class="t">${i.title}</span><p>${i.text}</p>${i.progress ? `<div class="pbar"><i style="width:${i.progress}%"></i></div>` : ""}<button class="act${i.act === i.done ? " done" : ""}">${i.act}</button></div>
       </article>`).join("");
       feed.querySelectorAll(".photo").forEach(Photo.draw);
       Avatar.drawAll(feed);
@@ -420,10 +419,6 @@
         b.classList.toggle("done", on); b.textContent = on ? i.done : i.act;
       }));
     }
-    document.querySelectorAll(".filters button").forEach(b => b.addEventListener("click", () => {
-      document.querySelectorAll(".filters button").forEach(x => x.setAttribute("aria-pressed", x === b));
-      renderFeed(b.dataset.f);
-    }));
     renderFeed("all");
     document.querySelectorAll(".heart").forEach(h => h.addEventListener("click", () => {
       const on = h.getAttribute("aria-pressed") !== "true";
