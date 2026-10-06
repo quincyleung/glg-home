@@ -234,3 +234,8 @@
 ## v23: Join a session carousel
 - **Asked for:** make v23's "Join a session" a carousel too.
 - **Made:** the three session cards (Barbell, Boxing, Paddle) now sit in a swipeable, snap-scrolling row like "You're going" (84% wide with the next card peeking). The psst nudge stays above it. Joining still updates who's going and syncs with psst.
+
+## v23 community carousel, v24 orbit rethink
+- **Asked for:** make the community posts a carousel too (v23). For v24, instead of clicking friends, maybe click features (events etc.), "or what do you think would be most helpful?"
+- **Recommendation:** a ring of features would duplicate the tab bar (Events, Community and Profile are already one tap away). The orbit is most useful answering the home-screen question "who can I train with this week, and how do I join them?" That's GLG's "never lift alone" idea.
+- **Made:** v23's "From the community" is a swipeable row of post cards (comments still open inside each card). v24's orbit now shows six friends, each with a badge for what she's doing next (🏋️ Chloe and Kiko → Barbell, ⛰️ Priya → hike, 🏃 Aisha → 5K, 🥊 Mandy → Boxing, 🏄‍♀️ Sara → Paddle). A pink ring means Jasmine isn't booked on that session yet. Tapping a friend shows "Chloe → Barbell Basics" with time, place and spots, and a one-tap "Join her · HK$180" that books the real card below (seat, who's going, psst, toast). If they're already going together, it shows "You're both going ✓" plus something useful ("Join her taxi 🚕", "Run with her"). Rings update when you join from anywhere on the page.

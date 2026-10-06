@@ -47,7 +47,8 @@
     .sat.near { z-index: 2; }
     .sat.near .ava { width: 50px; height: 50px; box-shadow: 0 0 0 3px #fff, 0 4px 12px rgba(40,10,90,.15); transition: transform .2s; }
     .sat.near.active .ava { transform: scale(1.15); box-shadow: 0 0 0 3px var(--purple), 0 4px 12px rgba(40,10,90,.25); }
-    .sat.near .dot { position: absolute; top: 0; right: 0; width: 13px; height: 13px; border-radius: 50%; background: var(--pink); border: 2px solid #fff; }
+    .sat.near .act-badge { position: absolute; right: -4px; bottom: 10px; width: 22px; height: 22px; border-radius: 50%; background: #fff; display: grid; place-items: center; font-size: 12px; box-shadow: 0 2px 6px rgba(40,10,90,.18); }
+    .sat.near.open .ava { box-shadow: 0 0 0 3px var(--pink), 0 4px 12px rgba(40,10,90,.15); }
     .sat.near .nm { position: absolute; left: 50%; top: 100%; transform: translateX(-50%); margin-top: 5px; font: 700 11px var(--display); text-transform: uppercase; letter-spacing: .06em; color: var(--muted); white-space: nowrap; }
     .center { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 32%; aspect-ratio: 1; border-radius: 50%; padding: 5px; background: conic-gradient(var(--purple) 0 75%, #fff 75% 100%); z-index: 3; }
     .center .ava { width: 100%; height: 100%; border: 4px solid #f5f1ff; }
@@ -59,6 +60,7 @@
     .spot p { margin: 2px 0 8px; font-size: 14px; }
     .spot button { background: var(--purple); color: #fff; font: 700 13px var(--display); text-transform: uppercase; letter-spacing: .06em; padding: 6px 12px; border-radius: 99px; }
     .spot button.done { background: var(--lav); color: var(--purple); }
+    .spot .both { display: inline-block; margin-top: 4px; font: 700 11px var(--display); text-transform: uppercase; letter-spacing: .06em; color: #1f6b52; background: var(--mint); padding: 2px 8px; border-radius: 99px; }
 
     main { padding: 0 16px; background: #f5f1ff; }
 
@@ -230,7 +232,7 @@
         <div class="outer-spin" id="far"></div>
         <div class="center" title="3-week streak"><span class="ava" data-who="jasmine"></span></div>
       </div>
-      <p class="orbit-hint">Your crew this week · pink dot = something new</p>
+      <p class="orbit-hint">Who you could train with this week · pink ring = you're not booked yet</p>
       <div class="spot" id="spot" aria-live="polite"></div>
       <div class="flip-wrap">
         <div class="flip" id="flip" role="button" tabindex="0" aria-pressed="false" aria-label="Your streak and stats. Tap to show your check-in QR code">
@@ -281,12 +283,12 @@
           <div class="body"><span class="d ttl">Barbell Basics</span><p class="meta">Sat 10 Oct · 8:00am · Kwun Tong</p>
             <div class="row"><div class="people"><span class="avs"><span class="ava" data-who="chloe"></span><span class="ava" data-who="kiko"></span><span class="ava" data-seed="33"></span></span><span class="who">Chloe, Kiko + 12</span></div><span class="price">HK$180</span><button class="join">Join</button></div></div>
         </div>
-        <div class="ev">
+        <div class="ev" id="ev-boxing">
           <div class="seatbox" data-crew="mandy,s52,s54,s55,s56,s57,s58,s59,s60" data-total="20"><span class="tag">3 first-timers</span><button class="info" aria-expanded="false" aria-label="Instructor details: Jess"><span class="ava" data-who="jess"></span></button><div class="details">With Coach Jess Albano at Left Hook Studio. Stance, jab-cross, footwork and pad work. Gloves and wraps provided.</div></div>
           <div class="body"><span class="d ttl">Boxing Fundamentals</span><p class="meta">Sat 17 Oct · 10:00am · Sheung Wan</p>
             <div class="row"><div class="people"><span class="avs"><span class="ava" data-who="mandy"></span><span class="ava" data-seed="52"></span><span class="ava" data-seed="54"></span></span><span class="who">Mandy + 8</span></div><span class="price">HK$250</span><button class="join">Join</button></div></div>
         </div>
-        <div class="ev">
+        <div class="ev" id="ev-paddle">
           <div class="seatbox" data-crew="sara,s62,s64,s65,s66,s67" data-total="12"><span class="tag">Brunch included</span><button class="info" aria-expanded="false" aria-label="Instructor details: Tash"><span class="ava" data-seed="47"></span></button><div class="details">With instructor Tash Wong. Two hours on the water with an instructor, then brunch by the harbour. Board hire included. You must be able to swim.</div></div>
           <div class="body"><span class="d ttl">Paddle &amp; Brunch</span><p class="meta">Sun 25 Oct · 9:00am · Sai Kung</p>
             <div class="row"><div class="people"><span class="avs"><span class="ava" data-who="sara"></span><span class="ava" data-seed="62"></span><span class="ava" data-seed="64"></span></span><span class="who">Sara + 5</span></div><span class="price">HK$420</span><button class="join">Join</button></div></div>
@@ -441,23 +443,28 @@
     })();
     Avatar.drawAll();
 
-    // Orbit (v20): the crew around Jasmine; tap someone for their news.
+    // Orbit: friends around Jasmine, each badged with what she's doing next.
+    // Tap a friend to see that session and join her, or a nudge if you're already going together.
     const ava = who => /^s\d+$/.test(who) ? `<span class="ava" data-seed="${who.slice(1)}"></span>` : `<span class="ava" data-who="${who}"></span>`;
     const crew = [
-      { who: "chloe", name: "Chloe", k: "Saturday", t: "Pulled a 100 kg deadlift. Two years ago I couldn't lift the empty bar.", a: "💜 Lift her up", done: "Lifted 💜", news: true },
-      { who: "priya", name: "Priya", k: "Chapter chat", t: "Splitting a taxi to To Tei Wan on Sunday, 5:40am from Quarry Bay. You're on this hike too.", a: "Join the taxi", done: "In the taxi 🚕", news: true },
-      { who: "hana", name: "Hana", k: "Chapter lead", t: "Run club now starts at the Star Ferry clock tower. Same time, 7:30pm.", a: "Got it", done: "See you Wednesday", news: true },
-      { who: "kiko", name: "Kiko", k: "New this week", t: "Just joined. Barbell Basics on Saturday is her first session.", a: "👋 Wave", done: "Waved 👋", news: true },
-      { who: "aisha", name: "Aisha", k: "Last Wednesday", t: "Ran her first ever 5K at run club. She'll be there again on Wednesday.", a: "Run with her", done: "She'll look out for you", news: false },
-      { who: "meiling", name: "Mei-Ling", k: "Coach", t: "Two seats left at Barbell Basics on Saturday. No experience needed.", a: "See seats", done: "Scroll down ↓", news: false }
+      { who: "chloe", name: "Chloe", icon: "🏋️", session: "Barbell Basics", when: "Sat 10 · 8am · Kwun Tong · 2 spots left", join: "#ev-barbell", price: "HK$180" },
+      { who: "priya", name: "Priya", icon: "⛰️", session: "Dragon's Back Sunrise Hike", when: "Sun 11 · 6:15am · To Tei Wan", both: "She's splitting a taxi from Quarry Bay at 5:40am.", extra: "Join her taxi 🚕", extraDone: "In the taxi ✓" },
+      { who: "mandy", name: "Mandy", icon: "🥊", session: "Boxing Fundamentals", when: "Sat 17 · 10am · Sheung Wan · her first time too", join: "#ev-boxing", price: "HK$250" },
+      { who: "kiko", name: "Kiko", icon: "🏋️", session: "Barbell Basics", when: "Sat 10 · 8am · her first ever GLG session", join: "#ev-barbell", price: "HK$180" },
+      { who: "aisha", name: "Aisha", icon: "🏃", session: "Harbourfront 5K Run Club", when: "Wed 14 · 7:30pm · new start at Star Ferry", both: "She ran her first 5K last week. Pace with her?", extra: "Run with her", extraDone: "She'll look out for you ✓" },
+      { who: "sara", name: "Sara", icon: "🏄‍♀️", session: "Paddle & Brunch", when: "Sun 25 · 9am · Sai Kung · brunch included", join: "#ev-paddle", price: "HK$420" }
     ];
     const orbit = document.getElementById("orbit"), spot = document.getElementById("spot");
+    const isBooked = c => !c.join || document.querySelector(c.join + " .join")?.disabled;
+    function paintDots() {
+      document.querySelectorAll(".sat.near").forEach((el, i) => el.classList.toggle("open", !isBooked(crew[i])));
+    }
     crew.forEach((c, i) => {
       const ang = -Math.PI / 2 + i * 2 * Math.PI / crew.length, r = 34;
       const b = document.createElement("button");
       b.className = "sat near"; b.style.left = 50 + r * Math.cos(ang) + "%"; b.style.top = 50 + r * Math.sin(ang) + "%";
-      b.innerHTML = ava(c.who) + (c.news ? '<span class="dot"></span>' : "") + `<span class="nm">${c.name}</span>`;
-      b.setAttribute("aria-label", c.name);
+      b.innerHTML = ava(c.who) + `<span class="act-badge" aria-hidden="true">${c.icon}</span><span class="nm">${c.name}</span>`;
+      b.setAttribute("aria-label", `${c.name}: ${c.session}`);
       b.addEventListener("click", () => show(i));
       orbit.appendChild(b);
     });
@@ -467,15 +474,22 @@
       far.insertAdjacentHTML("beforeend", `<span class="sat far" style="left:${50 + r * Math.cos(ang)}%;top:${50 + r * Math.sin(ang)}%">${ava("s" + (70 + i))}</span>`);
     }
     function show(i) {
-      const c = crew[i];
+      const c = crew[i], booked = isBooked(c);
       document.querySelectorAll(".sat.near").forEach((el, j) => el.classList.toggle("active", j === i));
-      document.querySelectorAll(".sat.near")[i].querySelector(".dot")?.remove();
       spot.classList.add("on");
-      spot.innerHTML = `${ava(c.who)}<div><span class="k">${c.name} · ${c.k}</span><p>${c.t}</p><button>${c.a}</button></div>`;
+      const line = booked ? (c.both || "You're both going. See you there!") : c.when;
+      const btn = booked ? (c.extra ? `<button class="go">${c.extra}</button>` : "") : `<button class="go">Join her · ${c.price}</button>`;
+      spot.innerHTML = `${ava(c.who)}<div><span class="k">${c.icon} ${c.name} → ${c.session}</span>${booked ? '<span class="both">You\'re both going ✓</span>' : ""}<p>${booked ? c.when + ". " + line : line}</p>${btn}</div>`;
       Avatar.drawAll(spot);
-      spot.querySelector("button").addEventListener("click", e => {
-        e.currentTarget.textContent = c.done; e.currentTarget.classList.add("done");
-        if (c.who === "meiling") document.getElementById("ev-barbell").scrollIntoView({ behavior: "smooth", block: "center" });
+      spot.querySelector(".go")?.addEventListener("click", e => {
+        const b = e.currentTarget;
+        if (!booked) {
+          const j = document.querySelector(c.join + " .join");
+          if (j && !j.disabled) j.click();
+          b.textContent = `You're in with ${c.name} ✓`;
+        } else b.textContent = c.extraDone;
+        b.classList.add("done"); b.disabled = true;
+        paintDots();
       });
     }
 
@@ -488,7 +502,8 @@
       box.insertAdjacentHTML("afterbegin", `<div class="seats">${html}</div>`);
     });
     document.querySelectorAll(".seat.empty").forEach(b => b.addEventListener("click", () => b.closest(".ev").querySelector(".join:not([disabled])")?.click()));
-    Avatar.drawAll(orbit); Avatar.drawAll();
+    document.addEventListener("click", e => { if (e.target.closest(".join, #psst-yes, .seat.empty")) setTimeout(paintDots, 0); });
+    Avatar.drawAll(orbit); Avatar.drawAll(); paintDots();
 
     // Member card flips to a check-in QR code (decorative pattern for the prototype, not a real code).
     (function qr() {
