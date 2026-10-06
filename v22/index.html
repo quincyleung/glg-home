@@ -21,7 +21,7 @@
     * { box-sizing: border-box; }
     body { margin: 0; background: #e4ddf3; color: var(--ink); font: 15px/1.45 var(--body); }
     button { font: inherit; cursor: pointer; border: 0; color: inherit; background: none; }
-    .app { max-width: 430px; margin: 0 auto; min-height: 100vh; background: radial-gradient(120% 40% at 0% 8%, rgba(201,182,255,.55), transparent 60%), radial-gradient(90% 35% at 100% 38%, rgba(255,190,220,.45), transparent 60%), radial-gradient(110% 40% at 0% 72%, rgba(190,215,255,.45), transparent 60%), radial-gradient(90% 30% at 100% 100%, rgba(201,182,255,.5), transparent 60%), #f7f4ff; position: relative; overflow-x: clip; }
+    .app { max-width: 430px; margin: 0 auto; min-height: 100vh; background: #fff; position: relative; overflow-x: clip; }
     @media (min-width: 600px) { .app { margin: 24px auto; min-height: 0; border-radius: 28px; overflow: clip; box-shadow: 0 20px 60px rgba(40,10,90,.2); } }
     .d { font-family: var(--display); font-weight: 700; text-transform: uppercase; font-stretch: condensed; letter-spacing: .01em; }
     .photo { position: relative; overflow: hidden; background: var(--lav); }
@@ -41,7 +41,7 @@
     .hero .txt { position: absolute; left: 18px; right: 18px; bottom: 46px; z-index: 2; color: #fff; }
     .hero h1 { font-size: 42px; line-height: 1; margin: 0; white-space: nowrap; }
 
-    main { padding: 0 16px; background: transparent; }
+    main { padding: 0 16px 24px; }
 
     /* member card: flips to check-in QR */
     .flip-wrap { perspective: 1200px; position: relative; z-index: 2; margin-top: -36px; }
@@ -49,7 +49,7 @@
     .flip:focus-visible { box-shadow: 0 0 0 3px var(--pink); }
     .flip.on { transform: rotateY(180deg); }
     .face { -webkit-backface-visibility: hidden; backface-visibility: hidden; border-radius: 22px; padding: 16px; }
-    .front { color: var(--ink); background: #fff; box-shadow: 0 0 0 1px #e6defa, 0 1px 2px rgba(74,31,184,.06); }
+    .front { color: var(--ink); background: #fff; box-shadow: 0 0 0 1px var(--line), 0 14px 34px rgba(74,31,184,.14); }
     .top-row { display: flex; align-items: baseline; justify-content: space-between; }
     .top-row .title { font-size: 22px; color: var(--purple); }
     .top-row small { color: var(--muted); font-size: 12px; }
@@ -71,65 +71,27 @@
     .back p { margin: 8px 0 6px; font-size: 13px; color: var(--muted); }
     .back .hint { color: var(--purple); margin: 0; }
 
-    /* sections: alternating bands with sticky headers so you always know where you are */
-    .sec { margin: 0 -16px; padding: 0 16px 24px; position: relative; }
-    .sec.tint { background: transparent; }
-    .flip-wrap + .sec { margin-top: 8px; }
-    .sec + .sec { border-top: 1px solid rgba(74,31,184,.08); }
-    .sec-head { position: sticky; top: 0; z-index: 6; display: flex; align-items: center; gap: 10px; margin: 0 -16px 12px; padding: 16px 16px 12px; background: transparent; transition: background .2s, box-shadow .2s; }
-    .sec-head.stuck { background: rgba(247,244,255,.92); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); box-shadow: 0 6px 14px -10px rgba(40,10,90,.35); }
-    .sec-head .ic { width: 34px; height: 34px; border-radius: 11px; background: var(--purple); display: grid; place-items: center; flex: none; }
-    .sec-head .ic svg { width: 19px; height: 19px; fill: none; stroke: #fff; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-    .sec-head .d { font-size: 22px; line-height: 1; }
-    .sec-head .count { font: 700 12px var(--display); background: var(--lav); color: var(--purple); padding: 2px 8px; border-radius: 99px; }
-    .sec-head .count { background: #fff; }
-    .sec-head a { margin-left: auto; font: 700 13px var(--body); color: var(--purple); text-decoration: none; }
-    .sec.tint .ticket, .sec.tint .post { background: #fff; }
-    .sec.tint .ticket .avs .ava { box-shadow: 0 0 0 2px #fff; }
-    .sec .psst { margin: 0 0 14px; }
+    h2 { font-size: 22px; margin: 30px 0 12px; display: flex; justify-content: space-between; align-items: baseline; }
+    h2 a { font: 700 13px var(--body); text-transform: none; color: var(--purple); text-decoration: none; letter-spacing: 0; }
 
-    /* you're going + coming up: one shared compact card */
+    /* you're going */
     .rail { display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: 16px; margin: 0 -16px; padding: 0 16px 6px; scrollbar-width: none; }
     .rail::-webkit-scrollbar { display: none; }
-    .ticket, .ev { border-radius: 18px; overflow: hidden; }
-    .ticket { scroll-snap-align: start; flex: 0 0 84%; background: #fff; border: 1px solid var(--line); }
-    .ev { border: 1px solid var(--line); margin-bottom: 12px; background: #fff; }
-    .join-rail .ev { scroll-snap-align: start; flex: 0 0 84%; margin-bottom: 0; }
-    .ticket .photo, .ev .photo { height: 118px; }
-    .tag { position: absolute; z-index: 2; top: 10px; left: 10px; font: 700 11px var(--display); letter-spacing: .06em; text-transform: uppercase; padding: 4px 9px; border-radius: 6px; background: #fff; color: var(--purple); }
-    .tag.hot { background: var(--pink); color: #fff; }
-    .info { position: absolute; z-index: 4; top: 8px; right: 8px; width: 38px; height: 38px; border-radius: 50%; padding: 0; background: #fff; box-shadow: 0 0 0 2px #fff, 0 3px 10px rgba(0,0,0,.25); transition: box-shadow .2s; }
-    .info .ava { width: 100%; height: 100%; }
-    .info[aria-expanded="true"] { box-shadow: 0 0 0 3px var(--purple), 0 3px 10px rgba(0,0,0,.25); }
-    .details { position: absolute; z-index: 3; left: 8px; right: 8px; bottom: 8px; background: rgba(255,255,255,.96); border-radius: 12px; padding: 8px 10px; font-size: 12px; line-height: 1.4; color: var(--ink); opacity: 0; transform: translateY(6px); pointer-events: none; transition: opacity .2s, transform .2s; }
-    .details.open { opacity: 1; transform: none; pointer-events: auto; }
-    .ticket .body, .ev .body { padding: 10px 12px 12px; }
-    .ttl { display: block; font-size: 18px; line-height: 1.1; }
-    .meta { margin: 3px 0 10px; font-size: 13px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .row { display: flex; align-items: center; gap: 8px; }
-    .people { flex: 1; min-width: 0; display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); }
-    .people .who { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .ticket { scroll-snap-align: start; flex: 0 0 78%; border-radius: 18px; overflow: hidden; background: var(--lav); }
+    .ticket .photo { height: 130px; }
+    .date { position: absolute; top: 10px; left: 10px; z-index: 2; background: #fff; border-radius: 10px; padding: 4px 9px; text-align: center; line-height: 1.05; }
+    .date span { font-size: 10px; font-weight: 700; color: var(--purple); text-transform: uppercase; }
+    .date b { display: block; font: 700 20px var(--display); }
+    .ticket .body { padding: 12px 14px 14px; }
+    .ticket .body .d { font-size: 18px; }
+    .ticket small { color: var(--muted); font-size: 13px; display: block; }
+    .people { display: flex; align-items: center; gap: 8px; margin-top: 10px; font-size: 12px; color: var(--muted); }
+    .people .going { margin-left: auto; }
     .avs { display: flex; flex: none; }
-    .avs .ava { width: 24px; height: 24px; box-shadow: 0 0 0 2px #fff; }
-    .ticket .avs .ava { box-shadow: 0 0 0 2px #fff; }
+    .avs .ava { width: 26px; height: 26px; box-shadow: 0 0 0 2px var(--lav); }
     .avs .ava + .ava { margin-left: -7px; }
-    .going { background: var(--purple); color: #fff; font-weight: 700; font-size: 12px; padding: 6px 11px; border-radius: 99px; white-space: nowrap; flex: none; }
-    .price { font: 700 16px var(--display); flex: none; }
-    .join { flex: none; background: var(--purple); color: #fff; font: 700 14px var(--display); text-transform: uppercase; letter-spacing: .06em; padding: 8px 16px; border-radius: 99px; transition: transform .15s; }
-    .join:active { transform: scale(.96); }
-    .join.done { background: var(--lav); color: var(--purple); }
+    .going { background: var(--purple); color: #fff; font-weight: 700; font-size: 12px; padding: 4px 10px; border-radius: 99px; white-space: nowrap; }
 
-    /* psst stack: one card per friend nudge, the next ones peeking underneath */
-    .psst-stack { margin: 0 0 14px; max-height: 520px; transition: opacity .35s, max-height .45s .2s, margin .45s .2s; }
-    .psst-stack.gone { opacity: 0; max-height: 0; margin: 0; overflow: hidden; }
-    .psst-head { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
-    .psst-head .kick { font-size: 15px; color: var(--purple); }
-    .pcount { font: 700 12px var(--display); background: var(--pink); color: #fff; padding: 2px 8px; border-radius: 99px; }
-    .pdeck { display: grid; padding-bottom: 24px; }
-    .sec .psst.pcard { grid-area: 1 / 1; margin: 0; max-height: none; transform-origin: 50% 0; transition: transform .35s ease, opacity .35s ease, filter .35s; box-shadow: 0 8px 18px -8px rgba(40,10,90,.25); }
-    .pcard .row2 { margin-top: 0; }
-    .pcard.behind { filter: saturate(.85) brightness(.985); }
-    .pcard.out { transform: translateX(-115%) rotate(-7deg) !important; opacity: 0; }
     /* psst */
     .psst { margin-top: 22px; background: var(--lav); border-radius: 20px; padding: 16px; border-left: 5px solid var(--pink); transition: opacity .35s, transform .35s, max-height .45s .2s, margin .45s .2s, padding .45s .2s; max-height: 400px; overflow: hidden; }
     .psst.gone { opacity: 0; transform: translateY(-6px); max-height: 0; margin-top: 0; padding-top: 0; padding-bottom: 0; }
@@ -147,16 +109,29 @@
     .psst .no { background: #fff; color: var(--purple); box-shadow: inset 0 0 0 2px var(--lav2); }
     .psst.joined .yes { background: var(--mint); color: #1f6b52; }
 
-    /* from the community: compact snippets in a swipeable row */
-    #feed { display: flex; gap: 12px; align-items: flex-start; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: 16px; margin: 0 -16px; padding: 0 16px 6px; scrollbar-width: none; }
-    #feed::-webkit-scrollbar { display: none; }
-    #feed .post { flex: 0 0 84%; scroll-snap-align: start; margin-bottom: 0; }
-    .post { display: block; background: #fff; padding: 12px; border: 1px solid var(--line); border-radius: 18px; margin-bottom: 8px; }
+    /* coming up: equal photo cards */
+    .ev { border-radius: 20px; overflow: hidden; border: 1px solid var(--line); margin-bottom: 12px; }
+    .ev .photo { height: 150px; }
+    .tag { position: absolute; z-index: 2; top: 12px; left: 12px; font: 700 12px var(--display); letter-spacing: .06em; text-transform: uppercase; padding: 4px 10px; border-radius: 6px; background: #fff; color: var(--purple); }
+    .tag.hot { background: var(--pink); color: #fff; }
+    .ev .body { padding: 14px; }
+    .ev .body .d { font-size: 21px; line-height: 1.05; }
+    .ev .meta { color: var(--muted); font-size: 13px; margin: 4px 0 12px; }
+    .ev .people { margin: -4px 0 12px; }
+    .ev .avs .ava { box-shadow: 0 0 0 2px #fff; }
+    .ev .row { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+    .price { font: 700 18px var(--display); }
+    .join { background: var(--purple); color: #fff; font: 700 15px var(--display); text-transform: uppercase; letter-spacing: .06em; padding: 10px 22px; border-radius: 99px; transition: transform .15s; }
+    .join:active { transform: scale(.96); }
+    .join.done { background: var(--lav); color: var(--purple); }
+
+    /* from the community: compact snippets */
+    .post { display: flex; gap: 12px; align-items: flex-start; padding: 12px; border: 1px solid var(--line); border-radius: 18px; margin-bottom: 8px; }
     .post .pb { flex: 1; min-width: 0; }
     .post .head { display: flex; align-items: center; gap: 7px; margin-bottom: 6px; font-size: 12px; }
     .post .head .ava { width: 26px; height: 26px; }
     .post .head small { color: var(--muted); }
-    .post .kind { margin-left: 2px; font: 700 10px var(--display); letter-spacing: .08em; text-transform: uppercase; padding: 2px 8px; border-radius: 6px; white-space: nowrap; background: var(--lav); color: var(--purple); }
+    .post .kind { margin-left: auto; font: 700 10px var(--display); letter-spacing: .08em; text-transform: uppercase; padding: 2px 8px; border-radius: 6px; white-space: nowrap; background: var(--lav); color: var(--purple); }
     .post .kind.announcements { background: var(--purple); color: #fff; }
     .post .kind.challenges { background: #ffe3ee; color: #c2185b; }
     .post .t { display: block; font: 700 16px/1.1 var(--display); text-transform: uppercase; letter-spacing: .01em; }
@@ -183,14 +158,16 @@
     .post .add input { flex: 1; min-width: 0; font: 12px inherit; border: 1px solid var(--line); border-radius: 99px; padding: 6px 10px; outline: none; }
     .post .add input:focus { border-color: var(--purple); }
     .post .add button { font-size: 12px; font-weight: 700; color: var(--purple); }
-    .post .chrow { display: flex; align-items: center; gap: 10px; }
-    .post .main { display: flex; gap: 12px; align-items: flex-start; }
-    .post .main + .react, .post .main + .pbar, .post .main + .chrow { margin-top: 2px; }
+    .post .chrow { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
     .post .members { font-size: 11px; color: var(--muted); }
     .post .chrow .act { background: var(--purple); color: #fff; }
     .post .chrow .act.done { background: var(--lav); color: var(--purple); }
+    /* values band */
+    .values { margin-top: 28px; background: var(--purple); color: #fff; overflow: hidden; white-space: nowrap; padding: 12px 0; }
+    .values span { display: inline-block; font: 700 18px var(--display); text-transform: uppercase; letter-spacing: .04em; animation: run 26s linear infinite; }
+    @keyframes run { to { transform: translateX(-50%); } }
 
-    .tabs { position: fixed; left: 50%; bottom: 0; transform: translateX(-50%); width: min(430px, 100%); z-index: 20; transform-style: flat; will-change: transform; display: grid; grid-template-columns: repeat(4, 1fr); background: rgba(255,255,255,.96); backdrop-filter: blur(12px); border-top: 1px solid var(--line); padding: 8px 8px calc(14px + env(safe-area-inset-bottom)); box-shadow: 0 -6px 20px rgba(40,10,90,.06); }
+    .tabs { position: fixed; left: 50%; bottom: 0; transform: translateX(-50%); width: min(430px, 100%); z-index: 20; display: grid; grid-template-columns: repeat(4, 1fr); background: rgba(255,255,255,.96); backdrop-filter: blur(12px); border-top: 1px solid var(--line); padding: 8px 8px calc(14px + env(safe-area-inset-bottom)); box-shadow: 0 -6px 20px rgba(40,10,90,.06); }
     .tabs a { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 6px 0 2px; color: var(--muted); text-decoration: none; font: 700 11px var(--display); text-transform: uppercase; letter-spacing: .08em; }
     .tabs .ic { display: grid; place-items: center; width: 52px; height: 32px; border-radius: 99px; transition: background .2s; }
     .tabs svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
@@ -229,77 +206,57 @@
         </div>
       </div>
 
-      <section class="sec tint" aria-labelledby="h-going">
-        <h2 class="sec-head" id="h-going"><span class="ic"><svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/><path d="m9 15 2 2 4-4"/></svg></span><span class="d">You're going</span><span class="count">2</span><a href="#">Calendar</a></h2>
-  <div class="rail">
-          <div class="ticket">
-          <div class="photo" data-scene="trail" data-people="6" data-seed="31" data-tone="color" data-alt="Members hiking Dragon's Back"><span class="tag">In 5 days</span><button class="info" aria-expanded="false" aria-label="Instructor details: Hana"><span class="ava" data-who="hana"></span></button><div class="details">Led by Hana Okafor. 8.5 km, easy to moderate. Bring water and a headlamp. Coffee at Shek O after.</div></div>
-          <div class="body"><span class="d ttl">Dragon's Back Sunrise Hike</span><p class="meta">Sun 11 Oct · 6:15am · To Tei Wan</p>
-            <div class="row"><div class="people"><span class="avs"><span class="ava" data-who="jasmine"></span><span class="ava" data-who="priya"></span><span class="ava" data-who="hana"></span></span><span class="who">You, Priya + 21</span></div><span class="going">Going ✓</span></div></div>
+      <h2 class="d">You're going <a href="#">Calendar</a></h2>
+      <div class="rail">
+        <div class="ticket">
+          <div class="photo" data-scene="trail" data-people="6" data-seed="31" data-tone="color" data-alt="Members hiking Dragon's Back"><span class="date"><span>Sun</span><b>11</b></span></div>
+          <div class="body"><span class="d">Dragon's Back Sunrise Hike</span><small>6:15am · To Tei Wan · coffee at Shek O after</small>
+            <div class="people"><span class="avs"><span class="ava" data-who="jasmine"></span><span class="ava" data-who="priya"></span><span class="ava" data-who="hana"></span></span>You, Priya + 21<span class="going">Going ✓</span></div></div>
         </div>
         <div class="ticket">
-          <div class="photo" data-scene="harbour" data-people="7" data-seed="8" data-tone="color" data-alt="Run club at the harbour"><span class="tag">In 8 days</span><button class="info" aria-expanded="false" aria-label="Instructor details: Hana"><span class="ava" data-who="hana"></span></button><div class="details">Hosted by Hana Okafor. New start: Star Ferry clock tower (look for the pink flag). 6:30 and 5:30/km pace groups. Bag drop available.</div></div>
-          <div class="body"><span class="d ttl">Harbourfront 5K Run Club</span><p class="meta">Wed 14 Oct · 7:30pm · Tsim Sha Tsui</p>
-            <div class="row"><div class="people"><span class="avs"><span class="ava" data-who="jasmine"></span><span class="ava" data-who="aisha"></span><span class="ava" data-seed="24"></span></span><span class="who">You, Aisha + 29</span></div><span class="going">Going ✓</span></div></div>
+          <div class="photo" data-scene="harbour" data-people="7" data-seed="8" data-tone="color" data-alt="Run club at the harbour"><span class="date"><span>Wed</span><b>14</b></span></div>
+          <div class="body"><span class="d">Harbourfront 5K Run Club</span><small>7:30pm · Star Ferry clock tower (new start)</small>
+            <div class="people"><span class="avs"><span class="ava" data-who="jasmine"></span><span class="ava" data-who="aisha"></span></span>You, Aisha + 29<span class="going">Going ✓</span></div></div>
         </div>
+      </div>
+
+      <div class="psst" id="psst" role="region" aria-label="Your friends are going">
+        <span class="d kick">Psst, your friends are going →</span>
+        <div class="row2">
+          <span class="faces"><span class="ava" data-who="chloe"></span><span class="ava" data-who="kiko"></span></span>
+          <div><b>Chloe and Kiko are going to Barbell Basics</b><small>Sat 10 · 8am · Kwun Tong · <span class="hot">only 2 spots left</span></small></div>
         </div>
+        <div class="btns"><button class="yes" id="psst-yes">Join them · HK$180</button><button class="no" id="psst-no">It's okay</button></div>
+      </div>
 
-      </section>
+      <h2 class="d">Coming up <a href="#">All events</a></h2>
+      <div class="ev" id="ev-barbell">
+        <div class="photo" data-scene="gym" data-people="6" data-seed="3" data-tone="color" data-alt="Barbell session at Iron Harbour"><span class="tag hot">Only 2 spots left</span></div>
+        <div class="body"><span class="d">Barbell Basics: Squat &amp; Deadlift</span>
+          <p class="meta">Sat 10 Oct · 8:00am · Iron Harbour, Kwun Tong · with Coach Mei-Ling</p>
+          <div class="people"><span class="avs"><span class="ava" data-who="chloe"></span><span class="ava" data-who="kiko"></span><span class="ava" data-seed="33"></span></span>Chloe, Kiko + 12</div>
+          <div class="row"><span class="price">HK$180</span><button class="join">Join</button></div></div>
+      </div>
+      <div class="ev">
+        <div class="photo" data-scene="studio" data-people="5" data-seed="9" data-tone="color" data-alt="Boxing workshop in the studio"><span class="tag">3 first-timers going</span></div>
+        <div class="body"><span class="d">Boxing Fundamentals</span>
+          <p class="meta">Sat 17 Oct · 10:00am · Left Hook Studio, Sheung Wan · gloves provided</p>
+          <div class="people"><span class="avs"><span class="ava" data-who="mandy"></span><span class="ava" data-seed="52"></span><span class="ava" data-seed="54"></span></span>Mandy + 8</div>
+          <div class="row"><span class="price">HK$250</span><button class="join">Join</button></div></div>
+      </div>
+      <div class="ev">
+        <div class="photo" data-scene="beach" data-people="6" data-seed="5" data-tone="color" data-alt="Paddleboarding at Sai Kung"><span class="tag">Brunch included</span></div>
+        <div class="body"><span class="d">Paddle &amp; Brunch</span>
+          <p class="meta">Sun 25 Oct · 9:00am · Sai Kung waterfront · 6 of 12 spots taken</p>
+          <div class="people"><span class="avs"><span class="ava" data-who="sara"></span><span class="ava" data-seed="62"></span><span class="ava" data-seed="64"></span></span>Sara + 5</div>
+          <div class="row"><span class="price">HK$420</span><button class="join">Join</button></div></div>
+      </div>
 
-      <section class="sec" aria-labelledby="h-join">
-        <h2 class="sec-head" id="h-join"><span class="ic"><svg viewBox="0 0 24 24"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/></svg></span><span class="d">Join a session</span><span class="count">3</span><a href="#">All events</a></h2>
-        <div class="psst-stack" id="psst" role="region" aria-label="Your friends are going">
-          <div class="psst-head"><span class="d kick">Psst, your friends are going →</span><span class="pcount" id="pcount">3</span></div>
-          <div class="pdeck">
-            <div class="psst pcard" data-target="#ev-barbell" data-names="Chloe and Kiko" data-toast="Chloe and Kiko will see you there 💜">
-              <div class="row2">
-                <span class="faces"><span class="ava" data-who="chloe"></span><span class="ava" data-who="kiko"></span></span>
-                <div><b>Chloe and Kiko are going to Barbell Basics</b><small>Sat 10 · 8am · Kwun Tong · <span class="hot">only 2 spots left</span></small></div>
-              </div>
-              <div class="btns"><button class="yes">Join them · HK$180</button><button class="no">It's okay</button></div>
-            </div>
-            <div class="psst pcard" data-target="#ev-boxing" data-names="Mandy" data-toast="Mandy will be glad of the company 🥊">
-              <div class="row2">
-                <span class="faces"><span class="ava" data-who="mandy"></span></span>
-                <div><b>Mandy is going to Boxing Fundamentals</b><small>Sat 17 · 10am · Sheung Wan · her first time too</small></div>
-              </div>
-              <div class="btns"><button class="yes">Join her · HK$250</button><button class="no">It's okay</button></div>
-            </div>
-            <div class="psst pcard" data-target="#ev-paddle" data-names="Sara and Aisha" data-toast="Sara and Aisha will save you a board 🏄‍♀️">
-              <div class="row2">
-                <span class="faces"><span class="ava" data-who="sara"></span><span class="ava" data-who="aisha"></span></span>
-                <div><b>Sara and Aisha are going to Paddle &amp; Brunch</b><small>Sun 25 · 9am · Sai Kung · brunch included</small></div>
-              </div>
-              <div class="btns"><button class="yes">Join them · HK$420</button><button class="no">It's okay</button></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="rail join-rail">
-          <div class="ev" id="ev-barbell">
-            <div class="photo" data-scene="gym" data-people="6" data-seed="3" data-tone="color" data-alt="Barbell session at Iron Harbour"><span class="tag hot">Only 2 spots left</span><button class="info" aria-expanded="false" aria-label="Instructor details: Mei-Ling"><span class="ava" data-who="meiling"></span></button><div class="details">Squat and deadlift with Coach Mei-Ling Ho: set-up, bracing and safe bailing. No experience needed.</div></div>
-            <div class="body"><span class="d ttl">Barbell Basics</span><p class="meta">Sat 10 Oct · 8:00am · Kwun Tong</p>
-              <div class="row"><div class="people"><span class="avs"><span class="ava" data-who="chloe"></span><span class="ava" data-who="kiko"></span><span class="ava" data-seed="33"></span></span><span class="who">Chloe, Kiko + 12</span></div><span class="price">HK$180</span><button class="join">Join</button></div></div>
-          </div>
-          <div class="ev" id="ev-boxing">
-            <div class="photo" data-scene="studio" data-people="5" data-seed="9" data-tone="color" data-alt="Boxing workshop in the studio"><span class="tag">3 first-timers</span><button class="info" aria-expanded="false" aria-label="Instructor details: Jess"><span class="ava" data-who="jess"></span></button><div class="details">With Coach Jess Albano at Left Hook Studio. Stance, jab-cross, footwork and pad work. Gloves and wraps provided.</div></div>
-            <div class="body"><span class="d ttl">Boxing Fundamentals</span><p class="meta">Sat 17 Oct · 10:00am · Sheung Wan</p>
-              <div class="row"><div class="people"><span class="avs"><span class="ava" data-who="mandy"></span><span class="ava" data-seed="52"></span><span class="ava" data-seed="54"></span></span><span class="who">Mandy + 8</span></div><span class="price">HK$250</span><button class="join">Join</button></div></div>
-          </div>
-          <div class="ev" id="ev-paddle">
-            <div class="photo" data-scene="beach" data-people="6" data-seed="5" data-tone="color" data-alt="Paddleboarding at Sai Kung"><span class="tag">Brunch included</span><button class="info" aria-expanded="false" aria-label="Instructor details: Tash"><span class="ava" data-seed="47"></span></button><div class="details">With instructor Tash Wong. Two hours on the water with an instructor, then brunch by the harbour. Board hire included. You must be able to swim.</div></div>
-            <div class="body"><span class="d ttl">Paddle &amp; Brunch</span><p class="meta">Sun 25 Oct · 9:00am · Sai Kung</p>
-              <div class="row"><div class="people"><span class="avs"><span class="ava" data-who="sara"></span><span class="ava" data-seed="62"></span><span class="ava" data-seed="64"></span></span><span class="who">Sara + 5</span></div><span class="price">HK$420</span><button class="join">Join</button></div></div>
-          </div>
-        </div>
-      </section>
-
-      <section class="sec tint" aria-labelledby="h-community">
-        <h2 class="sec-head" id="h-community"><span class="ic"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 9.5h8M8 12.5h5"/></svg></span><span class="d">From the community</span><a href="#">See all</a></h2>
-        <div id="feed" aria-live="polite"></div>
-      </section>
+      <h2 class="d">From the community <a href="#">See all</a></h2>
+      <div id="feed" aria-live="polite"></div>
     </main>
 
+    <div class="values" aria-label="Our values"><span>Finding strength in · Redefining norms · Accepting challenges · Being stronger together · Finding strength in · Redefining norms · Accepting challenges · Being stronger together ·&nbsp;</span></div>
 
     <nav class="tabs" aria-label="Main">
       <a class="on" href="#" aria-current="page"><span class="ic"><svg viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V20h5v-6h4v6h5V9.5"/></svg></span>Home</a>
@@ -462,25 +419,11 @@
     flip.addEventListener("click", toggleFlip);
     flip.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggleFlip(); } });
 
-    document.querySelectorAll(".info").forEach(b => b.addEventListener("click", e => {
-      e.stopPropagation();
-      const d = b.nextElementSibling, open = !d.classList.contains("open");
-      d.classList.toggle("open", open); b.setAttribute("aria-expanded", open);
-    }));
-    // Section titles sit on the page colour; they only get a frosted backing while pinned over scrolling cards.
-    const heads = [...document.querySelectorAll(".sec-head")];
-    function markStuck() {
-      heads.forEach(h => {
-        const top = parseFloat(getComputedStyle(h).top) || 0, r = h.getBoundingClientRect(), sec = h.parentElement.getBoundingClientRect();
-        h.classList.toggle("stuck", Math.abs(r.top - top) < 1 && sec.top < top - 1);
-      });
-    }
-    addEventListener("scroll", markStuck, { passive: true }); markStuck();
     const toast = document.getElementById("toast");
     function say(msg) { toast.textContent = msg; toast.classList.add("show"); clearTimeout(say.t); say.t = setTimeout(() => toast.classList.remove("show"), 2400); }
 
     // Psst: join friends, or dismiss. Kept in sync with the Barbell card under "coming up".
-    const psst = document.getElementById("psst");
+    const psst = document.getElementById("psst"), barbellJoin = document.querySelector("#ev-barbell .join");
     function markJoined(b) {
       b.textContent = "You're going ✓"; b.classList.add("done"); b.disabled = true;
       const ppl = b.closest(".ev")?.querySelector(".people");
@@ -490,43 +433,21 @@
         avs.lastElementChild.remove();
         avs.insertAdjacentHTML("afterbegin", '<span class="ava" data-who="jasmine"></span>');
         Avatar.drawAll(avs);
-        const who = ppl.querySelector(".who"); who.textContent = "You, " + who.textContent;
+        ppl.lastChild.textContent = "You, " + ppl.lastChild.textContent;
       }
     }
-    // Psst stack: answer the front card, and the next friend slides up.
-    let pcards = [...psst.querySelectorAll(".pcard")];
-    function layoutStack() {
-      pcards.forEach((c, i) => {
-        c.style.zIndex = 10 - i;
-        c.style.transform = i ? `translateY(${Math.min(i, 2) * 15}px) scale(${1 - Math.min(i, 2) * .035})` : "";
-        c.style.opacity = i > 2 ? 0 : 1;
-        c.classList.toggle("behind", i > 0); c.inert = i > 0;
-      });
-      document.getElementById("pcount").textContent = pcards.length;
-      if (!pcards.length) psst.classList.add("gone");
-    }
-    function dropCard(card) {
-      if (!pcards.includes(card)) return;
-      card.classList.add("out");
-      setTimeout(() => { card.remove(); pcards = pcards.filter(c => c !== card); layoutStack(); }, 330);
-    }
-    pcards.forEach(card => {
-      card.querySelector(".no").addEventListener("click", () => dropCard(card));
-      card.querySelector(".yes").addEventListener("click", e => {
-        const j = document.querySelector(card.dataset.target + " .join");
-        if (j && !j.disabled) markJoined(j);
-        card.classList.add("joined");
-        e.currentTarget.textContent = `You're in with ${card.dataset.names.replace(" and ", " & ")} ✓`; e.currentTarget.disabled = true;
-        card.querySelector(".no").remove();
-        say("You're in! " + card.dataset.toast);
-        setTimeout(() => dropCard(card), 1300);
-      });
+    document.getElementById("psst-yes").addEventListener("click", e => {
+      psst.classList.add("joined");
+      e.currentTarget.textContent = "You're in with Chloe & Kiko ✓"; e.currentTarget.disabled = true;
+      document.getElementById("psst-no").remove();
+      markJoined(barbellJoin);
+      say("You're in! Chloe and Kiko will see you there 💜");
+      setTimeout(() => psst.classList.add("gone"), 2200);
     });
-    layoutStack();
+    document.getElementById("psst-no").addEventListener("click", () => psst.classList.add("gone"));
     document.querySelectorAll(".join").forEach(b => b.addEventListener("click", () => {
       markJoined(b);
-      const id = "#" + b.closest(".ev").id, card = pcards.find(c => c.dataset.target === id);
-      if (card) dropCard(card);
+      if (b === barbellJoin) psst.classList.add("gone");
       say("You're in! We've saved your spot. See you there 💪");
     }));
 
@@ -535,7 +456,7 @@
     // Posts and announcements can be hearted and commented on; challenges are community challenges you can join.
     const tx = s => LOWER ? s.toLowerCase() : s;
     const feedItems = [
-      { type: "posts", age: 14, when: "Yesterday", who: "priya", name: "Priya Raman", title: "Taxi to Dragon's Back?", text: "Splitting a taxi to To Tei Wan on Sunday, 5:40am from Quarry Bay. You're on this hike too 🚕", photo: { scene: "trail", people: 4, seed: 35 }, hearts: 5, comments: 6, sample: [{ who: "hana", name: "Hana", text: "Save me a seat!" }] },
+      { type: "posts", age: 14, when: "Yesterday", who: "priya", name: "Priya Raman", title: "Taxi to Dragon's Back?", text: "Splitting a taxi to To Tei Wan on Sunday, 5:40am from Quarry Bay. You're on this hike too 🚕", hearts: 5, comments: 6, sample: [{ who: "hana", name: "Hana", text: "Save me a seat!" }] },
       { type: "announcements", age: 20, when: "Yesterday", seed: 90, name: "GLG HQ", title: "Global Lift Day · Sat 7 Nov", text: "All seven chapters lift at the same hour for the first time. Hong Kong lifts at 5pm at Iron Harbour.", photo: { scene: "gym", people: 8, seed: 77 }, hearts: 112, comments: 23, sample: [{ who: "meiling", name: "Mei-Ling", text: "HK is going to be loud 💜" }] },
       { type: "challenges", age: 22, when: "Yesterday", who: "hana", name: "Sunrise Club", title: "October Sunrise Club: 4 sunrises", text: "Hike, run or stretch at sunrise with the chapter. Sunday's Dragon's Back would count as your first.", photo: { scene: "trail", people: 6, seed: 44 }, members: 38, joined: false },
       { type: "posts", age: 40, when: "2 days ago", who: "kiko", name: "Kiko Sato", title: "Hi everyone 👋", text: "Just joined with Mandy and Sara. Barbell Basics on Saturday is my first ever session!", photo: { scene: "studio", people: 3, seed: 40 }, hearts: 18, comments: 5, sample: [{ who: "chloe", name: "Chloe", text: "See you Saturday!" }] },
@@ -549,7 +470,7 @@
       if (i.type === "challenges") {
         const status = i.joined ? (i.mine ? `You're in · ${i.mine}` : "You're in ✓") : "Join challenge";
         return `${i.progress ? `<div class="pbar"><i style="width:${i.progress}%"></i></div>` : ""}
-          <div class="chrow"><button class="act join-ch${i.joined ? " done" : ""}"${i.joined ? " disabled" : ""}>${tx(status)}</button><span class="members">${i.members} ${tx("members in")}</span></div>`;
+          <div class="chrow"><span class="members">${i.members} ${tx("members in")}</span><button class="act join-ch${i.joined ? " done" : ""}"${i.joined ? " disabled" : ""}>${tx(status)}</button></div>`;
       }
       return `<div class="react"><button class="heart" aria-pressed="false" aria-label="Heart">♡ <span>${i.hearts}</span></button><button class="cmt" aria-expanded="false" aria-label="Comments">💬 <span>${i.comments}</span></button></div>
         <div class="comments" hidden>
@@ -562,12 +483,11 @@
       const list = feedItems.slice().sort((a, b) => a.age - b.age).slice(0, 3);
       const feed = document.getElementById("feed");
       feed.innerHTML = list.map(i => `<article class="post">
-        <div class="head">${avaFor(i)}<b>${tx(i.name)}</b><small>· ${tx(i.when)}</small><span class="kind ${i.type}">${tx(kindLabel[i.type])}</span></div>
-        <div class="main">
-          <div class="pb"><span class="t">${tx(i.title)}</span><p>${tx(i.text)}</p></div>
-          ${i.photo ? `<div class="photo" data-scene="${i.photo.scene}" data-people="${i.photo.people}" data-seed="${i.photo.seed}" data-tone="color"></div>` : ""}
+        <div class="pb">
+          <div class="head">${avaFor(i)}<b>${tx(i.name)}</b><small>· ${tx(i.when)}</small><span class="kind ${i.type}">${tx(kindLabel[i.type])}</span></div>
+          <span class="t">${tx(i.title)}</span><p>${tx(i.text)}</p>${footFor(i)}
         </div>
-        ${footFor(i)}
+        ${i.photo ? `<div class="photo" data-scene="${i.photo.scene}" data-people="${i.photo.people}" data-seed="${i.photo.seed}" data-tone="color"></div>` : ""}
       </article>`).join("");
       feed.querySelectorAll(".photo").forEach(Photo.draw);
       Avatar.drawAll(feed);

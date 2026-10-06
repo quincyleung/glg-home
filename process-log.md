@@ -286,3 +286,7 @@
 - **Follow-up:** "make sure there are end quotes for the quote at the bottom." Added a matching pink closing ” under the quote, spaced to mirror the opening “.
 - **Follow-up:** "make the opening quote in the top left and ending quote bottom right." The pink “ is now pinned to the card's top-left corner and the ” to its bottom-right, with the quote centred between them.
 - **Follow-up:** remove the number next to "Join a session", and stop the section headers sticking while scrolling. The count pill on "Join a session" is gone, and headers now scroll with the page (sticky positioning and the pinned-title script removed).
+
+## v22 rolled back for contrast
+- **Asked for:** roll v22 back to an earlier iteration (before a major change) to show the contrast with v25, which looked really similar.
+- **Made:** restored v22 to its state just before its biggest change, the compact cards and banded sections (commit a1314a5): a short photo hero, a simple white streak card with Check in → QR, "You're going" photo tickets, a single psst card, the "Coming up" list of big stacked photo cards with who's going, the community snippet with hearts, comments and Join challenge, the values banner and the icon tab bar. The only thing carried forward is the fixed-tab-bar bug fix, so the bar doesn't disappear while scrolling. All of v22's later refinements (compact cards, instructor photos, carousels, soft glow, psst stack) are the path into v25. The gallery note for v22 now describes this version.
