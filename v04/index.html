@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>v04 · Zine Feed — GLG Home</title>
+  <style>
+    :root {
+      --paper: #f6f2ea;
+      --ink: #111;
+      --pink: #ff2e88;
+      --yellow: #ffe14f;
+      --muted: #555;
+      --mono: "Courier New", ui-monospace, monospace;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #ddd6c8; color: var(--ink); font: 15px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; }
+    button { font: inherit; cursor: pointer; border: 0; color: inherit; }
+    .app { max-width: 430px; margin: 0 auto; min-height: 100vh; position: relative;
+      background-color: var(--paper); background-image: radial-gradient(rgba(0,0,0,.07) 1px, transparent 1px); background-size: 4px 4px; }
+    @media (min-width: 600px) { .app { margin: 24px auto; min-height: 0; border-radius: 28px; overflow: clip; box-shadow: 0 20px 60px rgba(0,0,0,.25); } }
+    main { padding: 16px 18px 24px; }
+
+    .top { display: flex; justify-content: space-between; font: 700 12px var(--mono); }
+    .top a { color: var(--ink); text-decoration: none; }
+    .ransom { display: flex; flex-wrap: wrap; gap: 3px; margin: 20px 0 6px; }
+    .ransom span { font: 900 26px/1 Georgia, serif; padding: 3px 5px; background: #fff; border: 1.5px solid var(--ink); }
+    .ransom span:nth-child(odd) { background: var(--ink); color: #fff; transform: rotate(-4deg); }
+    .ransom span:nth-child(3n) { background: var(--pink); color: var(--ink); transform: rotate(3deg); font-family: Impact, "Arial Black", sans-serif; }
+    .ransom span:nth-child(4n) { background: var(--yellow); color: var(--ink); transform: rotate(-2deg); font-family: var(--mono); }
+    .ransom .gap { border: 0; background: none !important; width: 6px; padding: 0; }
+    .issue { font: 700 12px var(--mono); text-transform: uppercase; margin: 10px 0 18px; }
+    .issue mark { background: var(--yellow); }
+
+    .box { position: relative; background: #fff; border: 2px solid var(--ink); box-shadow: 4px 4px 0 var(--ink); border-radius: 14px; padding: 14px; margin-bottom: 14px; transition: transform .12s, box-shadow .12s; }
+    .box:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--ink); }
+    .kicker { font: 700 11px var(--mono); text-transform: uppercase; letter-spacing: .06em; }
+    .hero h2 { font-size: 26px; line-height: 1.05; margin: 6px 0; letter-spacing: -.02em; }
+    mark.hl { background: linear-gradient(transparent 55%, var(--yellow) 55%); color: inherit; padding: 0 2px; }
+    .hero p { margin: 0 0 12px; color: var(--muted); }
+    .sticker { position: absolute; top: -12px; right: -6px; background: var(--pink); border: 2px solid var(--ink); padding: 4px 10px; font: 900 14px Impact, "Arial Black", sans-serif; transform: rotate(8deg); border-radius: 6px; }
+    .cta { width: 100%; background: var(--ink); color: #fff; border-radius: 99px; padding: 13px; font-weight: 800; font-size: 15px; }
+    .cta.done { background: var(--pink); color: var(--ink); }
+
+    h3 { font: 900 14px var(--mono); text-transform: uppercase; margin: 24px 0 12px; display: flex; align-items: center; gap: 8px; }
+    h3::after { content: ""; flex: 1; border-top: 2px dashed var(--ink); }
+    .ev { display: flex; align-items: center; gap: 12px; }
+    .date { width: 50px; flex: none; text-align: center; border: 2px solid var(--ink); border-radius: 10px; font: 700 11px var(--mono); padding: 4px 0; background: var(--yellow); }
+    .date b { display: block; font: 900 20px/1 Georgia, serif; }
+    .ev .info { flex: 1; min-width: 0; }
+    .ev .info b { display: block; }
+    .ev .info small { color: var(--muted); font-size: 13px; }
+    .book { background: var(--ink); color: #fff; padding: 9px 14px; border-radius: 99px; font-weight: 800; font-size: 13px; white-space: nowrap; }
+    .in { font: 900 12px Impact, "Arial Black", sans-serif; background: var(--pink); border: 2px solid var(--ink); padding: 3px 8px; transform: rotate(-5deg); border-radius: 4px; white-space: nowrap; letter-spacing: .04em; }
+
+    .clip { position: relative; background: #fff; border: 1.5px dashed var(--ink); padding: 16px 14px 12px; margin: 18px 4px; font-size: 14px; }
+    .clip:nth-of-type(odd) { transform: rotate(-1.2deg); }
+    .clip:nth-of-type(even) { transform: rotate(1deg); }
+    .clip::before { content: ""; position: absolute; top: -8px; left: 38%; width: 60px; height: 16px; background: rgba(255,225,79,.85); transform: rotate(-4deg); }
+    .clip small { display: block; font: 700 11px var(--mono); margin-top: 6px; text-transform: uppercase; }
+    .meter { margin-top: 8px; height: 16px; border: 2px solid var(--ink); border-radius: 99px; overflow: hidden; background: #fff; }
+    .meter i { display: block; height: 100%; width: 41%; background: repeating-linear-gradient(-45deg, var(--pink) 0 6px, #ff6aa8 6px 12px); border-right: 2px solid var(--ink); }
+
+    .tabs { position: sticky; bottom: 0; margin: 0 14px 14px; display: flex; justify-content: space-around; background: var(--ink); border-radius: 99px; padding: 12px 6px; }
+    .tabs a { color: #aaa; text-decoration: none; font-size: 12px; font-weight: 700; }
+    .tabs a.on { color: var(--ink); background: var(--yellow); padding: 0 8px; border-radius: 99px; }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <main>
+      <div class="top"><a href="../index.html">← GALLERY</a><span>TUE 6 OCT</span></div>
+
+      <div class="ransom" aria-label="Girls Lift Girls">
+        <span>G</span><span>I</span><span>R</span><span>L</span><span>S</span><span class="gap"></span><span>L</span><span>I</span><span>F</span><span>T</span>
+      </div>
+      <p class="issue">HK chapter · Issue #41 · <mark>hey Jasmine</mark></p>
+
+      <article class="box hero">
+        <span class="sticker">2 LEFT!</span>
+        <span class="kicker">This Saturday · 8am · Kwun Tong</span>
+        <h2><mark class="hl">Barbell Basics</mark>: squat &amp; deadlift</h2>
+        <p>No experience needed. Coach Mei-Ling shows you set-up, bracing and safe bailing.</p>
+        <button class="cta" id="hero-book">Book a spot · HK$180</button>
+      </article>
+
+      <h3>Also this month</h3>
+      <div class="box ev"><div class="date">SUN<b>11</b></div><div class="info"><b>Dragon's Back Sunrise Hike</b><small>6:15am · To Tei Wan · free</small></div><span class="in">YOU'RE IN</span></div>
+      <div class="box ev"><div class="date">WED<b>14</b></div><div class="info"><b>Harbourfront 5K</b><small>7:30pm · Star Ferry · free</small></div><span class="in">YOU'RE IN</span></div>
+      <div class="box ev"><div class="date">SAT<b>17</b></div><div class="info"><b>Boxing Fundamentals</b><small>10am · Sheung Wan · HK$250</small></div><button class="book">Book</button></div>
+      <div class="box ev"><div class="date">SUN<b>25</b></div><div class="info"><b>Paddle &amp; Brunch</b><small>9am · Sai Kung · HK$420</small></div><button class="book">Book</button></div>
+
+      <h3>Cut-outs</h3>
+      <div class="clip"><b>RUN CLUB HAS MOVED.</b> From Wednesday we start at the Star Ferry clock tower. Look for the pink flag!<small>— Hana, chapter lead</small></div>
+      <div class="clip"><b>LIFT A MILLION.</b> 412,000 kg of 1,000,000. Hit it and HK$5,000 goes to a women's shelter.<div class="meter"><i></i></div><small>— Mei-Ling · 25 days left</small></div>
+      <div class="clip"><b>GLOBAL LIFT DAY · SAT 7 NOV.</b> Seven chapters, one hour. HK lifts at 5pm.<small>— GLG HQ</small></div>
+    </main>
+
+    <nav class="tabs"><a class="on" href="#">Home</a><a href="#">Events</a><a href="#">Community</a><a href="#">Profile</a></nav>
+  </div>
+
+  <script>
+    document.getElementById("hero-book").addEventListener("click", e => {
+      e.currentTarget.textContent = "YOU'RE IN! SEE YOU SATURDAY 💪";
+      e.currentTarget.classList.add("done");
+      document.querySelector(".sticker").textContent = "BOOKED!";
+    });
+    document.querySelectorAll(".book").forEach(b => b.addEventListener("click", () => {
+      b.outerHTML = '<span class="in">YOU\'RE IN</span>';
+    }));
+  </script>
+</body>
+</html>

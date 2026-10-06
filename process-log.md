@@ -43,3 +43,8 @@
 ## Fix: direct links
 - **Asked for:** clicking a gallery tile should open the page, not a folder listing.
 - **Made:** gallery links, preview iframes and every version's "← Gallery" link now point at `index.html` files directly, so they work when opened locally.
+
+## v04: Zine Feed
+- **Asked for:** Zine Feed as the fourth version, the other round 1 direction you liked.
+- **Made:** a dotted-paper, neo-brutalist zine. "GIRLS LIFT" as a ransom-note headline and "Issue #41 · hey Jasmine". Barbell Basics is the cover story, with a "2 LEFT!" sticker and highlighter. The other events are chunky cards with offset shadows and "YOU'RE IN" stickers. News is taped-on "Cut-outs", with a striped Lift a Million meter.
+- **Pushback:** none yet.
