@@ -24,3 +24,8 @@
 - **Asked for:** develop the Doing Things direction into a full home page.
 - **Made:** a cream page with pastel colour blocks where verbs lead everything. Verb-led personal stats on a dark card ("27× moved with GLG"), "You're doing" (Hike. / Run.), "Up for grabs" tiles (Lift. with a "2 left!" sticker, Punch., Paddle.), and a swipeable community rail (Heard. / Lifted. / Asked. / Lifting. / Together.). Floating dark tab bar.
 - **Pushback:** none yet.
+
+## v01: Departures
+- **Asked for:** Departures as the first version (from the round 1 sketches).
+- **Made:** a black and amber transit board. Each event is a "departure" with time, venue as the platform, and a status (blinking "2 LEFT", "BOOKED", "ON TIME"). Tap a row to expand the details and "BOOK SEAT". Chapter news and the global update scroll as a ticker.
+- **Pushback:** none yet.
