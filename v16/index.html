@@ -297,7 +297,7 @@
         for (let i = 0; i < back; i++) people += person(r, (i + .5) * W / back + (r() - .5) * 14, H * .98, 1.2);
         for (let i = 0; i < front; i++) people += person(r, (i + .5) * W / front + (r() - .5) * 14 + W / back / 2 * (front < back ? 1 : .5) - (front < back ? 0 : 10), H * 1.28, 1.55);
         const duo = el.dataset.tone !== "color";
-        el.innerHTML = `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMax slice" role="img" aria-label="${el.dataset.alt || "GLG members together"}">
+        el.insertAdjacentHTML("afterbegin", `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMax slice" role="img" aria-label="${el.dataset.alt || "GLG members together"}">
           <defs>
             <filter id="duo${uid}" color-interpolation-filters="sRGB"><feColorMatrix type="saturate" values="0"/><feComponentTransfer>
               <feFuncR type="table" tableValues="${d[0]} ${l[0]}"/><feFuncG type="table" tableValues="${d[1]} ${l[1]}"/><feFuncB type="table" tableValues="${d[2]} ${l[2]}"/></feComponentTransfer></filter>
@@ -305,7 +305,7 @@
           </defs>
           <g ${duo ? `filter="url(#duo${uid})"` : ""}>${scene(el.dataset.scene, r, W, H)}${people}</g>
           <rect width="${W}" height="${H}" filter="url(#gr${uid})" opacity=".09"/>
-        </svg>`;
+        </svg>`);
       }
       return { drawAll: (root = document) => root.querySelectorAll(".photo[data-scene]").forEach(draw), draw };
     })();

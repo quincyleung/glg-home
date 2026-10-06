@@ -123,3 +123,7 @@
 
 ## v16: Strength in Community
 - **Made:** the most brand-faithful version (from v13 + v8). A full-bleed duotone group photo hero with "MORNING, JASMINE." in condensed caps, then an overlapping "3 weeks strong" streak card with this week's planned days and stats. "You're signed up" is photo tickets with who's going. "Sign up next" has big photo cards ("Only 2 spots left", "3 first-timers going") with Join buttons. "From the community" has a pinned chapter update, Chloe's PR with a photo and "💜 Lift her up", Lift a Million, a chapter chat preview and Global Lift Day with city chips. A scrolling band of the GLG values sits at the end.
+
+## v17: Lavender Drop
+- **Made:** a cross of v14 (cool drops, lowercase, mono details, live countdowns) and v7 (pastels, no black), kept in the purple family. "morning, jasmine." with a pink→purple gradient, then a holographic pastel member card that holds the streak ring, this week's day tiles and stats. "Claimed" sessions have square photo thumbnails, countdowns and "you + 22". "This week's drops" are photo cards in pastel duotones with fill meters and "claim spot". "The feed" is a 3-column photo mosaic (run club "31 of us" big tile, Chloe's PR, new faces, sunrises) with ♡ reactions, plus pastel announcement notes (pinned run club update, Lift a Million, chapter chat, Global Lift Day).
+- **Fix:** the photo generator was replacing badges and date chips placed inside photos. It now inserts the drawing underneath. v16 is patched too.

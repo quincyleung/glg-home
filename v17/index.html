@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>v17 · Lavender Drop — GLG Home</title>
+  <style>
+    :root {
+      --ink: #2b1a5a;
+      --muted: #7c6fa6;
+      --lilac: #efe8ff;
+      --lav: #c9b6ff;
+      --purple: #6b45e0;
+      --pink: #ffc9e0;
+      --mint: #cdf3e4;
+      --butter: #fff0b8;
+      --sky: #d4e8ff;
+      --mono: "SF Mono", Menlo, Consolas, monospace;
+      --sans: Arimo, "Helvetica Neue", Helvetica, Arial, sans-serif;
+      --display: Oswald, "Avenir Next Condensed", "Helvetica Neue", "Arial Narrow", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; min-height: 100vh; background: linear-gradient(135deg, #f3e8ff, #e3eeff 50%, #ffe8f3) fixed; color: var(--ink); font: 14px/1.45 var(--sans); }
+    button { font: inherit; cursor: pointer; border: 0; color: inherit; background: none; }
+    .app { max-width: 430px; margin: 0 auto; min-height: 100vh; background: #fbf9ff; position: relative; overflow-x: clip; }
+    @media (min-width: 600px) { .app { margin: 24px auto; min-height: 0; border-radius: 28px; overflow: clip; box-shadow: 0 20px 60px rgba(107,69,224,.18); } }
+    main { padding: 14px 16px 24px; }
+    .photo { position: relative; overflow: hidden; background: var(--lilac); }
+    .photo svg { display: block; width: 100%; height: 100%; }
+    .mono { font-family: var(--mono); }
+
+    .top { display: flex; justify-content: space-between; font: 11px var(--mono); color: var(--muted); }
+    .top a { color: var(--ink); text-decoration: none; }
+    .top b { color: var(--purple); letter-spacing: .3em; }
+    h1 { font: 700 38px/1 var(--sans); letter-spacing: -.05em; margin: 24px 0 6px; }
+    h1 span { background: linear-gradient(90deg, #ff7ab8, var(--purple)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .lede { font: 12px var(--mono); color: var(--muted); margin: 0 0 16px; }
+    h2 { font: 12px var(--mono); color: var(--muted); margin: 26px 0 10px; display: flex; justify-content: space-between; }
+    h2 a { color: var(--purple); text-decoration: none; }
+
+    /* member card + streak */
+    .card { border-radius: 22px; padding: 16px; color: var(--ink); position: relative; overflow: hidden;
+      background: linear-gradient(115deg, #e9ddff 0%, #ffd9ec 30%, #d9ecff 55%, #e6fff4 75%, #e9ddff 100%); background-size: 220% 220%; animation: holo 9s ease-in-out infinite alternate; box-shadow: inset 0 0 0 1px rgba(255,255,255,.7), 0 10px 30px rgba(107,69,224,.15); }
+    @keyframes holo { to { background-position: 100% 100%; } }
+    .card .row { display: flex; justify-content: space-between; font: 10px var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+    .card .name { font: 700 24px var(--sans); letter-spacing: -.04em; margin: 14px 0 10px; }
+    .streak { display: flex; align-items: center; gap: 12px; }
+    .ring { width: 58px; height: 58px; border-radius: 50%; flex: none; display: grid; place-items: center; background: conic-gradient(var(--purple) 0 75%, rgba(255,255,255,.7) 75% 100%); }
+    .ring b { width: 44px; height: 44px; border-radius: 50%; background: #f7f1ff; display: grid; place-items: center; font: 700 15px/1 var(--display); text-align: center; }
+    .dots { display: flex; gap: 5px; }
+    .dots span { width: 26px; text-align: center; font: 9px var(--mono); color: var(--muted); }
+    .dots i { display: block; width: 26px; height: 26px; border-radius: 8px; background: rgba(255,255,255,.7); margin-bottom: 2px; font-style: normal; font-size: 12px; line-height: 26px; }
+    .dots i.done { background: var(--purple); color: #fff; }
+    .dots i.plan { background: #fff; box-shadow: inset 0 0 0 1.5px var(--purple); }
+    .nums { display: flex; gap: 18px; margin-top: 14px; font: 10px var(--mono); text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+    .nums b { display: block; font: 700 18px var(--sans); color: var(--ink); letter-spacing: -.02em; text-transform: none; }
+
+    /* claimed */
+    .claim-card { display: flex; gap: 12px; align-items: center; background: #fff; border-radius: 18px; padding: 8px; margin-bottom: 8px; box-shadow: 0 2px 10px rgba(107,69,224,.06); }
+    .claim-card .photo { width: 74px; height: 74px; border-radius: 14px; flex: none; }
+    .claim-card .info { flex: 1; min-width: 0; }
+    .claim-card b { font-size: 15px; letter-spacing: -.01em; }
+    .claim-card small { display: block; font: 11px var(--mono); color: var(--muted); }
+    .pill { font: 10px var(--mono); padding: 4px 8px; border-radius: 99px; background: var(--lilac); color: var(--purple); white-space: nowrap; }
+
+    /* drops */
+    .drops { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .drop { background: #fff; border-radius: 18px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 2px 10px rgba(107,69,224,.06); }
+    .drop .photo { height: 112px; }
+    .drop.wide { grid-column: span 2; }
+    .drop.wide .photo { height: 150px; }
+    .drop .badge { position: absolute; top: 8px; left: 8px; z-index: 2; font: 10px var(--mono); padding: 3px 8px; border-radius: 99px; background: #fff; color: var(--purple); }
+    .drop .badge.hot { background: #ff7ab8; color: #fff; }
+    .drop .body { padding: 10px 12px 12px; display: flex; flex-direction: column; gap: 4px; flex: 1; }
+    .drop b { font: 700 16px/1.1 var(--sans); letter-spacing: -.03em; }
+    .drop small { font: 11px var(--mono); color: var(--muted); }
+    .count { font: 11px var(--mono); color: var(--ink); }
+    .meter { height: 4px; border-radius: 2px; background: var(--lilac); overflow: hidden; }
+    .meter i { display: block; height: 100%; background: linear-gradient(90deg, #ff9fcb, var(--purple)); }
+    .claim { margin-top: 6px; background: var(--purple); color: #fff; font: 12px var(--mono); padding: 9px; border-radius: 99px; }
+    .claim.done { background: var(--mint); color: #1f6b52; }
+
+    /* feed mosaic */
+    .mosaic { display: grid; grid-template-columns: repeat(3, 1fr); grid-auto-rows: 112px; gap: 4px; border-radius: 18px; overflow: hidden; }
+    .mosaic .tile { position: relative; }
+    .mosaic .tile .photo { position: absolute; inset: 0; }
+    .mosaic .big { grid-column: span 2; grid-row: span 2; }
+    .mosaic .cap { position: absolute; left: 6px; right: 6px; bottom: 6px; z-index: 2; font: 10px/1.3 var(--mono); color: #fff; text-shadow: 0 1px 4px rgba(43,26,90,.6); }
+    .mosaic .big .cap { font-size: 12px; }
+    .mosaic .heart { position: absolute; top: 6px; right: 6px; z-index: 2; font: 10px var(--mono); background: rgba(255,255,255,.85); color: var(--purple); border-radius: 99px; padding: 2px 7px; }
+    .mosaic .heart[aria-pressed="true"] { background: var(--purple); color: #fff; }
+
+    .notes { margin-top: 12px; display: flex; flex-direction: column; gap: 8px; }
+    .note { border-radius: 16px; padding: 12px 14px; font-size: 14px; }
+    .note small { display: block; font: 10px var(--mono); color: var(--muted); margin-bottom: 3px; text-transform: lowercase; }
+    .bar { height: 8px; border-radius: 99px; background: rgba(255,255,255,.7); margin-top: 8px; overflow: hidden; }
+    .bar i { display: block; height: 100%; width: 41%; background: linear-gradient(90deg, #ff9fcb, var(--purple)); border-radius: 99px; }
+
+    .tabs { position: sticky; bottom: 12px; margin: 0 14px 12px; z-index: 5; display: flex; justify-content: space-around; background: rgba(255,255,255,.92); backdrop-filter: blur(10px); border-radius: 99px; padding: 10px 6px; box-shadow: 0 8px 24px rgba(107,69,224,.18); }
+    .tabs a { font: 11px var(--mono); color: var(--muted); text-decoration: none; padding: 3px 10px; border-radius: 99px; }
+    .tabs a.on { background: var(--lilac); color: var(--purple); }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <main>
+      <div class="top"><a href="../index.html">← gallery</a><b>GLG</b><span>hk · 07:42</span></div>
+
+      <h1>morning,<br><span>jasmine.</span></h1>
+      <p class="lede">2 claimed · 3 drops open · 1 almost gone</p>
+
+      <div class="card" aria-label="Your member card and streak">
+        <div class="row"><span>girls lift girls · hong kong</span><span>#0412</span></div>
+        <div class="name">jasmine tran</div>
+        <div class="streak">
+          <div class="ring"><b>3<br>wks</b></div>
+          <div class="dots">
+            <span><i class="done">✓</i>m</span><span><i></i>t</span><span><i class="plan">5k</i>w</span><span><i></i>t</span><span><i></i>f</span><span><i></i>s</span><span><i class="plan">⛰</i>s</span>
+          </div>
+        </div>
+        <div class="nums"><div><b>27</b>sessions</div><div><b>60kg</b>squat pb</div><div><b>2,140kg</b>for the million</div></div>
+      </div>
+
+      <h2><span>claimed (2)</span><a href="#">calendar →</a></h2>
+      <div class="claim-card"><div class="photo" data-scene="trail" data-people="5" data-seed="31" data-duo="#4b2fa8,#fff0f7" data-alt="Members on Dragon's Back"></div>
+        <div class="info"><b>dragon's back sunrise hike</b><small>sun 11 · 06:15 · to tei wan</small><small><span class="count" data-to="2026-10-11T06:15:00+08:00"></span></small></div><span class="pill">you + 22</span></div>
+      <div class="claim-card"><div class="photo" data-scene="harbour" data-people="5" data-seed="8" data-duo="#3a2a8a,#e6f2ff" data-alt="Run club at the harbour"></div>
+        <div class="info"><b>harbourfront 5k</b><small>wed 14 · 19:30 · star ferry (new spot)</small><small><span class="count" data-to="2026-10-14T19:30:00+08:00"></span></small></div><span class="pill">you + 30</span></div>
+
+      <h2><span>this week's drops</span><a href="#">all →</a></h2>
+      <div class="drops">
+        <div class="drop"><div class="photo" data-scene="gym" data-people="5" data-seed="3" data-duo="#5b2bd6,#ffe3f1" data-alt="Barbell session"><span class="badge hot">2 left</span></div>
+          <div class="body"><b>barbell basics</b><small>sat 10 · kwun tong · hk$180</small><span class="count" data-to="2026-10-10T08:00:00+08:00"></span><div class="meter"><i style="width:87.5%"></i></div><button class="claim">claim spot</button></div></div>
+        <div class="drop"><div class="photo" data-scene="studio" data-people="4" data-seed="9" data-duo="#4b2fa8,#fff4c9" data-alt="Boxing workshop"><span class="badge">9/20</span></div>
+          <div class="body"><b>boxing fundamentals</b><small>sat 17 · sheung wan · hk$250</small><span class="count" data-to="2026-10-17T10:00:00+08:00"></span><div class="meter"><i style="width:45%"></i></div><button class="claim">claim spot</button></div></div>
+        <div class="drop wide"><div class="photo" data-scene="beach" data-people="6" data-seed="5" data-duo="#3a2a8a,#dcfff1" data-alt="Paddle and brunch at Sai Kung"><span class="badge">6/12 · brunch incl.</span></div>
+          <div class="body"><b>paddle &amp; brunch</b><small>sun 25 · sai kung · hk$420</small><span class="count" data-to="2026-10-25T09:00:00+08:00"></span><div class="meter"><i style="width:50%"></i></div><button class="claim">claim spot</button></div></div>
+      </div>
+
+      <h2><span>the feed</span><a href="#">community →</a></h2>
+      <div class="mosaic">
+        <div class="tile big"><div class="photo" data-scene="harbour" data-people="9" data-seed="14" data-tone="color" data-alt="31 members at last week's run club"></div><button class="heart" aria-pressed="false" data-n="48">♡ 48</button><span class="cap">last wed · 31 of us at run club. aisha's first 5k!</span></div>
+        <div class="tile"><div class="photo" data-scene="gym" data-people="3" data-seed="21" data-duo="#5b2bd6,#ffe3f1"></div><button class="heart" aria-pressed="false" data-n="34">♡ 34</button><span class="cap">chloe · 100kg pr</span></div>
+        <div class="tile"><div class="photo" data-scene="studio" data-people="3" data-seed="40" data-duo="#4b2fa8,#e6f2ff"></div><span class="cap">new: mandy, kiko, sara 👋</span></div>
+        <div class="tile"><div class="photo" data-scene="trail" data-people="4" data-seed="44" data-duo="#3a2a8a,#fff4c9"></div><span class="cap">6 sunrises for you</span></div>
+        <div class="tile"><div class="photo" data-scene="beach" data-people="4" data-seed="52" data-duo="#4b2fa8,#dcfff1"></div><span class="cap">sai kung, last month</span></div>
+        <div class="tile"><div class="photo" data-scene="gym" data-people="4" data-seed="61" data-duo="#5b2bd6,#efe8ff"></div><span class="cap">saturday crew</span></div>
+      </div>
+      <div class="notes">
+        <div class="note" style="background:var(--pink)"><small>📌 hana · chapter lead · 2d</small>run club now starts at the star ferry clock tower. look for the pink flag.</div>
+        <div class="note" style="background:var(--lilac)"><small>lift a million · 25 days left</small>412,000 / 1,000,000 kg together. you've added 2,140.<div class="bar"><i></i></div></div>
+        <div class="note" style="background:var(--mint)"><small>chapter chat · 6 replies</small>priya: taxi to to tei wan sun 05:40 from quarry bay? 🚕</div>
+        <div class="note" style="background:var(--butter)"><small>glg hq · yesterday</small>global lift day, sat 7 nov. seven cities, same hour. hk lifts at 17:00.</div>
+      </div>
+    </main>
+
+    <nav class="tabs"><a class="on" href="#">home</a><a href="#">events</a><a href="#">community</a><a href="#">profile</a></nav>
+  </div>
+
+  <script>
+    // Illustrated "photos": groups of women at GLG sessions, drawn as SVG so no real photos are used.
+    // <div class="photo" data-scene="gym|harbour|trail|beach|studio" data-people="6" data-seed="3" data-tone="duo|color"></div>
+    const Photo = (() => {
+      const SKIN = ["#f3d2b8", "#e8b48f", "#c98e66", "#a26a44", "#7a4a2c", "#5a3520"];
+      const HAIR = ["#1b1210", "#3a2418", "#6b4226", "#b07a3f", "#2a1a2e", "#1b1210"];
+      const TOPS = ["#7b4fe0", "#ff7aa8", "#ffffff", "#24202e", "#ffd23f", "#5fd0c0", "#b9a3ff", "#ff8a5c"];
+      const BOTS = ["#1d1d24", "#3a3350", "#4a1fb8", "#2b2b33", "#5b4a7a"];
+      let uid = 0;
+      const rng = seed => () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+      const pick = (r, a) => a[Math.floor(r() * a.length)];
+
+      function person(r, x, y, s) {
+        const skin = pick(r, SKIN), hair = pick(r, HAIR), top = pick(r, TOPS), bot = pick(r, BOTS);
+        const hr = 11 * s, hy = y - 118 * s + hr, sh = hy + hr + 5 * s, hip = sh + 40 * s;
+        const p = r(), pose = p < .28 ? "up" : p < .55 ? "hug" : p < .66 ? "flex" : "down";
+        const aw = 7 * s, st = `stroke="${skin}" stroke-width="${aw}" stroke-linecap="round" fill="none"`;
+        let g = "";
+        const style = Math.floor(r() * 4);
+        if (style === 2) g += `<path d="M${x - hr} ${hy} Q${x - hr * 1.3} ${sh + 14 * s} ${x - hr * .4} ${sh + 16 * s} L${x + hr * .4} ${sh + 16 * s} Q${x + hr * 1.3} ${sh + 14 * s} ${x + hr} ${hy}Z" fill="${hair}"/>`;
+        if (style === 1) g += `<ellipse cx="${x + hr * .9}" cy="${hy + hr * .6}" rx="${hr * .45}" ry="${hr * 1.1}" fill="${hair}" transform="rotate(-20 ${x + hr} ${hy})"/>`;
+        g += `<path d="M${x - 7 * s} ${hip} L${x - 10 * s} ${y + 4 * s} M${x + 7 * s} ${hip} L${x + 10 * s} ${y + 4 * s}" stroke="${bot}" stroke-width="${11 * s}" stroke-linecap="round"/>`;
+        if (pose === "up") g += `<path d="M${x - 11 * s} ${sh + 3 * s} L${x - 24 * s} ${hy - 26 * s} M${x + 11 * s} ${sh + 3 * s} L${x + 24 * s} ${hy - 26 * s}" ${st}/>`;
+        else if (pose === "hug") g += `<path d="M${x - 11 * s} ${sh + 3 * s} L${x - 15 * s} ${hip} M${x + 11 * s} ${sh + 3 * s} L${x + 34 * s} ${sh + 8 * s}" ${st}/>`;
+        else if (pose === "flex") g += `<path d="M${x - 11 * s} ${sh + 3 * s} L${x - 28 * s} ${sh + 4 * s} L${x - 28 * s} ${sh - 16 * s} M${x + 11 * s} ${sh + 3 * s} L${x + 15 * s} ${hip}" ${st}/>`;
+        else g += `<path d="M${x - 11 * s} ${sh + 3 * s} L${x - 15 * s} ${hip + 4 * s} M${x + 11 * s} ${sh + 3 * s} L${x + 15 * s} ${hip + 4 * s}" ${st}/>`;
+        g += `<rect x="${x - 14 * s}" y="${sh - 3 * s}" width="${28 * s}" height="${hip - sh + 8 * s}" rx="${10 * s}" fill="${top}"/>`;
+        g += `<rect x="${x - 3.5 * s}" y="${hy + hr - 2 * s}" width="${7 * s}" height="${8 * s}" fill="${skin}"/>`;
+        g += `<circle cx="${x}" cy="${hy}" r="${hr}" fill="${skin}"/>`;
+        g += `<path d="M${x - hr} ${hy + 1 * s} A${hr} ${hr} 0 0 1 ${x + hr} ${hy + 1 * s} Q${x} ${hy - hr * .35} ${x - hr} ${hy + 1 * s}Z" fill="${hair}"/>`;
+        if (style === 0) g += `<circle cx="${x}" cy="${hy - hr * 1.05}" r="${hr * .5}" fill="${hair}"/>`;
+        if (r() < .5) g += `<path d="M${x - 4 * s} ${hy + 4 * s} Q${x} ${hy + 7 * s} ${x + 4 * s} ${hy + 4 * s}" stroke="#3a1f1a" stroke-width="${1.4 * s}" fill="none" stroke-linecap="round"/>`;
+        return g;
+      }
+
+      function scene(type, r, W, H) {
+        const hz = H * .62;
+        switch (type) {
+          case "harbour": return `<defs><linearGradient id="sk${uid}" x2="0" y2="1"><stop offset="0" stop-color="#3b2a6b"/><stop offset=".6" stop-color="#f2785c"/><stop offset="1" stop-color="#ffc48a"/></linearGradient></defs>
+            <rect width="${W}" height="${H}" fill="url(#sk${uid})"/><circle cx="${W * .72}" cy="${hz - 30}" r="26" fill="#ffe0a8"/>
+            ${Array.from({ length: 16 }, (_, i) => { const w = 14 + r() * 22, h = 30 + r() * 90; return `<rect x="${i * W / 15 - 6}" y="${hz - h}" width="${w}" height="${h + 2}" fill="#1e1a33"/>`; }).join("")}
+            <rect y="${hz}" width="${W}" height="${H - hz}" fill="#2c3f6b"/>`;
+          case "trail": return `<defs><linearGradient id="sk${uid}" x2="0" y2="1"><stop offset="0" stop-color="#ffb37a"/><stop offset="1" stop-color="#ffe6c2"/></linearGradient></defs>
+            <rect width="${W}" height="${H}" fill="url(#sk${uid})"/><circle cx="${W * .3}" cy="${hz - 40}" r="30" fill="#fff3d6"/>
+            <path d="M0 ${hz - 30} Q${W * .25} ${hz - 90} ${W * .5} ${hz - 40} T${W} ${hz - 60} V${H} H0Z" fill="#8a9a6a"/>
+            <path d="M0 ${hz} Q${W * .3} ${hz - 40} ${W * .6} ${hz - 6} T${W} ${hz - 20} V${H} H0Z" fill="#5d7a48"/>
+            <path d="M${W * .45} ${H} Q${W * .5} ${hz + 20} ${W * .62} ${hz}" stroke="#d9c49a" stroke-width="18" fill="none"/>`;
+          case "beach": return `<defs><linearGradient id="sk${uid}" x2="0" y2="1"><stop offset="0" stop-color="#9fd8ff"/><stop offset="1" stop-color="#ffe3f0"/></linearGradient></defs>
+            <rect width="${W}" height="${H}" fill="url(#sk${uid})"/><circle cx="${W * .8}" cy="${hz - 60}" r="24" fill="#fff6c9"/>
+            <rect y="${hz - 30}" width="${W}" height="40" fill="#3aa0d8"/><rect y="${hz + 8}" width="${W}" height="${H}" fill="#f2dcb3"/>
+            <rect x="${W * .05}" y="${hz + 30}" width="120" height="16" rx="8" fill="#ff8fb8" transform="rotate(-6 ${W * .1} ${hz})"/>`;
+          case "studio": return `<rect width="${W}" height="${H}" fill="#efe7f7"/>
+            ${[0.1, 0.4, 0.7].map(f => `<rect x="${W * f}" y="${H * .08}" width="${W * .22}" height="${H * .4}" fill="#fffaf0"/><rect x="${W * f + W * .105}" y="${H * .08}" width="5" height="${H * .4}" fill="#dccdea"/>`).join("")}
+            <rect y="${hz + 6}" width="${W}" height="${H}" fill="#c9a77f"/>
+            ${[0, 1, 2, 3].map(i => `<rect x="${i * W / 4 + 8}" y="${hz + 40}" width="${W / 4 - 18}" height="22" rx="4" fill="${["#b9a3ff", "#ff9ec4", "#7bd3c4", "#ffd88a"][i]}"/>`).join("")}`;
+          default: return `<defs><radialGradient id="sk${uid}" cx=".5" cy="0" r="1"><stop offset="0" stop-color="#6b6b78"/><stop offset="1" stop-color="#18181c"/></radialGradient></defs>
+            <rect width="${W}" height="${H}" fill="url(#sk${uid})"/>
+            <rect x="${W * .06}" y="${H * .12}" width="8" height="${hz - H * .12}" fill="#444"/><rect x="${W * .3}" y="${H * .12}" width="8" height="${hz - H * .12}" fill="#444"/>
+            <rect x="${W * .04}" y="${H * .3}" width="${W * .3}" height="6" fill="#999"/>
+            ${[0, 1, 2, 3].map(i => `<circle cx="${W * .62 + i * 34}" cy="${H * .3}" r="${18 - i * 2}" fill="none" stroke="#7a1fe0" stroke-width="8"/>`).join("")}
+            <rect y="${hz}" width="${W}" height="${H}" fill="#2a2a30"/>`;
+        }
+      }
+
+      function hex(c) { return [1, 3, 5].map(i => (parseInt(c.slice(i, i + 2), 16) / 255).toFixed(3)); }
+
+      function draw(el) {
+        uid++;
+        const W = 400, H = 300, r = rng(+el.dataset.seed || 1), n = +el.dataset.people || 5;
+        const [d, l] = (el.dataset.duo || "#2a0f6b,#e6d9ff").split(",").map(hex);
+        let people = "";
+        const back = Math.ceil(n / 2), front = n - back;
+        for (let i = 0; i < back; i++) people += person(r, (i + .5) * W / back + (r() - .5) * 14, H * .98, 1.2);
+        for (let i = 0; i < front; i++) people += person(r, (i + .5) * W / front + (r() - .5) * 14 + W / back / 2 * (front < back ? 1 : .5) - (front < back ? 0 : 10), H * 1.28, 1.55);
+        const duo = el.dataset.tone !== "color";
+        el.insertAdjacentHTML("afterbegin", `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMax slice" role="img" aria-label="${el.dataset.alt || "GLG members together"}">
+          <defs>
+            <filter id="duo${uid}" color-interpolation-filters="sRGB"><feColorMatrix type="saturate" values="0"/><feComponentTransfer>
+              <feFuncR type="table" tableValues="${d[0]} ${l[0]}"/><feFuncG type="table" tableValues="${d[1]} ${l[1]}"/><feFuncB type="table" tableValues="${d[2]} ${l[2]}"/></feComponentTransfer></filter>
+            <filter id="gr${uid}"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
+          </defs>
+          <g ${duo ? `filter="url(#duo${uid})"` : ""}>${scene(el.dataset.scene, r, W, H)}${people}</g>
+          <rect width="${W}" height="${H}" filter="url(#gr${uid})" opacity=".09"/>
+        </svg>`);
+      }
+      return { drawAll: (root = document) => root.querySelectorAll(".photo[data-scene]").forEach(draw), draw };
+    })();
+    Photo.drawAll();
+    // The prototype's "now" is fixed at Tue 6 Oct 2026, 07:42 HKT; the clock ticks from page load.
+    const base = new Date("2026-10-06T07:42:00+08:00").getTime(), loaded = Date.now();
+    const pad = n => String(n).padStart(2, "0");
+    function tick() {
+      const now = base + (Date.now() - loaded);
+      document.querySelectorAll(".count").forEach(el => {
+        let s = Math.max(0, Math.floor((new Date(el.dataset.to) - now) / 1000));
+        const d = Math.floor(s / 86400); s %= 86400;
+        el.textContent = `in ${d}d ${pad(Math.floor(s / 3600))}:${pad(Math.floor(s % 3600 / 60))}:${pad(s % 60)}`;
+      });
+    }
+    tick(); setInterval(tick, 1000);
+    document.querySelectorAll(".claim").forEach(b => b.addEventListener("click", () => {
+      b.textContent = "claimed ✓"; b.classList.add("done"); b.disabled = true;
+    }));
+    document.querySelectorAll(".heart").forEach(h => h.addEventListener("click", () => {
+      const on = h.getAttribute("aria-pressed") !== "true";
+      h.setAttribute("aria-pressed", on);
+      h.textContent = `${on ? "♥" : "♡"} ${+h.dataset.n + (on ? 1 : 0)}`;
+    }));
+  </script>
+</body>
+</html>
