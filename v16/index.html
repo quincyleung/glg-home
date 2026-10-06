@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>v16 · Strength in Community — GLG Home</title>
+  <style>
+    :root {
+      --purple: #4a1fb8;
+      --deep: #24104f;
+      --lav: #efe9ff;
+      --lav2: #c9b6ff;
+      --pink: #ff7aa8;
+      --ink: #1a1328;
+      --muted: #6e6585;
+      --line: #ece7f5;
+      --display: Oswald, "Avenir Next Condensed", "Helvetica Neue", "Arial Narrow", sans-serif;
+      --body: Arimo, Arial, "Helvetica Neue", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #e4ddf3; color: var(--ink); font: 15px/1.45 var(--body); }
+    button { font: inherit; cursor: pointer; border: 0; color: inherit; background: none; }
+    .app { max-width: 430px; margin: 0 auto; min-height: 100vh; background: #fff; position: relative; overflow-x: clip; }
+    @media (min-width: 600px) { .app { margin: 24px auto; min-height: 0; border-radius: 28px; overflow: clip; box-shadow: 0 20px 60px rgba(40,10,90,.2); } }
+    .d { font-family: var(--display); font-weight: 700; text-transform: uppercase; font-stretch: condensed; letter-spacing: .01em; }
+    .photo { position: relative; overflow: hidden; background: var(--lav); }
+    .photo svg { display: block; width: 100%; height: 100%; }
+
+    /* top bar */
+    .bar { position: absolute; top: 0; left: 0; right: 0; z-index: 3; display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; color: #fff; }
+    .bar a { color: #fff; text-decoration: none; font-size: 13px; font-weight: 700; background: rgba(0,0,0,.25); padding: 5px 10px; border-radius: 99px; }
+    .bar .logo { font-size: 17px; letter-spacing: .04em; }
+    .me-av { width: 34px; height: 34px; border-radius: 50%; background: #fff; color: var(--purple); display: grid; place-items: center; font-weight: 700; font-size: 12px; }
+
+    /* hero */
+    .hero { height: 400px; }
+    .hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(36,16,79,.35) 0%, transparent 30%, transparent 45%, rgba(36,16,79,.85) 100%); }
+    .hero .txt { position: absolute; left: 18px; right: 18px; bottom: 40px; z-index: 2; color: #fff; }
+    .hero .k { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; opacity: .85; }
+    .hero h1 { font-size: 46px; line-height: .95; margin: 4px 0 8px; }
+    .hero p { margin: 0; font-size: 14px; opacity: .92; }
+
+    main { padding: 0 16px 24px; }
+
+    /* streak card */
+    .streak { position: relative; z-index: 2; margin-top: -24px; background: #fff; border-radius: 20px; padding: 16px; box-shadow: 0 10px 30px rgba(40,10,90,.14); }
+    .streak .top { display: flex; justify-content: space-between; align-items: baseline; }
+    .streak .top .d { font-size: 22px; color: var(--purple); }
+    .streak .top small { color: var(--muted); font-size: 12px; }
+    .week { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; margin: 12px 0; text-align: center; font-size: 11px; color: var(--muted); font-weight: 700; }
+    .week i { display: grid; place-items: center; height: 34px; border-radius: 10px; background: var(--lav); margin-bottom: 4px; font-style: normal; color: var(--purple); font-size: 13px; }
+    .week i.plan { background: #fff; border: 2px dashed var(--purple); }
+    .week i.today { box-shadow: inset 0 0 0 2px var(--ink); }
+    .nums { display: flex; justify-content: space-between; border-top: 1px solid var(--line); padding-top: 12px; }
+    .nums div { font-size: 12px; color: var(--muted); }
+    .nums b { display: block; font: 700 20px var(--display); color: var(--ink); }
+
+    h2 { font-size: 22px; margin: 30px 0 12px; display: flex; justify-content: space-between; align-items: baseline; }
+    h2 a { font: 700 13px var(--body); text-transform: none; color: var(--purple); text-decoration: none; letter-spacing: 0; }
+
+    /* signed up */
+    .rail { display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; margin: 0 -16px; padding: 0 16px 6px; scrollbar-width: none; }
+    .rail::-webkit-scrollbar { display: none; }
+    .ticket { scroll-snap-align: start; flex: 0 0 78%; border-radius: 18px; overflow: hidden; background: var(--lav); }
+    .ticket .photo { height: 140px; }
+    .date { position: absolute; top: 10px; left: 10px; z-index: 2; background: #fff; border-radius: 10px; padding: 4px 9px; text-align: center; line-height: 1.05; }
+    .date span { font-size: 10px; font-weight: 700; color: var(--purple); text-transform: uppercase; }
+    .date b { display: block; font: 700 20px var(--display); }
+    .ticket .body { padding: 12px 14px 14px; }
+    .ticket .body .d { font-size: 18px; }
+    .ticket small { color: var(--muted); font-size: 13px; display: block; }
+    .people { display: flex; align-items: center; gap: 8px; margin-top: 10px; font-size: 12px; color: var(--muted); }
+    .people span:last-child { margin-left: auto; }
+    .avs { display: flex; flex: none; }
+    .av { width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; font-size: 9px; font-weight: 700; color: #fff; border: 2px solid #fff; }
+    .avs .av + .av { margin-left: -7px; }
+    .going { background: var(--purple); color: #fff; font-weight: 700; font-size: 12px; padding: 4px 10px; border-radius: 99px; }
+
+    /* sign up next */
+    .ev { border-radius: 20px; overflow: hidden; border: 1px solid var(--line); margin-bottom: 14px; }
+    .ev .photo { height: 170px; }
+    .tag { position: absolute; z-index: 2; top: 12px; left: 12px; font: 700 12px var(--display); letter-spacing: .06em; text-transform: uppercase; padding: 4px 10px; border-radius: 6px; background: #fff; color: var(--purple); }
+    .tag.hot { background: var(--pink); color: #fff; }
+    .ev .body { padding: 14px; }
+    .ev .body .d { font-size: 22px; line-height: 1.05; }
+    .ev .meta { color: var(--muted); font-size: 13px; margin: 4px 0 12px; }
+    .ev .row { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+    .price { font: 700 18px var(--display); }
+    .join { background: var(--purple); color: #fff; font: 700 15px var(--display); text-transform: uppercase; letter-spacing: .06em; padding: 11px 22px; border-radius: 99px; transition: transform .15s; }
+    .join:active { transform: scale(.96); }
+    .join.done { background: var(--lav); color: var(--purple); }
+
+    /* community */
+    .post { border-radius: 20px; overflow: hidden; background: #fff; border: 1px solid var(--line); margin-bottom: 14px; }
+    .post .head { display: flex; align-items: center; gap: 10px; padding: 12px 14px; }
+    .post .head .av { width: 34px; height: 34px; font-size: 11px; border: 0; }
+    .post .head b { display: block; font-size: 14px; }
+    .post .head small { color: var(--muted); font-size: 12px; }
+    .post .head .pin { margin-left: auto; font-size: 11px; font-weight: 700; color: var(--purple); background: var(--lav); padding: 3px 8px; border-radius: 99px; }
+    .post .photo { height: 200px; }
+    .post .txt { padding: 12px 14px 14px; }
+    .post .txt .d { font-size: 19px; display: block; margin-bottom: 4px; }
+    .post .txt p { margin: 0; color: #3d3550; font-size: 14px; }
+    .lift { margin-top: 10px; display: inline-flex; gap: 6px; align-items: center; background: var(--lav); color: var(--purple); font-weight: 700; font-size: 13px; padding: 7px 14px; border-radius: 99px; }
+    .lift[aria-pressed="true"] { background: var(--purple); color: #fff; }
+
+    .million { background: var(--purple); color: #fff; border-radius: 20px; padding: 16px; margin-bottom: 14px; }
+    .million .d { font-size: 30px; line-height: 1; }
+    .million p { margin: 6px 0 12px; font-size: 14px; opacity: .9; }
+    .bar2 { height: 12px; border-radius: 99px; background: rgba(255,255,255,.2); overflow: hidden; }
+    .bar2 i { display: block; height: 100%; width: 41%; background: linear-gradient(90deg, var(--lav2), #fff); border-radius: 99px; }
+    .million small { display: flex; justify-content: space-between; margin-top: 8px; font-size: 12px; opacity: .85; }
+
+    .chat { background: var(--lav); border-radius: 20px; padding: 14px; margin-bottom: 14px; }
+    .chat .k { font-size: 12px; font-weight: 700; color: var(--purple); }
+    .bub { background: #fff; border-radius: 16px 16px 16px 4px; padding: 10px 12px; margin-top: 8px; font-size: 14px; }
+    .bub small { display: block; color: var(--muted); font-size: 12px; margin-top: 4px; }
+    .chat button { margin-top: 10px; font-weight: 700; color: var(--purple); font-size: 13px; }
+
+    .global { background: var(--deep); color: #fff; border-radius: 20px; padding: 18px; }
+    .global .d { font-size: 26px; line-height: 1.05; }
+    .global p { margin: 6px 0 12px; font-size: 14px; opacity: .9; }
+    .cities { display: flex; flex-wrap: wrap; gap: 6px; }
+    .cities span { font-size: 12px; padding: 4px 10px; border-radius: 99px; border: 1px solid rgba(255,255,255,.3); }
+    .cities span.here { background: #fff; color: var(--deep); border-color: #fff; font-weight: 700; }
+
+    /* values band */
+    .values { margin-top: 28px; background: var(--purple); color: #fff; overflow: hidden; white-space: nowrap; padding: 12px 0; }
+    .values span { display: inline-block; font: 700 18px var(--display); text-transform: uppercase; letter-spacing: .04em; animation: run 26s linear infinite; }
+    @keyframes run { to { transform: translateX(-50%); } }
+
+    .tabs { position: sticky; bottom: 0; z-index: 5; display: flex; justify-content: space-around; background: rgba(255,255,255,.95); backdrop-filter: blur(8px); border-top: 1px solid var(--line); padding: 10px 0 14px; }
+    .tabs a { color: var(--muted); text-decoration: none; font: 700 12px var(--display); text-transform: uppercase; letter-spacing: .06em; }
+    .tabs a.on { color: var(--purple); }
+    .toast { position: fixed; left: 50%; bottom: 84px; transform: translate(-50%, 20px); background: var(--purple); color: #fff; padding: 12px 18px; border-radius: 14px; font-size: 14px; opacity: 0; pointer-events: none; transition: .3s; max-width: 90vw; z-index: 10; }
+    .toast.show { opacity: 1; transform: translate(-50%, 0); }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header class="photo hero" data-scene="harbour" data-people="9" data-seed="14" data-duo="#1e0a52,#f3ecff" data-alt="GLG Hong Kong members together at the harbour">
+    </header>
+    <div class="bar"><a href="../index.html">← Gallery</a><span class="d logo">Girls Lift Girls</span><span class="me-av" aria-label="Jasmine's profile">JT</span></div>
+
+    <main>
+      <div class="streak" aria-label="Your streak">
+        <div class="top"><span class="d">🔥 3 weeks strong</span><small>This week: 2 planned</small></div>
+        <div class="week">
+          <div><i>✓</i>M</div><div><i class="today"></i>T</div><div><i class="plan">5K</i>W</div><div><i></i>T</div><div><i></i>F</div><div><i></i>S</div><div><i class="plan">⛰</i>S</div>
+        </div>
+        <div class="nums">
+          <div><b>27</b>sessions</div><div><b>60 kg</b>squat PB</div><div><b>2,140 kg</b>to the million</div><div><b>6</b>sunrises</div>
+        </div>
+      </div>
+
+      <h2 class="d">You're signed up <a href="#">Calendar</a></h2>
+      <div class="rail">
+        <div class="ticket">
+          <div class="photo" data-scene="trail" data-people="6" data-seed="31" data-tone="color" data-alt="Members hiking Dragon's Back"><span class="date"><span>Sun</span><b>11</b></span></div>
+          <div class="body"><span class="d">Dragon's Back Sunrise Hike</span><small>6:15am · To Tei Wan · coffee at Shek O after</small>
+            <div class="people"><span class="avs"><span class="av" style="background:#4a1fb8">JT</span><span class="av" style="background:#2a9d8f">PR</span><span class="av" style="background:#e07a5f">HO</span></span>You, Priya + 21<span class="going">Going ✓</span></div></div>
+        </div>
+        <div class="ticket">
+          <div class="photo" data-scene="harbour" data-people="7" data-seed="8" data-tone="color" data-alt="Run club at the harbour"><span class="date"><span>Wed</span><b>14</b></span></div>
+          <div class="body"><span class="d">Harbourfront 5K Run Club</span><small>7:30pm · Star Ferry clock tower (new start)</small>
+            <div class="people"><span class="avs"><span class="av" style="background:#4a1fb8">JT</span><span class="av" style="background:#d6336c">AL</span></span>You, Aisha + 29<span class="going">Going ✓</span></div></div>
+        </div>
+      </div>
+
+      <h2 class="d">Sign up next <a href="#">All events</a></h2>
+      <div class="ev">
+        <div class="photo" data-scene="gym" data-people="6" data-seed="3" data-tone="color" data-alt="Barbell session at Iron Harbour"><span class="tag hot">Only 2 spots left</span></div>
+        <div class="body"><span class="d">Barbell Basics: Squat &amp; Deadlift</span>
+          <p class="meta">Sat 10 Oct · 8:00am · Iron Harbour, Kwun Tong · with Coach Mei-Ling. No experience needed.</p>
+          <div class="row"><span class="price">HK$180</span><button class="join">Join</button></div></div>
+      </div>
+      <div class="ev">
+        <div class="photo" data-scene="studio" data-people="5" data-seed="9" data-tone="color" data-alt="Boxing workshop in the studio"><span class="tag">3 first-timers going</span></div>
+        <div class="body"><span class="d">Boxing Fundamentals</span>
+          <p class="meta">Sat 17 Oct · 10:00am · Left Hook Studio, Sheung Wan · gloves provided</p>
+          <div class="row"><span class="price">HK$250</span><button class="join">Join</button></div></div>
+      </div>
+      <div class="ev">
+        <div class="photo" data-scene="beach" data-people="6" data-seed="5" data-tone="color" data-alt="Paddleboarding at Sai Kung"><span class="tag">Brunch included</span></div>
+        <div class="body"><span class="d">Paddle &amp; Brunch</span>
+          <p class="meta">Sun 25 Oct · 9:00am · Sai Kung waterfront · 6 of 12 spots taken</p>
+          <div class="row"><span class="price">HK$420</span><button class="join">Join</button></div></div>
+      </div>
+
+      <h2 class="d">From the community <a href="#">See all</a></h2>
+      <article class="post">
+        <div class="head"><span class="av" style="background:#e07a5f">HO</span><div><b>Hana Okafor</b><small>Chapter lead · 2 days ago</small></div><span class="pin">📌 Update</span></div>
+        <div class="txt" style="padding-top:0"><span class="d">Run club has a new start line</span><p>From this Wednesday we meet at the Star Ferry clock tower instead of the Avenue of Stars. Same time, 7:30pm. Look for the pink flag!</p></div>
+      </article>
+      <article class="post">
+        <div class="head"><span class="av" style="background:#6f4ad8">CN</span><div><b>Chloe Ng</b><small>Saturday · Iron Harbour</small></div></div>
+        <div class="photo" data-scene="gym" data-people="5" data-seed="21" data-alt="Chloe celebrating her deadlift PR with the Saturday crew"></div>
+        <div class="txt"><span class="d">100 kg deadlift. New PR. 🔥</span><p>Two years ago I couldn't lift the empty bar. Thank you, Mei-Ling and the Saturday crew.</p>
+          <button class="lift" aria-pressed="false" data-n="34">💜 Lift her up · 34</button></div>
+      </article>
+      <div class="million">
+        <span class="d">Lift a Million</span>
+        <p>412,000 of 1,000,000 kg, lifted together. Hit it by 31 Oct and HK$5,000 goes to a local women's shelter.</p>
+        <div class="bar2"><i></i></div>
+        <small><span>Your share: 2,140 kg</span><span>25 days left</span></small>
+      </div>
+      <div class="chat">
+        <span class="k">💬 HK chapter chat · 6 replies</span>
+        <div class="bub">Anyone splitting a taxi to To Tei Wan on Sunday? Leaving Quarry Bay 5:40am 🚕<small>Priya Raman · you're on this hike</small></div>
+        <button>Open chat →</button>
+      </div>
+      <div class="global">
+        <span class="d">Global Lift Day · Sat 7 Nov</span>
+        <p>For the first time, all seven chapters lift at the same hour. Hong Kong lifts at 5pm at Iron Harbour.</p>
+        <div class="cities"><span class="here">Hong Kong</span><span>Dubai</span><span>Sydney</span><span>Brisbane</span><span>Gold Coast</span><span>Heidelberg</span><span>Shanghai</span></div>
+      </div>
+    </main>
+
+    <div class="values" aria-label="Our values"><span>Finding strength in · Redefining norms · Accepting challenges · Being stronger together · Finding strength in · Redefining norms · Accepting challenges · Being stronger together ·&nbsp;</span></div>
+
+    <nav class="tabs"><a class="on" href="#">Home</a><a href="#">Events</a><a href="#">Community</a><a href="#">Profile</a></nav>
+  </div>
+  <div class="toast" id="toast" role="status"></div>
+
+  <script>
+    // Illustrated "photos": groups of women at GLG sessions, drawn as SVG so no real photos are used.
+    // <div class="photo" data-scene="gym|harbour|trail|beach|studio" data-people="6" data-seed="3" data-tone="duo|color"></div>
+    const Photo = (() => {
+      const SKIN = ["#f3d2b8", "#e8b48f", "#c98e66", "#a26a44", "#7a4a2c", "#5a3520"];
+      const HAIR = ["#1b1210", "#3a2418", "#6b4226", "#b07a3f", "#2a1a2e", "#1b1210"];
+      const TOPS = ["#7b4fe0", "#ff7aa8", "#ffffff", "#24202e", "#ffd23f", "#5fd0c0", "#b9a3ff", "#ff8a5c"];
+      const BOTS = ["#1d1d24", "#3a3350", "#4a1fb8", "#2b2b33", "#5b4a7a"];
+      let uid = 0;
+      const rng = seed => () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+      const pick = (r, a) => a[Math.floor(r() * a.length)];
+
+      function person(r, x, y, s) {
+        const skin = pick(r, SKIN), hair = pick(r, HAIR), top = pick(r, TOPS), bot = pick(r, BOTS);
+        const hr = 11 * s, hy = y - 118 * s + hr, sh = hy + hr + 5 * s, hip = sh + 40 * s;
+        const p = r(), pose = p < .28 ? "up" : p < .55 ? "hug" : p < .66 ? "flex" : "down";
+        const aw = 7 * s, st = `stroke="${skin}" stroke-width="${aw}" stroke-linecap="round" fill="none"`;
+        let g = "";
+        const style = Math.floor(r() * 4);
+        if (style === 2) g += `<path d="M${x - hr} ${hy} Q${x - hr * 1.3} ${sh + 14 * s} ${x - hr * .4} ${sh + 16 * s} L${x + hr * .4} ${sh + 16 * s} Q${x + hr * 1.3} ${sh + 14 * s} ${x + hr} ${hy}Z" fill="${hair}"/>`;
+        if (style === 1) g += `<ellipse cx="${x + hr * .9}" cy="${hy + hr * .6}" rx="${hr * .45}" ry="${hr * 1.1}" fill="${hair}" transform="rotate(-20 ${x + hr} ${hy})"/>`;
+        g += `<path d="M${x - 7 * s} ${hip} L${x - 10 * s} ${y + 4 * s} M${x + 7 * s} ${hip} L${x + 10 * s} ${y + 4 * s}" stroke="${bot}" stroke-width="${11 * s}" stroke-linecap="round"/>`;
+        if (pose === "up") g += `<path d="M${x - 11 * s} ${sh + 3 * s} L${x - 24 * s} ${hy - 26 * s} M${x + 11 * s} ${sh + 3 * s} L${x + 24 * s} ${hy - 26 * s}" ${st}/>`;
+        else if (pose === "hug") g += `<path d="M${x - 11 * s} ${sh + 3 * s} L${x - 15 * s} ${hip} M${x + 11 * s} ${sh + 3 * s} L${x + 34 * s} ${sh + 8 * s}" ${st}/>`;
+        else if (pose === "flex") g += `<path d="M${x - 11 * s} ${sh + 3 * s} L${x - 28 * s} ${sh + 4 * s} L${x - 28 * s} ${sh - 16 * s} M${x + 11 * s} ${sh + 3 * s} L${x + 15 * s} ${hip}" ${st}/>`;
+        else g += `<path d="M${x - 11 * s} ${sh + 3 * s} L${x - 15 * s} ${hip + 4 * s} M${x + 11 * s} ${sh + 3 * s} L${x + 15 * s} ${hip + 4 * s}" ${st}/>`;
+        g += `<rect x="${x - 14 * s}" y="${sh - 3 * s}" width="${28 * s}" height="${hip - sh + 8 * s}" rx="${10 * s}" fill="${top}"/>`;
+        g += `<rect x="${x - 3.5 * s}" y="${hy + hr - 2 * s}" width="${7 * s}" height="${8 * s}" fill="${skin}"/>`;
+        g += `<circle cx="${x}" cy="${hy}" r="${hr}" fill="${skin}"/>`;
+        g += `<path d="M${x - hr} ${hy + 1 * s} A${hr} ${hr} 0 0 1 ${x + hr} ${hy + 1 * s} Q${x} ${hy - hr * .35} ${x - hr} ${hy + 1 * s}Z" fill="${hair}"/>`;
+        if (style === 0) g += `<circle cx="${x}" cy="${hy - hr * 1.05}" r="${hr * .5}" fill="${hair}"/>`;
+        if (r() < .5) g += `<path d="M${x - 4 * s} ${hy + 4 * s} Q${x} ${hy + 7 * s} ${x + 4 * s} ${hy + 4 * s}" stroke="#3a1f1a" stroke-width="${1.4 * s}" fill="none" stroke-linecap="round"/>`;
+        return g;
+      }
+
+      function scene(type, r, W, H) {
+        const hz = H * .62;
+        switch (type) {
+          case "harbour": return `<defs><linearGradient id="sk${uid}" x2="0" y2="1"><stop offset="0" stop-color="#3b2a6b"/><stop offset=".6" stop-color="#f2785c"/><stop offset="1" stop-color="#ffc48a"/></linearGradient></defs>
+            <rect width="${W}" height="${H}" fill="url(#sk${uid})"/><circle cx="${W * .72}" cy="${hz - 30}" r="26" fill="#ffe0a8"/>
+            ${Array.from({ length: 16 }, (_, i) => { const w = 14 + r() * 22, h = 30 + r() * 90; return `<rect x="${i * W / 15 - 6}" y="${hz - h}" width="${w}" height="${h + 2}" fill="#1e1a33"/>`; }).join("")}
+            <rect y="${hz}" width="${W}" height="${H - hz}" fill="#2c3f6b"/>`;
+          case "trail": return `<defs><linearGradient id="sk${uid}" x2="0" y2="1"><stop offset="0" stop-color="#ffb37a"/><stop offset="1" stop-color="#ffe6c2"/></linearGradient></defs>
+            <rect width="${W}" height="${H}" fill="url(#sk${uid})"/><circle cx="${W * .3}" cy="${hz - 40}" r="30" fill="#fff3d6"/>
+            <path d="M0 ${hz - 30} Q${W * .25} ${hz - 90} ${W * .5} ${hz - 40} T${W} ${hz - 60} V${H} H0Z" fill="#8a9a6a"/>
+            <path d="M0 ${hz} Q${W * .3} ${hz - 40} ${W * .6} ${hz - 6} T${W} ${hz - 20} V${H} H0Z" fill="#5d7a48"/>
+            <path d="M${W * .45} ${H} Q${W * .5} ${hz + 20} ${W * .62} ${hz}" stroke="#d9c49a" stroke-width="18" fill="none"/>`;
+          case "beach": return `<defs><linearGradient id="sk${uid}" x2="0" y2="1"><stop offset="0" stop-color="#9fd8ff"/><stop offset="1" stop-color="#ffe3f0"/></linearGradient></defs>
+            <rect width="${W}" height="${H}" fill="url(#sk${uid})"/><circle cx="${W * .8}" cy="${hz - 60}" r="24" fill="#fff6c9"/>
+            <rect y="${hz - 30}" width="${W}" height="40" fill="#3aa0d8"/><rect y="${hz + 8}" width="${W}" height="${H}" fill="#f2dcb3"/>
+            <rect x="${W * .05}" y="${hz + 30}" width="120" height="16" rx="8" fill="#ff8fb8" transform="rotate(-6 ${W * .1} ${hz})"/>`;
+          case "studio": return `<rect width="${W}" height="${H}" fill="#efe7f7"/>
+            ${[0.1, 0.4, 0.7].map(f => `<rect x="${W * f}" y="${H * .08}" width="${W * .22}" height="${H * .4}" fill="#fffaf0"/><rect x="${W * f + W * .105}" y="${H * .08}" width="5" height="${H * .4}" fill="#dccdea"/>`).join("")}
+            <rect y="${hz + 6}" width="${W}" height="${H}" fill="#c9a77f"/>
+            ${[0, 1, 2, 3].map(i => `<rect x="${i * W / 4 + 8}" y="${hz + 40}" width="${W / 4 - 18}" height="22" rx="4" fill="${["#b9a3ff", "#ff9ec4", "#7bd3c4", "#ffd88a"][i]}"/>`).join("")}`;
+          default: return `<defs><radialGradient id="sk${uid}" cx=".5" cy="0" r="1"><stop offset="0" stop-color="#6b6b78"/><stop offset="1" stop-color="#18181c"/></radialGradient></defs>
+            <rect width="${W}" height="${H}" fill="url(#sk${uid})"/>
+            <rect x="${W * .06}" y="${H * .12}" width="8" height="${hz - H * .12}" fill="#444"/><rect x="${W * .3}" y="${H * .12}" width="8" height="${hz - H * .12}" fill="#444"/>
+            <rect x="${W * .04}" y="${H * .3}" width="${W * .3}" height="6" fill="#999"/>
+            ${[0, 1, 2, 3].map(i => `<circle cx="${W * .62 + i * 34}" cy="${H * .3}" r="${18 - i * 2}" fill="none" stroke="#7a1fe0" stroke-width="8"/>`).join("")}
+            <rect y="${hz}" width="${W}" height="${H}" fill="#2a2a30"/>`;
+        }
+      }
+
+      function hex(c) { return [1, 3, 5].map(i => (parseInt(c.slice(i, i + 2), 16) / 255).toFixed(3)); }
+
+      function draw(el) {
+        uid++;
+        const W = 400, H = 300, r = rng(+el.dataset.seed || 1), n = +el.dataset.people || 5;
+        const [d, l] = (el.dataset.duo || "#2a0f6b,#e6d9ff").split(",").map(hex);
+        let people = "";
+        const back = Math.ceil(n / 2), front = n - back;
+        for (let i = 0; i < back; i++) people += person(r, (i + .5) * W / back + (r() - .5) * 14, H * .98, 1.2);
+        for (let i = 0; i < front; i++) people += person(r, (i + .5) * W / front + (r() - .5) * 14 + W / back / 2 * (front < back ? 1 : .5) - (front < back ? 0 : 10), H * 1.28, 1.55);
+        const duo = el.dataset.tone !== "color";
+        el.innerHTML = `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMax slice" role="img" aria-label="${el.dataset.alt || "GLG members together"}">
+          <defs>
+            <filter id="duo${uid}" color-interpolation-filters="sRGB"><feColorMatrix type="saturate" values="0"/><feComponentTransfer>
+              <feFuncR type="table" tableValues="${d[0]} ${l[0]}"/><feFuncG type="table" tableValues="${d[1]} ${l[1]}"/><feFuncB type="table" tableValues="${d[2]} ${l[2]}"/></feComponentTransfer></filter>
+            <filter id="gr${uid}"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
+          </defs>
+          <g ${duo ? `filter="url(#duo${uid})"` : ""}>${scene(el.dataset.scene, r, W, H)}${people}</g>
+          <rect width="${W}" height="${H}" filter="url(#gr${uid})" opacity=".09"/>
+        </svg>`;
+      }
+      return { drawAll: (root = document) => root.querySelectorAll(".photo[data-scene]").forEach(draw), draw };
+    })();
+    Photo.drawAll();
+    // Hero text sits on top of the hero photo.
+    document.querySelector(".hero").insertAdjacentHTML("beforeend",
+      '<div class="txt"><span class="k">Tue 6 Oct · Hong Kong chapter</span><h1 class="d">Morning,<br>Jasmine.</h1><p>2 sessions booked this week. Saturday\'s Barbell Basics is almost full.</p></div>');
+
+    const toast = document.getElementById("toast");
+    function say(msg) { toast.textContent = msg; toast.classList.add("show"); clearTimeout(say.t); say.t = setTimeout(() => toast.classList.remove("show"), 2400); }
+    document.querySelectorAll(".join").forEach(b => b.addEventListener("click", () => {
+      b.textContent = "You're in ✓"; b.classList.add("done"); b.disabled = true;
+      say("You're in! We've saved your spot. See you there 💪");
+    }));
+    document.querySelectorAll(".lift").forEach(h => h.addEventListener("click", () => {
+      const on = h.getAttribute("aria-pressed") !== "true";
+      h.setAttribute("aria-pressed", on);
+      h.textContent = `💜 ${on ? "Lifted" : "Lift her up"} · ${+h.dataset.n + (on ? 1 : 0)}`;
+    }));
+  </script>
+</body>
+</html>
