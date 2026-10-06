@@ -102,3 +102,7 @@
 - **Asked for:** a "chic" theme.
 - **Made:** quiet luxury in ivory and ink with Didot/Bodoni italics, Avenir spaced caps and hairline rules. The tone is refined ("Your week, considered.", "Two places remain"). Has an "In numbers" strip, "Your itinerary" with dotted leaders, "To reserve" with roman numerals and underlined text links, "Notes from the chapter" as italic quotes with an Applaud action, and Global Lift Day as a double-ruled save-the-date card.
 - Also updated the gallery's intro to the versions to tell the v06–v15 part of the story.
+
+## v13 redone: Together
+- **Pushback:** "v13 is too similar to v10. Can you redo v13 so it's giving sporty, photo based (like Strava), and together."
+- **Made:** a Strava-style white-and-orange activity app. "Your week" has planned sessions, km and time with a day-by-day bar chart and streak. "You're going" shows route-map thumbnails. "Join a group session" cards have photo headers and "14 of 16" with avatars. The feed has group activities ("Harbourfront 5K: 31 of us": distance, pace, together count, a dusk harbour photo, route map, kudos and comments) and Chloe's PR as a strength activity. Plus a Lift a Million club challenge with leaderboard (you're #38) and club news. The photos are illustrated SVG scenes, because AGENTS.md rules out real photos and external images. Added the activity stats and leaderboard to `content.md`.

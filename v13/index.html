@@ -3,180 +3,256 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>v13 · Community — GLG Home</title>
+  <title>v13 · Together — GLG Home</title>
   <style>
     :root {
-      --bg: #f3f6f4;
-      --ink: #173a3a;
-      --muted: #5f7a78;
-      --teal: #1f7a74;
-      --teal-soft: #dcefeb;
-      --mustard: #e9b23f;
-      --cork: #c99a63;
-      --line: #dce6e3;
-      --human: "Gill Sans", "Gill Sans MT", "Trebuchet MS", Calibri, sans-serif;
+      --orange: #fc5200;
+      --ink: #242428;
+      --muted: #6d6d78;
+      --line: #e6e6eb;
+      --bg: #f2f2f5;
+      --card: #fff;
+      --sans: "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif;
     }
     * { box-sizing: border-box; }
-    body { margin: 0; background: #d7e3df; color: var(--ink); font: 16px/1.45 var(--human); }
-    button { font: inherit; cursor: pointer; border: 0; color: inherit; }
+    body { margin: 0; background: #dcdce2; color: var(--ink); font: 15px/1.4 var(--sans); }
+    button { font: inherit; cursor: pointer; border: 0; color: inherit; background: none; }
     .app { max-width: 430px; margin: 0 auto; min-height: 100vh; background: var(--bg); position: relative; }
-    @media (min-width: 600px) { .app { margin: 24px auto; min-height: 0; border-radius: 28px; overflow: clip; box-shadow: 0 20px 60px rgba(20,60,60,.18); } }
-    main { padding: 16px 18px 24px; }
+    @media (min-width: 600px) { .app { margin: 24px auto; min-height: 0; border-radius: 24px; overflow: clip; box-shadow: 0 20px 60px rgba(0,0,0,.15); } }
 
-    .top { display: flex; justify-content: space-between; align-items: center; font-size: 14px; }
-    .top a { color: var(--muted); text-decoration: none; }
-    .chapter { font-weight: 600; letter-spacing: .02em; }
-    .av { width: 28px; height: 28px; border-radius: 50%; display: inline-grid; place-items: center; color: #fff; font-size: 10px; font-weight: 700; flex: none; border: 2px solid var(--bg); }
+    .bar { position: sticky; top: 0; z-index: 5; background: #fff; display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; border-bottom: 1px solid var(--line); }
+    .bar a { color: var(--muted); text-decoration: none; font-size: 13px; font-weight: 600; }
+    .logo { font: 900 italic 20px var(--sans); color: var(--orange); letter-spacing: -.02em; }
+    .av { width: 32px; height: 32px; border-radius: 50%; display: inline-grid; place-items: center; color: #fff; font-size: 11px; font-weight: 700; flex: none; }
+    .sm { width: 24px; height: 24px; font-size: 9px; border: 2px solid #fff; }
+    .stack { display: flex; flex: none; } .stack .av + .av { margin-left: -7px; }
 
-    /* hero: we moved together */
-    .we { margin-top: 16px; background: var(--teal); color: #fff; border-radius: 26px; padding: 18px; }
-    .we .k { font-size: 13px; letter-spacing: .1em; text-transform: uppercase; opacity: .8; }
-    .we h1 { font: 600 30px/1.1 var(--human); margin: 4px 0 14px; }
-    .mosaic { display: grid; grid-template-columns: repeat(12, 1fr); gap: 4px; }
-    .mosaic i { aspect-ratio: 1; border-radius: 50%; background: rgba(255,255,255,.35); }
-    .mosaic i.me { background: var(--mustard); box-shadow: 0 0 0 2px #fff; }
-    .we p { margin: 12px 0 0; font-size: 14px; opacity: .9; }
+    section { background: var(--card); margin-bottom: 8px; padding: 16px; }
+    h2 { font-size: 17px; font-weight: 800; margin: 0 0 12px; display: flex; justify-content: space-between; align-items: baseline; }
+    h2 a { font-size: 13px; font-weight: 700; color: var(--orange); text-decoration: none; }
+    .k { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; font-weight: 600; }
+    .stats { display: flex; gap: 22px; }
+    .stats b { display: block; font-size: 22px; font-weight: 800; font-variant-numeric: tabular-nums; letter-spacing: -.02em; }
 
-    h2 { font: 600 20px var(--human); margin: 28px 0 10px; display: flex; justify-content: space-between; align-items: baseline; }
-    h2 a { font-size: 14px; color: var(--teal); text-decoration: none; font-weight: 400; }
+    /* your week */
+    .hello { font-size: 22px; font-weight: 800; letter-spacing: -.02em; margin: 0 0 2px; }
+    .sub { color: var(--muted); margin: 0 0 14px; font-size: 14px; }
+    .days { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; align-items: end; height: 64px; margin-top: 14px; }
+    .days div { display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 10px; color: var(--muted); font-weight: 700; height: 100%; justify-content: flex-end; }
+    .days i { width: 100%; border-radius: 4px; background: var(--line); }
+    .days i.done { background: var(--orange); }
+    .days i.plan { background: repeating-linear-gradient(-45deg, #ffd6c2 0 4px, #fff 4px 8px); border: 1.5px solid var(--orange); }
+    .days .today { color: var(--ink); }
+    .streak { display: flex; align-items: center; gap: 8px; margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--line); font-size: 14px; }
+    .streak b { color: var(--orange); }
 
-    /* welcome */
-    .welcome { display: flex; align-items: center; gap: 12px; background: #fff; border-radius: 20px; padding: 12px 14px; }
-    .stack { display: flex; flex: none; } .stack .av + .av { margin-left: -8px; }
-    .welcome p { margin: 0; flex: 1; font-size: 14px; }
-    .wave { background: var(--teal-soft); color: var(--teal); font-weight: 600; padding: 7px 12px; border-radius: 99px; font-size: 14px; }
+    /* upcoming with route thumbs */
+    .up { display: flex; gap: 12px; align-items: center; padding: 10px 0; border-top: 1px solid var(--line); }
+    .up:first-of-type { border-top: 0; padding-top: 0; }
+    .route { width: 64px; height: 64px; flex: none; border-radius: 8px; background: #eef0ea; overflow: hidden; }
+    .up .info { flex: 1; min-width: 0; }
+    .up b { display: block; font-size: 15px; }
+    .up small { color: var(--muted); font-size: 13px; }
+    .going { color: var(--orange); font-weight: 800; font-size: 12px; }
 
-    /* noticeboard */
-    .cork { background: var(--cork); background-image: radial-gradient(rgba(0,0,0,.08) 1px, transparent 1.5px); background-size: 6px 6px; border-radius: 18px; padding: 18px 14px 8px; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; border: 6px solid #a87a48; }
-    .notice { background: #fffdf3; padding: 14px 10px 10px; font-size: 13px; position: relative; box-shadow: 0 3px 6px rgba(0,0,0,.18); }
-    .notice:nth-child(1) { transform: rotate(-2deg); } .notice:nth-child(2) { transform: rotate(1.5deg); background: #fff4c7; }
-    .notice::before { content: ""; position: absolute; top: -6px; left: 50%; width: 12px; height: 12px; border-radius: 50%; background: #d9534f; box-shadow: inset -2px -2px 0 rgba(0,0,0,.2); }
-    .notice b { display: block; font-size: 14px; margin-bottom: 4px; }
-    .notice small { display: block; color: var(--muted); margin-top: 6px; }
-    .notice .bar { height: 6px; background: #eadfb0; border-radius: 3px; margin-top: 6px; overflow: hidden; }
-    .notice .bar i { display: block; height: 100%; width: 41%; background: var(--teal); }
+    /* group sessions to join */
+    .rail { display: flex; gap: 10px; overflow-x: auto; margin: 0 -16px; padding: 0 16px 2px; scrollbar-width: none; scroll-snap-type: x mandatory; }
+    .rail::-webkit-scrollbar { display: none; }
+    .gs { scroll-snap-align: start; flex: 0 0 74%; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+    .gs .photo { height: 120px; position: relative; }
+    .gs .photo .badge { position: absolute; top: 8px; left: 8px; background: var(--orange); color: #fff; font-size: 11px; font-weight: 800; padding: 3px 8px; border-radius: 4px; }
+    .gs .body { padding: 10px 12px 12px; }
+    .gs b { display: block; }
+    .gs small { color: var(--muted); font-size: 13px; }
+    .gs .row { display: flex; align-items: center; gap: 8px; margin-top: 10px; }
+    .gs .row span { flex: 1; font-size: 12px; color: var(--muted); }
+    .join { background: var(--orange); color: #fff; font-weight: 800; font-size: 13px; padding: 8px 14px; border-radius: 6px; }
+    .join.done { background: #fff; color: var(--orange); box-shadow: inset 0 0 0 1.5px var(--orange); }
 
-    /* sessions with people */
-    .session { background: #fff; border-radius: 20px; padding: 14px; margin-bottom: 10px; }
-    .session .head { display: flex; justify-content: space-between; gap: 10px; }
-    .session b { font-size: 17px; font-weight: 600; }
-    .session .meta { color: var(--muted); font-size: 14px; }
-    .host { font-size: 13px; color: var(--muted); margin-top: 2px; }
-    .hot { color: #c0392b; font-weight: 600; }
-    .people { display: flex; align-items: center; gap: 10px; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--line); }
-    .people > span:not(.in) { flex: 1; font-size: 14px; }
-    .join { background: var(--teal); color: #fff; font-weight: 600; padding: 8px 14px; border-radius: 99px; font-size: 14px; white-space: nowrap; }
-    .in { color: var(--teal); font-weight: 600; font-size: 14px; white-space: nowrap; }
-    .mine { border: 2px solid var(--teal-soft); }
+    /* photo look */
+    .photo svg, .map svg { display: block; width: 100%; height: 100%; }
+    .photo { position: relative; overflow: hidden; }
+    .photo::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(rgba(0,0,0,.08) 1px, transparent 1px); background-size: 3px 3px; mix-blend-mode: multiply; }
 
-    /* threads + wins */
-    .list { background: #fff; border-radius: 20px; padding: 0 14px; }
-    .li { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--line); align-items: flex-start; }
-    .li:last-child { border-bottom: 0; }
-    .li .txt { flex: 1; font-size: 15px; }
-    .li small { display: block; color: var(--muted); font-size: 13px; }
-    .cheer { background: #fff4d6; color: #8a6200; font-weight: 600; font-size: 13px; padding: 4px 10px; border-radius: 99px; margin-top: 6px; }
-    .cheer[aria-pressed="true"] { background: var(--mustard); color: #fff; }
+    /* activity feed */
+    .post { padding: 0; }
+    .post .head { display: flex; gap: 10px; align-items: center; padding: 14px 16px 0; }
+    .post .head b { display: block; font-size: 15px; }
+    .post .head small { color: var(--muted); font-size: 12px; }
+    .post h3 { font-size: 19px; font-weight: 800; margin: 10px 16px 4px; letter-spacing: -.01em; }
+    .post p { margin: 0 16px 10px; font-size: 14px; color: #444; }
+    .post .stats { padding: 0 16px 12px; }
+    .post .stats b { font-size: 18px; }
+    .media { display: grid; grid-template-columns: 1.4fr 1fr; gap: 2px; height: 200px; }
+    .media { grid-template-rows: 100%; overflow: hidden; }
+    .media .photo, .media .map { height: 100%; min-height: 0; overflow: hidden; }
+    .media.one { grid-template-columns: 1fr; }
+    .map { background: #eef0ea; }
+    .actions { display: flex; align-items: center; gap: 8px; padding: 10px 16px 14px; }
+    .actions .who { flex: 1; font-size: 12px; color: var(--muted); display: flex; align-items: center; gap: 8px; }
+    .kudos { display: flex; align-items: center; gap: 6px; font-weight: 700; font-size: 13px; padding: 7px 12px; border-radius: 6px; border: 1.5px solid var(--line); }
+    .kudos svg { width: 16px; height: 16px; }
+    .kudos[aria-pressed="true"] { color: var(--orange); border-color: var(--orange); }
+    .kudos[aria-pressed="true"] svg path { fill: var(--orange); }
+    .comment { font-size: 13px; font-weight: 700; padding: 7px 12px; border-radius: 6px; border: 1.5px solid var(--line); }
 
-    /* you in the community */
-    .you { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-    .you div { background: var(--teal-soft); border-radius: 16px; padding: 12px; text-align: center; font-size: 13px; color: var(--muted); }
-    .you b { display: block; color: var(--ink); font-size: 22px; font-weight: 600; }
+    /* club challenge */
+    .ch .prog { height: 10px; border-radius: 5px; background: var(--line); margin: 10px 0 12px; overflow: hidden; }
+    .ch .prog i { display: block; height: 100%; width: 41%; background: var(--orange); }
+    .lb { width: 100%; border-collapse: collapse; font-size: 14px; }
+    .lb td { padding: 8px 0; border-top: 1px solid var(--line); }
+    .lb td:first-child { width: 28px; color: var(--muted); font-weight: 700; }
+    .lb td:last-child { text-align: right; font-weight: 700; font-variant-numeric: tabular-nums; }
+    .lb tr.me td { color: var(--orange); }
 
-    .cities { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
-    .cities span { font-size: 13px; padding: 4px 10px; border-radius: 99px; background: #fff; border: 1px solid var(--line); }
-    .cities span.here { background: var(--ink); color: #fff; border-color: var(--ink); }
+    .notice { display: flex; gap: 12px; align-items: flex-start; }
+    .notice .pin { width: 40px; height: 40px; border-radius: 8px; background: #fff1ea; display: grid; place-items: center; flex: none; font-size: 18px; }
+    .notice small { display: block; color: var(--muted); font-size: 12px; margin-top: 2px; }
 
-    .tabs { position: sticky; bottom: 0; display: flex; justify-content: space-around; background: rgba(243,246,244,.95); backdrop-filter: blur(8px); border-top: 1px solid var(--line); padding: 10px 0 14px; }
-    .tabs a { color: var(--muted); text-decoration: none; font-size: 13px; }
-    .tabs a.on { color: var(--teal); font-weight: 600; }
+    .tabs { position: sticky; bottom: 0; z-index: 5; display: flex; justify-content: space-around; background: #fff; border-top: 1px solid var(--line); padding: 10px 0 14px; }
+    .tabs a { color: var(--muted); text-decoration: none; font-size: 11px; font-weight: 700; }
+    .tabs a.on { color: var(--orange); }
   </style>
 </head>
 <body>
   <div class="app">
-    <main>
-      <div class="top"><a href="../index.html">← Gallery</a><span class="chapter">GLG Hong Kong · 312 members</span></div>
+    <div class="bar"><a href="../index.html">← Gallery</a><span class="logo">GLG</span><span class="av" style="background:var(--orange)">JT</span></div>
 
-      <section class="we">
-        <span class="k">Hi Jasmine · this week</span>
-        <h1>48 of us moved together.</h1>
-        <div class="mosaic" aria-label="48 members, you highlighted">
-          <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
-          <i></i><i></i><i></i><i></i><i></i><i class="me"></i><i></i><i></i><i></i><i></i><i></i><i></i>
-          <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
-          <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+    <!-- your week -->
+    <section>
+      <p class="hello">Morning, Jasmine</p>
+      <p class="sub">Hong Kong chapter · Tue 6 Oct</p>
+      <div class="stats">
+        <div><span class="k">Sessions</span><b>2</b></div>
+        <div><span class="k">Planned km</span><b>13.5</b></div>
+        <div><span class="k">Planned time</span><b>3h 40m</b></div>
+      </div>
+      <div class="days" aria-label="This week: 2 sessions planned">
+        <div><i style="height:6px"></i>M</div>
+        <div class="today"><i style="height:6px"></i>T</div>
+        <div><i class="plan" style="height:30px"></i>W</div>
+        <div><i style="height:6px"></i>T</div>
+        <div><i style="height:6px"></i>F</div>
+        <div><i style="height:6px"></i>S</div>
+        <div><i class="plan" style="height:48px"></i>S</div>
+      </div>
+      <div class="streak">🔥 <span><b>3-week streak.</b> 27 sessions · squat PB 60 kg · 2,140 kg for the million</span></div>
+    </section>
+
+    <!-- booked -->
+    <section>
+      <h2>You're going <a href="#">Calendar</a></h2>
+      <div class="up">
+        <svg class="route" viewBox="0 0 64 64" aria-hidden="true"><path d="M0 44 C14 40 20 52 32 46 S50 30 64 34" stroke="#cfe0c4" stroke-width="10" fill="none"/><path d="M10 50 C16 38 24 40 28 30 S38 14 46 18 54 10 56 8" stroke="#fc5200" stroke-width="3" fill="none" stroke-linecap="round"/><circle cx="10" cy="50" r="3" fill="#2a9d3f"/><circle cx="56" cy="8" r="3" fill="#242428"/></svg>
+        <div class="info"><b>Dragon's Back Sunrise Hike</b><small>Sun 11 · 6:15am · 8.5 km · 23 going</small></div>
+        <span class="going">GOING</span>
+      </div>
+      <div class="up">
+        <svg class="route" viewBox="0 0 64 64" aria-hidden="true"><rect x="0" y="40" width="64" height="24" fill="#cfe2f0"/><path d="M8 38 H56 C60 38 60 34 56 34 H8 C4 34 4 38 8 38" stroke="#fc5200" stroke-width="3" fill="none"/><circle cx="8" cy="36" r="3" fill="#2a9d3f"/></svg>
+        <div class="info"><b>Harbourfront 5K Run Club</b><small>Wed 14 · 7:30pm · 5.0 km · 31 going</small></div>
+        <span class="going">GOING</span>
+      </div>
+    </section>
+
+    <!-- join -->
+    <section>
+      <h2>Join a group session <a href="#">All events</a></h2>
+      <div class="rail">
+        <div class="gs">
+          <div class="photo">
+            <svg viewBox="0 0 300 120" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><radialGradient id="spot" cx=".5" cy="0" r="1"><stop offset="0" stop-color="#5a5a66"/><stop offset="1" stop-color="#151518"/></radialGradient></defs><rect width="300" height="120" fill="url(#spot)"/><rect x="0" y="96" width="300" height="24" fill="#2b2b30"/><rect x="60" y="62" width="180" height="5" fill="#bbb"/><rect x="72" y="42" width="12" height="46" rx="2" fill="#fc5200"/><rect x="86" y="48" width="9" height="34" rx="2" fill="#eee"/><rect x="216" y="42" width="12" height="46" rx="2" fill="#fc5200"/><rect x="205" y="48" width="9" height="34" rx="2" fill="#eee"/></svg>
+            <span class="badge">2 SPOTS LEFT</span>
+          </div>
+          <div class="body"><b>Barbell Basics</b><small>Sat 10 · 8am · Kwun Tong · HK$180</small>
+            <div class="row"><div class="stack"><span class="av sm" style="background:#6f4ad8">CN</span><span class="av sm" style="background:#3d85c6">KS</span><span class="av sm" style="background:#888">+12</span></div><span>14 of 16</span><button class="join">Join</button></div></div>
         </div>
-        <p>That gold dot is you. 3 weeks in a row now 🔥</p>
-      </section>
+        <div class="gs">
+          <div class="photo">
+            <svg viewBox="0 0 300 120" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="300" height="120" fill="#b3261e"/><circle cx="230" cy="20" r="90" fill="#d9442f"/><circle cx="150" cy="64" r="34" fill="#7a1410"/><rect x="128" y="88" width="44" height="22" rx="6" fill="#5c0f0c"/><circle cx="140" cy="54" r="10" fill="#9c1b15"/></svg>
+          </div>
+          <div class="body"><b>Boxing Fundamentals</b><small>Sat 17 · 10am · Sheung Wan · HK$250</small>
+            <div class="row"><div class="stack"><span class="av sm" style="background:#e9b23f">+9</span></div><span>9 of 20 · 3 first-timers</span><button class="join">Join</button></div></div>
+        </div>
+        <div class="gs">
+          <div class="photo">
+            <svg viewBox="0 0 300 120" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="300" height="120" fill="#8fd3f4"/><rect y="60" width="300" height="60" fill="#2a8ec2"/><path d="M0 60 Q60 40 120 58 T300 52 V60 H0Z" fill="#4c7a4a"/><rect x="120" y="76" width="70" height="5" rx="2" fill="#fff"/><rect x="152" y="50" width="4" height="27" fill="#242428"/><circle cx="154" cy="46" r="5" fill="#242428"/><line x1="140" y1="58" x2="172" y2="84" stroke="#242428" stroke-width="2"/></svg>
+          </div>
+          <div class="body"><b>Paddle &amp; Brunch</b><small>Sun 25 · 9am · Sai Kung · HK$420</small>
+            <div class="row"><div class="stack"><span class="av sm" style="background:#3d85c6">+6</span></div><span>6 of 12</span><button class="join">Join</button></div></div>
+        </div>
+      </div>
+    </section>
 
-      <h2>New faces</h2>
-      <div class="welcome">
-        <div class="stack"><span class="av" style="background:#e07a5f">MW</span><span class="av" style="background:#3d85c6">KS</span><span class="av" style="background:#8e7cc3">SA</span></div>
-        <p><b>Mandy, Kiko and Sara</b> joined this week. Barbell Basics is Kiko's first session.</p>
-        <button class="wave" id="wave">👋 Wave</button>
+    <!-- group activity: run club -->
+    <section class="post">
+      <div class="head"><span class="av" style="background:#e07a5f">HO</span><div><b>Hana Okafor <span style="color:var(--muted);font-weight:400">and 30 others</span></b><small>Last Wed · 7:30pm · Tsim Sha Tsui</small></div></div>
+      <h3>Harbourfront 5K: 31 of us 🧡</h3>
+      <p>Aisha finished her first ever 5K! Next week we start at the Star Ferry clock tower.</p>
+      <div class="stats"><div><span class="k">Distance</span><b>5.0 km</b></div><div><span class="k">Avg pace</span><b>6:12 /km</b></div><div><span class="k">Together</span><b>31</b></div></div>
+      <div class="media">
+        <div class="photo">
+          <svg viewBox="0 0 240 200" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><linearGradient id="dusk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3b2a6b"/><stop offset=".55" stop-color="#f2785c"/><stop offset="1" stop-color="#ffc48a"/></linearGradient></defs><rect width="240" height="200" fill="url(#dusk)"/><circle cx="170" cy="98" r="18" fill="#ffe0a8"/><g fill="#1e1a33"><rect x="0" y="80" width="18" height="50"/><rect x="20" y="60" width="14" height="70"/><rect x="36" y="88" width="20" height="42"/><rect x="58" y="44" width="12" height="86"/><rect x="72" y="72" width="22" height="58"/><rect x="96" y="90" width="16" height="40"/><rect x="114" y="66" width="12" height="64"/><rect x="128" y="96" width="30" height="34"/><rect x="196" y="76" width="16" height="54"/><rect x="214" y="92" width="26" height="38"/></g><rect y="130" width="240" height="70" fill="#2c3f6b"/><g stroke="#ffcf9e" stroke-width="2" opacity=".6"><line x1="150" y1="140" x2="190" y2="140"/><line x1="160" y1="152" x2="182" y2="152"/><line x1="166" y1="164" x2="176" y2="164"/></g><g fill="#141221"><circle cx="40" cy="146" r="5"/><rect x="36" y="151" width="8" height="18" rx="3"/><circle cx="62" cy="144" r="5"/><rect x="58" y="149" width="8" height="20" rx="3"/><circle cx="84" cy="147" r="5"/><rect x="80" y="152" width="8" height="17" rx="3"/></g></svg>
+        </div>
+        <div class="map">
+          <svg viewBox="0 0 160 200" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="160" height="200" fill="#eef0ea"/><rect y="118" width="160" height="82" fill="#cfe2f0"/><g stroke="#fff" stroke-width="5"><line x1="0" y1="40" x2="160" y2="52"/><line x1="50" y1="0" x2="60" y2="118"/><line x1="110" y1="0" x2="104" y2="118"/></g><path d="M20 110 C40 112 70 116 100 112 S140 104 146 96 C150 88 136 86 120 92 S60 104 30 102 Z" stroke="#fc5200" stroke-width="4" fill="none" stroke-linejoin="round"/><circle cx="20" cy="110" r="5" fill="#2a9d3f" stroke="#fff" stroke-width="2"/></svg>
+        </div>
       </div>
+      <div class="actions">
+        <span class="who"><span class="stack"><span class="av sm" style="background:#d6336c">AL</span><span class="av sm" style="background:#2a9d8f">PR</span><span class="av sm" style="background:#6f4ad8">CN</span></span>Aisha, Priya and 45 others gave kudos</span>
+        <button class="kudos" aria-pressed="false" data-n="48"><svg viewBox="0 0 24 24"><path d="M2 21h4V9H2v12zm20-11a2 2 0 0 0-2-2h-6.3l1-4.6v-.3c0-.4-.2-.8-.4-1.1L13.2 1 6.6 7.6C6.2 8 6 8.5 6 9v10a2 2 0 0 0 2 2h9a2 2 0 0 0 1.8-1.2l3-7.1c.1-.2.2-.5.2-.7v-2z" fill="none" stroke="currentColor" stroke-width="1.8"/></svg><span>48</span></button>
+        <button class="comment">💬 12</button>
+      </div>
+    </section>
 
-      <h2>Noticeboard</h2>
-      <div class="cork">
-        <div class="notice"><b>Run club has moved!</b>From Wednesday we start at the Star Ferry clock tower. Look for the pink flag.<small>— Hana, chapter lead</small></div>
-        <div class="notice"><b>Lift a Million</b>412,000 of 1,000,000 kg, together. HK$5,000 to a women's shelter if we make it.<div class="bar"><i></i></div><small>— Mei-Ling · 25 days left</small></div>
+    <!-- strength activity -->
+    <section class="post">
+      <div class="head"><span class="av" style="background:#6f4ad8">CN</span><div><b>Chloe Ng</b><small>Saturday · Iron Harbour, Kwun Tong</small></div></div>
+      <h3>100 kg deadlift. New PR 🔥</h3>
+      <p>Two years ago I couldn't lift the empty bar. Thank you, Mei-Ling and the Saturday crew.</p>
+      <div class="stats"><div><span class="k">Top set</span><b>100 kg × 1</b></div><div><span class="k">Volume</span><b>3,450 kg</b></div><div><span class="k">Time</span><b>58m</b></div></div>
+      <div class="media one">
+        <div class="photo">
+          <svg viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><radialGradient id="gym" cx=".5" cy=".1" r=".9"><stop offset="0" stop-color="#6b6b78"/><stop offset="1" stop-color="#121214"/></radialGradient></defs><rect width="400" height="200" fill="url(#gym)"/><rect y="160" width="400" height="40" fill="#26262b"/><rect x="70" y="118" width="260" height="6" fill="#c8c8cc"/><g fill="#fc5200"><rect x="84" y="86" width="16" height="70" rx="3"/><rect x="300" y="86" width="16" height="70" rx="3"/></g><g fill="#e8e8ea"><rect x="102" y="94" width="12" height="54" rx="3"/><rect x="286" y="94" width="12" height="54" rx="3"/></g><g fill="#0d0d10"><circle cx="200" cy="70" r="12"/><path d="M188 84 h24 l6 40 h-36z"/><rect x="186" y="124" width="10" height="36"/><rect x="204" y="124" width="10" height="36"/><rect x="176" y="96" width="8" height="26" transform="rotate(-10 180 96)"/><rect x="216" y="96" width="8" height="26" transform="rotate(10 220 96)"/></g><text x="16" y="28" fill="#fff" font-family="Helvetica Neue, Arial" font-weight="800" font-size="20">PR · 100 KG</text></svg>
+        </div>
       </div>
+      <div class="actions">
+        <span class="who"><span class="stack"><span class="av sm" style="background:#e07a5f">MH</span><span class="av sm" style="background:#3d85c6">KS</span></span>Mei-Ling and 33 others gave kudos</span>
+        <button class="kudos" aria-pressed="false" data-n="34"><svg viewBox="0 0 24 24"><path d="M2 21h4V9H2v12zm20-11a2 2 0 0 0-2-2h-6.3l1-4.6v-.3c0-.4-.2-.8-.4-1.1L13.2 1 6.6 7.6C6.2 8 6 8.5 6 9v10a2 2 0 0 0 2 2h9a2 2 0 0 0 1.8-1.2l3-7.1c.1-.2.2-.5.2-.7v-2z" fill="none" stroke="currentColor" stroke-width="1.8"/></svg><span>34</span></button>
+        <button class="comment">💬 9</button>
+      </div>
+    </section>
 
-      <h2>Who's going <a href="#">All events</a></h2>
-      <div class="session mine">
-        <div class="head"><div><b>Dragon's Back Sunrise Hike</b><div class="meta">Sun 11 · 6:15am · To Tei Wan</div><div class="host">Led by Hana Okafor</div></div></div>
-        <div class="people"><div class="stack"><span class="av" style="background:#1f7a74">JT</span><span class="av" style="background:#2a9d8f">PR</span><span class="av" style="background:#e07a5f">HO</span></div><span>You, Priya + 21 others</span><span class="in">Going ✓</span></div>
-      </div>
-      <div class="session mine">
-        <div class="head"><div><b>Harbourfront 5K Run Club</b><div class="meta">Wed 14 · 7:30pm · Star Ferry clock tower</div><div class="host">Two pace groups, nobody left behind</div></div></div>
-        <div class="people"><div class="stack"><span class="av" style="background:#1f7a74">JT</span><span class="av" style="background:#d6336c">AL</span></div><span>You, Aisha + 29 others</span><span class="in">Going ✓</span></div>
-      </div>
-      <div class="session">
-        <div class="head"><div><b>Barbell Basics</b><div class="meta">Sat 10 · 8am · Kwun Tong · HK$180 · <span class="hot">2 left</span></div><div class="host">Coached by Mei-Ling Ho</div></div></div>
-        <div class="people"><div class="stack"><span class="av" style="background:#6f4ad8">CN</span><span class="av" style="background:#3d85c6">KS</span><span class="av" style="background:#c99a63">+12</span></div><span>Chloe, Kiko + 12 others</span><button class="join">Join them</button></div>
-      </div>
-      <div class="session">
-        <div class="head"><div><b>Boxing Fundamentals</b><div class="meta">Sat 17 · 10am · Sheung Wan · HK$250</div><div class="host">Coached by Jess Albano</div></div></div>
-        <div class="people"><div class="stack"><span class="av" style="background:#e9b23f">+9</span></div><span>9 going, 3 first-timers</span><button class="join">Join them</button></div>
-      </div>
-      <div class="session">
-        <div class="head"><div><b>Paddle &amp; Brunch</b><div class="meta">Sun 25 · 9am · Sai Kung · HK$420</div><div class="host">Instructor on the water, brunch after</div></div></div>
-        <div class="people"><div class="stack"><span class="av" style="background:#3d85c6">+6</span></div><span>6 going, 6 spots open</span><button class="join">Join them</button></div>
-      </div>
+    <!-- club challenge -->
+    <section class="ch">
+      <h2>Club challenge: Lift a Million <a href="#">Details</a></h2>
+      <div class="stats"><div><span class="k">Lifted together</span><b>412,000 kg</b></div><div><span class="k">Days left</span><b>25</b></div></div>
+      <div class="prog"><i></i></div>
+      <table class="lb">
+        <tr><td>1</td><td>Mei-Ling Ho</td><td>18,920 kg</td></tr>
+        <tr><td>2</td><td>Chloe Ng</td><td>15,300 kg</td></tr>
+        <tr><td>3</td><td>Priya Raman</td><td>11,780 kg</td></tr>
+        <tr class="me"><td>38</td><td>You</td><td>2,140 kg</td></tr>
+      </table>
+    </section>
 
-      <h2>Talking about <a href="#">Chat</a></h2>
-      <div class="list">
-        <div class="li"><span class="av" style="background:#2a9d8f">PR</span><div class="txt">"Anyone splitting a taxi to To Tei Wan on Sunday? Leaving Quarry Bay 5:40am."<small>Priya · 6 replies · you're on this hike</small></div></div>
-        <div class="li"><span class="av" style="background:#6f4ad8">CN</span><div class="txt">Chloe hit a 100 kg deadlift PR 🔥<br><button class="cheer" aria-pressed="false" data-n="34">👏 Cheer · 34</button></div></div>
-        <div class="li"><span class="av" style="background:#d6336c">AL</span><div class="txt">Aisha finished her first ever 5K!<br><button class="cheer" aria-pressed="false" data-n="21">👏 Cheer · 21</button></div></div>
-      </div>
-
-      <h2>You in the community</h2>
-      <div class="you">
-        <div><b>14</b>women you've trained with</div>
-        <div><b>8×</b>with Priya, your top buddy</div>
-        <div><b>2,140</b>kg towards the million</div>
-      </div>
-
-      <h2>Across GLG</h2>
-      <div class="list"><div class="li"><span class="av" style="background:var(--ink)">HQ</span><div class="txt"><b>Global Lift Day · Sat 7 Nov.</b> All seven chapters lift at the same hour for the first time. HK lifts at 5pm.<small>GLG HQ · yesterday</small></div></div></div>
-      <div class="cities"><span class="here">Hong Kong</span><span>Dubai</span><span>Sydney</span><span>Brisbane</span><span>Gold Coast</span><span>Heidelberg</span><span>Shanghai</span></div>
-    </main>
+    <!-- news -->
+    <section>
+      <h2>Club news</h2>
+      <div class="notice"><span class="pin">🚩</span><div><b>Run club has a new start line</b><br>From Wednesday: Star Ferry clock tower, same time. Look for the pink flag.<small>Hana Okafor · 2d · Priya's also splitting a taxi to Sunday's hike (6 replies)</small></div></div>
+      <div class="notice" style="margin-top:14px"><span class="pin">🌏</span><div><b>Global Lift Day · Sat 7 Nov</b><br>All seven chapters lift at the same hour. HK lifts at 5pm.<small>GLG HQ · yesterday</small></div></div>
+    </section>
 
     <nav class="tabs"><a class="on" href="#">Home</a><a href="#">Events</a><a href="#">Community</a><a href="#">Profile</a></nav>
   </div>
 
   <script>
-    document.getElementById("wave").addEventListener("click", e => { e.currentTarget.textContent = "Waved 👋"; e.currentTarget.disabled = true; });
     document.querySelectorAll(".join").forEach(b => b.addEventListener("click", () => {
-      const span = b.previousElementSibling;
-      span.textContent = "You + " + span.textContent.replace(/^(\d+) going.*$/, "$1 others");
-      b.outerHTML = '<span class="in">Going ✓</span>';
+      b.textContent = "Joined ✓"; b.classList.add("done"); b.disabled = true;
     }));
-    document.querySelectorAll(".cheer").forEach(h => h.addEventListener("click", () => {
-      const on = h.getAttribute("aria-pressed") !== "true";
-      h.setAttribute("aria-pressed", on);
-      h.textContent = `👏 ${on ? "Cheered" : "Cheer"} · ${+h.dataset.n + (on ? 1 : 0)}`;
+    document.querySelectorAll(".kudos").forEach(k => k.addEventListener("click", () => {
+      const on = k.getAttribute("aria-pressed") !== "true";
+      k.setAttribute("aria-pressed", on);
+      k.querySelector("span").textContent = +k.dataset.n + (on ? 1 : 0);
     }));
   </script>
 </body>

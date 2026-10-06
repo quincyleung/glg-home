@@ -80,6 +80,7 @@ Short items for a "community" area on the home page. Mix of types so it doesn't 
 - **Challenge:** Lift a Million — 412,000 / 1,000,000 kg (41%), 25 days left.
 - **Buddy match:** Chloe Ng is going to Barbell Basics solo too.
 - **New members this week:** Mandy Wong, Kiko Sato, Sara Ahmed. Barbell Basics is Kiko's first session.
+- **Activity stats (for feed-style versions):** last week's Harbourfront 5K: 31 members, 5.0 km, avg 6:12/km, 48 kudos. Chloe's PR session: top set 100 kg × 1, volume 3,450 kg, 58 min, 34 kudos. Lift a Million leaderboard: Mei-Ling Ho 18,920 kg, Chloe Ng 15,300 kg, Priya Raman 11,780 kg … Jasmine #38 with 2,140 kg.
 - **Chapter size:** 312 members; 48 moved together this week.
 
 ## Global GLG update
