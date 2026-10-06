@@ -21,7 +21,7 @@
     * { box-sizing: border-box; }
     body { margin: 0; background: #e4ddf3; color: var(--ink); font: 15px/1.45 var(--body); }
     button { font: inherit; cursor: pointer; border: 0; color: inherit; background: none; }
-    .app { max-width: 430px; margin: 0 auto; min-height: 100vh; background: #fff; position: relative; overflow-x: clip; }
+    .app { max-width: 430px; margin: 0 auto; min-height: 100vh; background: radial-gradient(120% 40% at 0% 8%, rgba(201,182,255,.55), transparent 60%), radial-gradient(90% 35% at 100% 38%, rgba(255,190,220,.45), transparent 60%), radial-gradient(110% 40% at 0% 72%, rgba(190,215,255,.45), transparent 60%), radial-gradient(90% 30% at 100% 100%, rgba(201,182,255,.5), transparent 60%), #f7f4ff; position: relative; overflow-x: clip; }
     @media (min-width: 600px) { .app { margin: 24px auto; min-height: 0; border-radius: 28px; overflow: clip; box-shadow: 0 20px 60px rgba(40,10,90,.2); } }
     .d { font-family: var(--display); font-weight: 700; text-transform: uppercase; font-stretch: condensed; letter-spacing: .01em; }
     .photo { position: relative; overflow: hidden; background: var(--lav); }
@@ -30,7 +30,7 @@
     .ava svg { display: block; width: 100%; height: 100%; }
 
     /* v20 header + orbit */
-    .bar { display: flex; justify-content: space-between; align-items: center; padding: 14px 16px 0; background: #f5f1ff; }
+    .bar { display: flex; justify-content: space-between; align-items: center; padding: 14px 16px 0; background: transparent; }
     .bar a { color: var(--muted); text-decoration: none; font-size: 13px; font-weight: 700; }
     .bar .logo { font-size: 15px; letter-spacing: .06em; color: var(--purple); }
     .me { width: 36px; height: 36px; border-radius: 50%; background: var(--purple); color: #fff; display: grid; place-items: center; font-weight: 700; font-size: 12px; }
@@ -51,7 +51,7 @@
     .sat.near.open .ava { box-shadow: 0 0 0 3px var(--pink), 0 4px 12px rgba(40,10,90,.15); }
     .sat.near .nm { position: absolute; left: 50%; top: 100%; transform: translateX(-50%); margin-top: 5px; font: 700 11px var(--display); text-transform: uppercase; letter-spacing: .06em; color: var(--muted); white-space: nowrap; }
     .center { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 32%; aspect-ratio: 1; border-radius: 50%; padding: 5px; background: conic-gradient(var(--purple) 0 75%, #fff 75% 100%); z-index: 3; }
-    .center .ava { width: 100%; height: 100%; border: 4px solid #f5f1ff; }
+    .center .ava { width: 100%; height: 100%; border: 4px solid #fff; }
     .orbit-hint { text-align: center; font-size: 12px; color: var(--muted); margin: 2px 0 12px; }
     .spot { display: none; margin: 0 0 14px; background: #fff; border-radius: 18px; padding: 12px 14px; gap: 12px; align-items: flex-start; box-shadow: 0 0 0 1px #e6defa; }
     .spot.on { display: flex; }
@@ -62,7 +62,7 @@
     .spot button.done { background: var(--lav); color: var(--purple); }
     .spot .both { display: inline-block; margin-top: 4px; font: 700 11px var(--display); text-transform: uppercase; letter-spacing: .06em; color: #1f6b52; background: var(--mint); padding: 2px 8px; border-radius: 99px; }
 
-    main { padding: 0 16px; background: #f5f1ff; }
+    main { padding: 0 16px; background: transparent; }
 
     /* member card: flips to check-in QR */
     .flip-wrap { perspective: 1200px; position: relative; z-index: 2; }
@@ -94,18 +94,15 @@
 
     /* sections: alternating bands with sticky headers so you always know where you are */
     .sec { margin: 0 -16px; padding: 0 16px 24px; position: relative; }
-    .sec:not(.tint) { background: #fff; }
-    .sec.tint { background: #f5f1ff; }
+    .sec.tint { background: transparent; }
     .flip-wrap + .sec { margin-top: 8px; }
-    .sec + .sec { border-top: 1px solid var(--line); }
-    .sec-head { position: sticky; top: 0; z-index: 6; display: flex; align-items: center; gap: 10px; margin: 0 -16px 12px; padding: 16px 16px 12px; background: inherit; }
-    .sec.tint .sec-head { background: rgba(245,241,255,.94); backdrop-filter: blur(10px); }
-    .sec:not(.tint) .sec-head { background: rgba(255,255,255,.94); backdrop-filter: blur(10px); }
+    .sec + .sec { border-top: 1px solid rgba(74,31,184,.08); }
+    .sec-head { position: sticky; top: 0; z-index: 6; display: flex; align-items: center; gap: 10px; margin: 0 -16px 12px; padding: 16px 16px 12px; background: rgba(255,255,255,.55); -webkit-backdrop-filter: blur(14px) saturate(1.4); backdrop-filter: blur(14px) saturate(1.4); }
     .sec-head .ic { width: 34px; height: 34px; border-radius: 11px; background: var(--purple); display: grid; place-items: center; flex: none; }
     .sec-head .ic svg { width: 19px; height: 19px; fill: none; stroke: #fff; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
     .sec-head .d { font-size: 22px; line-height: 1; }
     .sec-head .count { font: 700 12px var(--display); background: var(--lav); color: var(--purple); padding: 2px 8px; border-radius: 99px; }
-    .sec.tint .sec-head .count { background: #fff; }
+    .sec-head .count { background: #fff; }
     .sec-head a { margin-left: auto; font: 700 13px var(--body); color: var(--purple); text-decoration: none; }
     .sec.tint .ticket, .sec.tint .post { background: #fff; }
     .sec.tint .ticket .avs .ava { box-shadow: 0 0 0 2px #fff; }
@@ -115,8 +112,9 @@
     .rail { display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: 16px; margin: 0 -16px; padding: 0 16px 6px; scrollbar-width: none; }
     .rail::-webkit-scrollbar { display: none; }
     .ticket, .ev { border-radius: 18px; overflow: hidden; }
-    .ticket { scroll-snap-align: start; flex: 0 0 84%; background: var(--lav); }
+    .ticket { scroll-snap-align: start; flex: 0 0 84%; background: #fff; border: 1px solid var(--line); }
     .ev { border: 1px solid var(--line); margin-bottom: 12px; background: #fff; }
+    .join-rail .ev { scroll-snap-align: start; flex: 0 0 84%; margin-bottom: 0; }
     .ticket .photo, .ev .photo { height: 118px; }
     .tag { position: absolute; z-index: 2; top: 10px; left: 10px; font: 700 11px var(--display); letter-spacing: .06em; text-transform: uppercase; padding: 4px 9px; border-radius: 6px; background: #fff; color: var(--purple); }
     .tag.hot { background: var(--pink); color: #fff; }
@@ -133,7 +131,7 @@
     .people .who { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .avs { display: flex; flex: none; }
     .avs .ava { width: 24px; height: 24px; box-shadow: 0 0 0 2px #fff; }
-    .ticket .avs .ava { box-shadow: 0 0 0 2px var(--lav); }
+    .ticket .avs .ava { box-shadow: 0 0 0 2px #fff; }
     .avs .ava + .ava { margin-left: -7px; }
     .going { background: var(--purple); color: #fff; font-weight: 700; font-size: 12px; padding: 6px 11px; border-radius: 99px; white-space: nowrap; flex: none; }
     .price { font: 700 16px var(--display); flex: none; }
@@ -168,8 +166,11 @@
     .psst .no { background: #fff; color: var(--purple); box-shadow: inset 0 0 0 2px var(--lav2); }
     .psst.joined .yes { background: var(--mint); color: #1f6b52; }
 
-    /* from the community: compact snippets */
-    .post { display: block; padding: 12px; border: 1px solid var(--line); border-radius: 18px; margin-bottom: 8px; }
+    /* from the community: compact snippets in a swipeable row */
+    #feed { display: flex; gap: 12px; align-items: flex-start; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: 16px; margin: 0 -16px; padding: 0 16px 6px; scrollbar-width: none; }
+    #feed::-webkit-scrollbar { display: none; }
+    #feed .post { flex: 0 0 84%; scroll-snap-align: start; margin-bottom: 0; }
+    .post { display: block; background: #fff; padding: 12px; border: 1px solid var(--line); border-radius: 18px; margin-bottom: 8px; }
     .post .pb { flex: 1; min-width: 0; }
     .post .head { display: flex; align-items: center; gap: 7px; margin-bottom: 6px; font-size: 12px; }
     .post .head .ava { width: 26px; height: 26px; }
@@ -278,20 +279,22 @@
           <div class="btns"><button class="yes" id="psst-yes">Join them · HK$180</button><button class="no" id="psst-no">It's okay</button></div>
         </div>
 
-        <div class="ev" id="ev-barbell">
-          <div class="seatbox" data-crew="chloe,kiko,s33,s34,s35,s36,s37,s38,s39,s40,s41,s42,s43,s44" data-total="16"><span class="tag hot">Only 2 spots left</span><button class="info" aria-expanded="false" aria-label="Instructor details: Mei-Ling"><span class="ava" data-who="meiling"></span></button><div class="details">Squat and deadlift with Coach Mei-Ling Ho: set-up, bracing and safe bailing. No experience needed.</div></div>
-          <div class="body"><span class="d ttl">Barbell Basics</span><p class="meta">Sat 10 Oct · 8:00am · Kwun Tong</p>
-            <div class="row"><div class="people"><span class="avs"><span class="ava" data-who="chloe"></span><span class="ava" data-who="kiko"></span><span class="ava" data-seed="33"></span></span><span class="who">Chloe, Kiko + 12</span></div><span class="price">HK$180</span><button class="join">Join</button></div></div>
-        </div>
-        <div class="ev" id="ev-boxing">
-          <div class="seatbox" data-crew="mandy,s52,s54,s55,s56,s57,s58,s59,s60" data-total="20"><span class="tag">3 first-timers</span><button class="info" aria-expanded="false" aria-label="Instructor details: Jess"><span class="ava" data-who="jess"></span></button><div class="details">With Coach Jess Albano at Left Hook Studio. Stance, jab-cross, footwork and pad work. Gloves and wraps provided.</div></div>
-          <div class="body"><span class="d ttl">Boxing Fundamentals</span><p class="meta">Sat 17 Oct · 10:00am · Sheung Wan</p>
-            <div class="row"><div class="people"><span class="avs"><span class="ava" data-who="mandy"></span><span class="ava" data-seed="52"></span><span class="ava" data-seed="54"></span></span><span class="who">Mandy + 8</span></div><span class="price">HK$250</span><button class="join">Join</button></div></div>
-        </div>
-        <div class="ev" id="ev-paddle">
-          <div class="seatbox" data-crew="sara,s62,s64,s65,s66,s67" data-total="12"><span class="tag">Brunch included</span><button class="info" aria-expanded="false" aria-label="Instructor details: Tash"><span class="ava" data-seed="47"></span></button><div class="details">With instructor Tash Wong. Two hours on the water with an instructor, then brunch by the harbour. Board hire included. You must be able to swim.</div></div>
-          <div class="body"><span class="d ttl">Paddle &amp; Brunch</span><p class="meta">Sun 25 Oct · 9:00am · Sai Kung</p>
-            <div class="row"><div class="people"><span class="avs"><span class="ava" data-who="sara"></span><span class="ava" data-seed="62"></span><span class="ava" data-seed="64"></span></span><span class="who">Sara + 5</span></div><span class="price">HK$420</span><button class="join">Join</button></div></div>
+        <div class="rail join-rail">
+          <div class="ev" id="ev-barbell">
+            <div class="seatbox" data-crew="chloe,kiko,s33,s34,s35,s36,s37,s38,s39,s40,s41,s42,s43,s44" data-total="16"><span class="tag hot">Only 2 spots left</span><button class="info" aria-expanded="false" aria-label="Instructor details: Mei-Ling"><span class="ava" data-who="meiling"></span></button><div class="details">Squat and deadlift with Coach Mei-Ling Ho: set-up, bracing and safe bailing. No experience needed.</div></div>
+            <div class="body"><span class="d ttl">Barbell Basics</span><p class="meta">Sat 10 Oct · 8:00am · Kwun Tong</p>
+              <div class="row"><div class="people"><span class="avs"><span class="ava" data-who="chloe"></span><span class="ava" data-who="kiko"></span><span class="ava" data-seed="33"></span></span><span class="who">Chloe, Kiko + 12</span></div><span class="price">HK$180</span><button class="join">Join</button></div></div>
+          </div>
+          <div class="ev" id="ev-boxing">
+            <div class="seatbox" data-crew="mandy,s52,s54,s55,s56,s57,s58,s59,s60" data-total="20"><span class="tag">3 first-timers</span><button class="info" aria-expanded="false" aria-label="Instructor details: Jess"><span class="ava" data-who="jess"></span></button><div class="details">With Coach Jess Albano at Left Hook Studio. Stance, jab-cross, footwork and pad work. Gloves and wraps provided.</div></div>
+            <div class="body"><span class="d ttl">Boxing Fundamentals</span><p class="meta">Sat 17 Oct · 10:00am · Sheung Wan</p>
+              <div class="row"><div class="people"><span class="avs"><span class="ava" data-who="mandy"></span><span class="ava" data-seed="52"></span><span class="ava" data-seed="54"></span></span><span class="who">Mandy + 8</span></div><span class="price">HK$250</span><button class="join">Join</button></div></div>
+          </div>
+          <div class="ev" id="ev-paddle">
+            <div class="seatbox" data-crew="sara,s62,s64,s65,s66,s67" data-total="12"><span class="tag">Brunch included</span><button class="info" aria-expanded="false" aria-label="Instructor details: Tash"><span class="ava" data-seed="47"></span></button><div class="details">With instructor Tash Wong. Two hours on the water with an instructor, then brunch by the harbour. Board hire included. You must be able to swim.</div></div>
+            <div class="body"><span class="d ttl">Paddle &amp; Brunch</span><p class="meta">Sun 25 Oct · 9:00am · Sai Kung</p>
+              <div class="row"><div class="people"><span class="avs"><span class="ava" data-who="sara"></span><span class="ava" data-seed="62"></span><span class="ava" data-seed="64"></span></span><span class="who">Sara + 5</span></div><span class="price">HK$420</span><button class="join">Join</button></div></div>
+          </div>
         </div>
       </section>
 
