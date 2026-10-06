@@ -144,3 +144,7 @@
 ## v18: Cover Story
 - **Made:** the brand as an editorial poster, like the GLG website's bold type over photos. A purple announcement ticker, then a three-photo collage cover with "MORNING, JASMINE." on stacked purple and white labels ("HK chapter · Week 41"). Her streak is a giant purple "3" with "Weeks strong. Make it four." and a stats list. "You're in" is two tall photos with rotated "You're in" stamps. "This month at GLG" is three numbered zig-zag features, each kicked off by a GLG value (Accepting challenges → Barbell, Redefining norms → Boxing, Finding strength in → Paddle). "Being stronger together" is a dark section with Chloe's pull quote and portrait, chapter notes, and Lift a Million as a huge number. It ends with a Global Lift Day save-the-date band.
 - Added a portrait mode to the photo generator (one large figure) for avatar crops.
+
+## Renumbering again: two more innovative versions first
+- **Asked for:** two more innovative versions before converging (e.g. more minimalistic, avatars instead of photos), inserted before Lavender Drop and Night Session, which become the convergence steps.
+- **Made:** Lavender Drop moved v19 → v21 and Night Session v20 → v22. New versions take v19 and v20. Convergence now runs v21–v25.
