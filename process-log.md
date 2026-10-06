@@ -136,3 +136,7 @@
 ## Renumbering: converge from v20
 - **Asked for:** start converging at v20 to leave room for more variety. Insert a few new on-brand versions between v16 and v17.
 - **Decision (you picked):** 2 new versions as v17 and v18. Lavender Drop moves from v17 to v19, and Night Session from v18 to v20. Night Session already merges v8 and v13, so it becomes the first convergence step, and convergence runs v20–v25.
+
+## v17: Week Ahead
+- **Asked for:** more on-brand variety before converging. Keep GLG's branding but change things around.
+- **Made:** the v16 brand (white and GLG purple, Oswald-style caps, Arimo, illustrated group photos) reorganised around time. "MORNING, JASMINE." with no hero photo, then a 12-week streak heatmap ("3 weeks strong") with stats, then a sticky date scroller (dots: booked / open / news). One vertical timeline: today's community moments (Chloe's PR with Lift her up, new members), Barbell Basics to join, her booked hike (solid purple) with Priya's taxi under it, the run club start-line announcement pinned right above her booked 5K, boxing and paddle to join, the Lift a Million deadline on 31 Oct, and Global Lift Day on 7 Nov. Then "Looking back" photo postcards and the GLG values.

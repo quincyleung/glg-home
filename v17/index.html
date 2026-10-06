@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>v17 · Week Ahead — GLG Home</title>
+  <style>
+    :root {
+      --purple: #4a1fb8;
+      --deep: #24104f;
+      --lav: #efe9ff;
+      --lav2: #c9b6ff;
+      --pink: #ff7aa8;
+      --ink: #1a1328;
+      --muted: #6e6585;
+      --line: #ece7f5;
+      --display: Oswald, "Avenir Next Condensed", "Helvetica Neue", "Arial Narrow", sans-serif;
+      --body: Arimo, Arial, "Helvetica Neue", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #e4ddf3; color: var(--ink); font: 15px/1.45 var(--body); }
+    button { font: inherit; cursor: pointer; border: 0; color: inherit; background: none; }
+    .app { max-width: 430px; margin: 0 auto; min-height: 100vh; background: #fff; position: relative; overflow-x: clip; }
+    @media (min-width: 600px) { .app { margin: 24px auto; min-height: 0; border-radius: 28px; overflow: clip; box-shadow: 0 20px 60px rgba(40,10,90,.2); } }
+    .d { font-family: var(--display); font-weight: 700; text-transform: uppercase; font-stretch: condensed; letter-spacing: .01em; }
+    .photo { position: relative; overflow: hidden; background: var(--lav); }
+    .photo svg { display: block; width: 100%; height: 100%; }
+    main { padding: 0 16px 24px; }
+
+    .top { display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; border-bottom: 1px solid var(--line); }
+    .top a { color: var(--muted); text-decoration: none; font-size: 13px; font-weight: 700; }
+    .top .logo { color: var(--purple); font-size: 16px; letter-spacing: .04em; }
+    .me { width: 32px; height: 32px; border-radius: 50%; background: var(--purple); color: #fff; display: grid; place-items: center; font-size: 12px; font-weight: 700; }
+
+    h1 { font-size: 44px; line-height: .95; color: var(--purple); margin: 22px 0 6px; }
+    .sub { margin: 0; color: var(--muted); }
+
+    /* streak heatmap */
+    .heat { margin-top: 18px; border: 1px solid var(--line); border-radius: 20px; padding: 14px; }
+    .heat .row { display: flex; justify-content: space-between; align-items: baseline; }
+    .heat .row .d { font-size: 20px; }
+    .heat .row small { color: var(--muted); font-size: 12px; }
+    .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 3px; margin: 12px 0 8px; }
+    .grid i { aspect-ratio: 1.7; border-radius: 3px; background: var(--lav); }
+    .grid i.l1 { background: var(--lav2); } .grid i.l2 { background: #8f6ef0; } .grid i.l3 { background: var(--purple); }
+    .grid i.now { box-shadow: 0 0 0 2px var(--pink); }
+    .legend { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); }
+    .stats { display: flex; gap: 18px; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--line); font-size: 12px; color: var(--muted); }
+    .stats b { display: block; font: 700 18px var(--display); color: var(--ink); }
+
+    /* date scroller */
+    .dates { position: sticky; top: 0; z-index: 4; background: #fff; display: flex; gap: 6px; overflow-x: auto; margin: 20px -16px 0; padding: 10px 16px; border-bottom: 1px solid var(--line); scrollbar-width: none; }
+    .dates::-webkit-scrollbar { display: none; }
+    .dates a { flex: none; width: 48px; text-align: center; border-radius: 14px; padding: 6px 0 8px; text-decoration: none; color: var(--ink); background: var(--lav); }
+    .dates a span { display: block; font-size: 10px; font-weight: 700; color: var(--muted); text-transform: uppercase; }
+    .dates a b { display: block; font: 700 20px var(--display); }
+    .dates a i { display: block; width: 6px; height: 6px; border-radius: 50%; margin: 2px auto 0; }
+    .dates a i.booked { background: var(--purple); } .dates a i.open { box-shadow: inset 0 0 0 1.5px var(--purple); } .dates a i.news { background: var(--pink); }
+    .dates a.today { background: var(--purple); color: #fff; } .dates a.today span { color: var(--lav2); }
+
+    /* timeline */
+    .tl { position: relative; margin-top: 8px; padding-left: 22px; }
+    .tl::before { content: ""; position: absolute; left: 6px; top: 8px; bottom: 8px; width: 2px; background: var(--line); }
+    .day { position: relative; padding-top: 18px; scroll-margin-top: 90px; }
+    .day::before { content: ""; position: absolute; left: -21px; top: 24px; width: 12px; height: 12px; border-radius: 50%; background: #fff; box-shadow: inset 0 0 0 2px var(--lav2); }
+    .day.mine::before { background: var(--purple); box-shadow: none; }
+    .day.today::before { background: var(--pink); box-shadow: 0 0 0 4px #ffe0ec; }
+    .day > .label { font-size: 15px; color: var(--muted); margin-bottom: 8px; display: block; }
+    .day.today > .label, .day.mine > .label { color: var(--ink); }
+
+    .item { border-radius: 18px; overflow: hidden; display: flex; margin-bottom: 8px; border: 1px solid var(--line); background: #fff; }
+    .item .photo { width: 104px; flex: none; min-height: 112px; }
+    .item .c { padding: 12px; flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+    .item .c .d { font-size: 18px; line-height: 1.05; }
+    .item small { color: var(--muted); font-size: 13px; }
+    .item .act { margin-top: auto; padding-top: 6px; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+    .item.mine { background: var(--purple); color: #fff; border-color: var(--purple); }
+    .item.mine small { color: var(--lav2); }
+    .in { font: 700 12px var(--display); text-transform: uppercase; letter-spacing: .06em; background: #fff; color: var(--purple); padding: 4px 10px; border-radius: 99px; }
+    .hot { font: 700 11px var(--display); text-transform: uppercase; letter-spacing: .06em; color: #fff; background: var(--pink); padding: 3px 8px; border-radius: 6px; align-self: flex-start; }
+    .join { background: var(--purple); color: #fff; font: 700 14px var(--display); text-transform: uppercase; letter-spacing: .06em; padding: 8px 16px; border-radius: 99px; }
+    .join.done { background: var(--lav); color: var(--purple); }
+    .price { font: 700 16px var(--display); }
+    .avs { display: flex; } .av { width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; font-size: 8px; font-weight: 700; color: #fff; border: 2px solid var(--purple); }
+    .avs .av + .av { margin-left: -6px; }
+
+    .note { display: flex; gap: 10px; align-items: flex-start; border-radius: 16px; padding: 10px 12px; margin-bottom: 8px; background: var(--lav); font-size: 14px; }
+    .note.pin { background: #fff0f5; }
+    .note small { display: block; color: var(--muted); font-size: 12px; }
+    .note .em { font-size: 18px; line-height: 1.2; }
+    .note button { margin-top: 6px; font-weight: 700; font-size: 12px; color: var(--purple); background: #fff; padding: 4px 10px; border-radius: 99px; }
+    .note button[aria-pressed="true"] { background: var(--purple); color: #fff; }
+    .note .bar { height: 8px; border-radius: 99px; background: #fff; margin-top: 6px; overflow: hidden; }
+    .note .bar i { display: block; height: 100%; width: 41%; background: var(--purple); }
+
+    /* looking back */
+    h2 { font-size: 22px; margin: 30px 0 12px; display: flex; justify-content: space-between; align-items: baseline; }
+    h2 a { font: 700 13px var(--body); text-transform: none; color: var(--purple); text-decoration: none; letter-spacing: 0; }
+    .back { display: flex; gap: 10px; overflow-x: auto; margin: 0 -16px; padding: 0 16px 4px; scrollbar-width: none; }
+    .back::-webkit-scrollbar { display: none; }
+    .post { flex: 0 0 62%; background: #fff; padding: 8px 8px 12px; border-radius: 6px; box-shadow: 0 4px 14px rgba(40,10,90,.12); }
+    .post .photo { height: 150px; border-radius: 3px; }
+    .post b { display: block; font: 700 15px var(--display); text-transform: uppercase; margin: 8px 2px 2px; }
+    .post small { color: var(--muted); font-size: 12px; margin: 0 2px; }
+
+    .values { margin-top: 26px; text-align: center; font: 700 13px var(--display); text-transform: uppercase; letter-spacing: .1em; color: var(--lav2); line-height: 1.8; }
+    .values b { color: var(--purple); }
+
+    .tabs { position: sticky; bottom: 0; z-index: 5; display: flex; justify-content: space-around; background: rgba(255,255,255,.95); backdrop-filter: blur(8px); border-top: 1px solid var(--line); padding: 10px 0 14px; }
+    .tabs a { color: var(--muted); text-decoration: none; font: 700 12px var(--display); text-transform: uppercase; letter-spacing: .06em; }
+    .tabs a.on { color: var(--purple); }
+    .toast { position: fixed; left: 50%; bottom: 84px; transform: translate(-50%, 20px); background: var(--purple); color: #fff; padding: 12px 18px; border-radius: 14px; font-size: 14px; opacity: 0; pointer-events: none; transition: .3s; max-width: 90vw; z-index: 10; }
+    .toast.show { opacity: 1; transform: translate(-50%, 0); }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <div class="top"><a href="../index.html">← Gallery</a><span class="d logo">Girls Lift Girls · HK</span><span class="me" aria-label="Jasmine's profile">JT</span></div>
+    <main>
+      <h1 class="d">Morning,<br>Jasmine.</h1>
+      <p class="sub">Tuesday 6 October. Here's your month, together.</p>
+
+      <section class="heat" aria-label="Your streak">
+        <div class="row"><span class="d">🔥 3 weeks strong</span><small>Last 12 weeks</small></div>
+        <div class="grid" id="grid"></div>
+        <div class="legend"><span>Jul</span><span>Aug</span><span>Sep</span><span>Oct</span></div>
+        <div class="stats"><div><b>27</b>sessions</div><div><b>60 kg</b>squat PB</div><div><b>6</b>sunrises</div><div><b>2,140 kg</b>to the million</div></div>
+      </section>
+
+      <nav class="dates" aria-label="Jump to a day">
+        <a class="today" href="#d6"><span>Tue</span><b>6</b><i class="news"></i></a>
+        <a href="#d10"><span>Sat</span><b>10</b><i class="open"></i></a>
+        <a href="#d11"><span>Sun</span><b>11</b><i class="booked"></i></a>
+        <a href="#d14"><span>Wed</span><b>14</b><i class="booked"></i></a>
+        <a href="#d17"><span>Sat</span><b>17</b><i class="open"></i></a>
+        <a href="#d25"><span>Sun</span><b>25</b><i class="open"></i></a>
+        <a href="#d31"><span>Fri</span><b>31</b><i class="news"></i></a>
+        <a href="#n7"><span>Nov</span><b>7</b><i class="news"></i></a>
+      </nav>
+
+      <div class="tl">
+        <div class="day today" id="d6"><span class="d label">Today · Tue 6</span>
+          <div class="note"><span class="em">💜</span><div>Chloe Ng hit a 100 kg deadlift PR on Saturday.<small>Two years ago she couldn't lift the empty bar.</small><button class="lift" aria-pressed="false" data-n="34">Lift her up · 34</button></div></div>
+          <div class="note"><span class="em">👋</span><div>Mandy, Kiko and Sara joined the chapter this week.<small>Kiko's first session is Saturday's Barbell Basics.</small></div></div>
+        </div>
+
+        <div class="day" id="d10"><span class="d label">Sat 10</span>
+          <div class="item"><div class="photo" data-scene="gym" data-people="4" data-seed="3" data-tone="color" data-alt="Barbell session"></div>
+            <div class="c"><span class="hot">2 spots left</span><span class="d">Barbell Basics</span><small>8:00am · Iron Harbour, Kwun Tong · with Mei-Ling</small>
+              <div class="act"><span class="price">HK$180</span><button class="join">Join</button></div></div></div>
+        </div>
+
+        <div class="day mine" id="d11"><span class="d label">Sun 11 · You're in</span>
+          <div class="item mine"><div class="photo" data-scene="trail" data-people="4" data-seed="31" data-tone="color" data-alt="Dragon's Back hike"></div>
+            <div class="c"><span class="d">Dragon's Back Sunrise Hike</span><small>6:15am · To Tei Wan · coffee at Shek O after</small>
+              <div class="act"><span class="avs"><span class="av" style="background:#2a9d8f">PR</span><span class="av" style="background:#e07a5f">HO</span><span class="av" style="background:#8f6ef0">+21</span></span><span class="in">Going ✓</span></div></div></div>
+          <div class="note"><span class="em">💬</span><div>Priya's splitting a taxi from Quarry Bay at 5:40am.<small>Chapter chat · 6 replies</small><button>Join the taxi</button></div></div>
+        </div>
+
+        <div class="day mine" id="d14"><span class="d label">Wed 14 · You're in</span>
+          <div class="note pin"><span class="em">📌</span><div><b>New start line.</b> Run club now meets at the Star Ferry clock tower. Look for the pink flag!<small>Hana Okafor · chapter lead</small></div></div>
+          <div class="item mine"><div class="photo" data-scene="harbour" data-people="5" data-seed="8" data-tone="color" data-alt="Run club at the harbour"></div>
+            <div class="c"><span class="d">Harbourfront 5K Run Club</span><small>7:30pm · 6:30 &amp; 5:30/km groups</small>
+              <div class="act"><span class="avs"><span class="av" style="background:#d6336c">AL</span><span class="av" style="background:#8f6ef0">+29</span></span><span class="in">Going ✓</span></div></div></div>
+        </div>
+
+        <div class="day" id="d17"><span class="d label">Sat 17</span>
+          <div class="item"><div class="photo" data-scene="studio" data-people="4" data-seed="9" data-tone="color" data-alt="Boxing workshop"></div>
+            <div class="c"><span class="d">Boxing Fundamentals</span><small>10:00am · Sheung Wan · 3 first-timers going</small>
+              <div class="act"><span class="price">HK$250</span><button class="join">Join</button></div></div></div>
+        </div>
+
+        <div class="day" id="d25"><span class="d label">Sun 25</span>
+          <div class="item"><div class="photo" data-scene="beach" data-people="4" data-seed="5" data-tone="color" data-alt="Paddleboarding at Sai Kung"></div>
+            <div class="c"><span class="d">Paddle &amp; Brunch</span><small>9:00am · Sai Kung · brunch included</small>
+              <div class="act"><span class="price">HK$420</span><button class="join">Join</button></div></div></div>
+        </div>
+
+        <div class="day" id="d31"><span class="d label">Fri 31 · Deadline</span>
+          <div class="note"><span class="em">🏋️</span><div><b>Lift a Million ends.</b> 412,000 / 1,000,000 kg so far. Hit it and HK$5,000 goes to a women's shelter.<div class="bar"><i></i></div><small>Your share: 2,140 kg</small></div></div>
+        </div>
+
+        <div class="day" id="n7"><span class="d label">Sat 7 Nov · Save the date</span>
+          <div class="note"><span class="em">🌏</span><div><b>Global Lift Day.</b> All seven chapters lift at the same hour. HK lifts at 5pm at Iron Harbour.<small>GLG HQ · registration opens next week</small><button>Remind me</button></div></div>
+        </div>
+      </div>
+
+      <h2 class="d">Looking back <a href="#">Community</a></h2>
+      <div class="back">
+        <div class="post"><div class="photo" data-scene="harbour" data-people="9" data-seed="14" data-tone="color"></div><b>31 of us at run club</b><small>Last Wed · Aisha's first ever 5K</small></div>
+        <div class="post"><div class="photo" data-scene="gym" data-people="5" data-seed="21" data-tone="color"></div><b>The Saturday crew</b><small>Chloe's 100 kg PR day</small></div>
+        <div class="post"><div class="photo" data-scene="trail" data-people="6" data-seed="44" data-tone="color"></div><b>Sunrise on the ridge</b><small>Your 6th sunrise hike</small></div>
+      </div>
+
+      <p class="values">Finding strength in · <b>Redefining norms</b><br>Accepting challenges · <b>Being stronger together</b></p>
+    </main>
+
+    <nav class="tabs"><a class="on" href="#">Home</a><a href="#">Events</a><a href="#">Community</a><a href="#">Profile</a></nav>
+  </div>
+  <div class="toast" id="toast" role="status"></div>
+
+  <script>
+    // Illustrated "photos": groups of women at GLG sessions, drawn as SVG so no real photos are used.
+    // <div class="photo" data-scene="gym|harbour|trail|beach|studio" data-people="6" data-seed="3" data-tone="duo|color"></div>
+    const Photo = (() => {
+      const SKIN = ["#f3d2b8", "#e8b48f", "#c98e66", "#a26a44", "#7a4a2c", "#5a3520"];
+      const HAIR = ["#1b1210", "#3a2418", "#6b4226", "#b07a3f", "#2a1a2e", "#1b1210"];
+      const TOPS = ["#7b4fe0", "#ff7aa8", "#ffffff", "#24202e", "#ffd23f", "#5fd0c0", "#b9a3ff", "#ff8a5c"];
+      const BOTS = ["#1d1d24", "#3a3350", "#4a1fb8", "#2b2b33", "#5b4a7a"];
+      let uid = 0;
+      const rng = seed => () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+      const pick = (r, a) => a[Math.floor(r() * a.length)];
+
+      function person(r, x, y, s) {
+        const skin = pick(r, SKIN), hair = pick(r, HAIR), top = pick(r, TOPS), bot = pick(r, BOTS);
+        const hr = 11 * s, hy = y - 118 * s + hr, sh = hy + hr + 5 * s, hip = sh + 40 * s;
+        const p = r(), pose = p < .28 ? "up" : p < .55 ? "hug" : p < .66 ? "flex" : "down";
+        const aw = 7 * s, st = `stroke="${skin}" stroke-width="${aw}" stroke-linecap="round" fill="none"`;
+        let g = "";
+        const style = Math.floor(r() * 4);
+        if (style === 2) g += `<path d="M${x - hr} ${hy} Q${x - hr * 1.3} ${sh + 14 * s} ${x - hr * .4} ${sh + 16 * s} L${x + hr * .4} ${sh + 16 * s} Q${x + hr * 1.3} ${sh + 14 * s} ${x + hr} ${hy}Z" fill="${hair}"/>`;
+        if (style === 1) g += `<ellipse cx="${x + hr * .9}" cy="${hy + hr * .6}" rx="${hr * .45}" ry="${hr * 1.1}" fill="${hair}" transform="rotate(-20 ${x + hr} ${hy})"/>`;
+        g += `<path d="M${x - 7 * s} ${hip} L${x - 10 * s} ${y + 4 * s} M${x + 7 * s} ${hip} L${x + 10 * s} ${y + 4 * s}" stroke="${bot}" stroke-width="${11 * s}" stroke-linecap="round"/>`;
+        if (pose === "up") g += `<path d="M${x - 11 * s} ${sh + 3 * s} L${x - 24 * s} ${hy - 26 * s} M${x + 11 * s} ${sh + 3 * s} L${x + 24 * s} ${hy - 26 * s}" ${st}/>`;
+        else if (pose === "hug") g += `<path d="M${x - 11 * s} ${sh + 3 * s} L${x - 15 * s} ${hip} M${x + 11 * s} ${sh + 3 * s} L${x + 34 * s} ${sh + 8 * s}" ${st}/>`;
+        else if (pose === "flex") g += `<path d="M${x - 11 * s} ${sh + 3 * s} L${x - 28 * s} ${sh + 4 * s} L${x - 28 * s} ${sh - 16 * s} M${x + 11 * s} ${sh + 3 * s} L${x + 15 * s} ${hip}" ${st}/>`;
+        else g += `<path d="M${x - 11 * s} ${sh + 3 * s} L${x - 15 * s} ${hip + 4 * s} M${x + 11 * s} ${sh + 3 * s} L${x + 15 * s} ${hip + 4 * s}" ${st}/>`;
+        g += `<rect x="${x - 14 * s}" y="${sh - 3 * s}" width="${28 * s}" height="${hip - sh + 8 * s}" rx="${10 * s}" fill="${top}"/>`;
+        g += `<rect x="${x - 3.5 * s}" y="${hy + hr - 2 * s}" width="${7 * s}" height="${8 * s}" fill="${skin}"/>`;
+        g += `<circle cx="${x}" cy="${hy}" r="${hr}" fill="${skin}"/>`;
+        g += `<path d="M${x - hr} ${hy + 1 * s} A${hr} ${hr} 0 0 1 ${x + hr} ${hy + 1 * s} Q${x} ${hy - hr * .35} ${x - hr} ${hy + 1 * s}Z" fill="${hair}"/>`;
+        if (style === 0) g += `<circle cx="${x}" cy="${hy - hr * 1.05}" r="${hr * .5}" fill="${hair}"/>`;
+        if (r() < .5) g += `<path d="M${x - 4 * s} ${hy + 4 * s} Q${x} ${hy + 7 * s} ${x + 4 * s} ${hy + 4 * s}" stroke="#3a1f1a" stroke-width="${1.4 * s}" fill="none" stroke-linecap="round"/>`;
+        return g;
+      }
+
+      function scene(type, r, W, H) {
+        const hz = H * .62;
+        switch (type) {
+          case "harbour": return `<defs><linearGradient id="sk${uid}" x2="0" y2="1"><stop offset="0" stop-color="#3b2a6b"/><stop offset=".6" stop-color="#f2785c"/><stop offset="1" stop-color="#ffc48a"/></linearGradient></defs>
+            <rect width="${W}" height="${H}" fill="url(#sk${uid})"/><circle cx="${W * .72}" cy="${hz - 30}" r="26" fill="#ffe0a8"/>
+            ${Array.from({ length: 16 }, (_, i) => { const w = 14 + r() * 22, h = 30 + r() * 90; return `<rect x="${i * W / 15 - 6}" y="${hz - h}" width="${w}" height="${h + 2}" fill="#1e1a33"/>`; }).join("")}
+            <rect y="${hz}" width="${W}" height="${H - hz}" fill="#2c3f6b"/>`;
+          case "trail": return `<defs><linearGradient id="sk${uid}" x2="0" y2="1"><stop offset="0" stop-color="#ffb37a"/><stop offset="1" stop-color="#ffe6c2"/></linearGradient></defs>
+            <rect width="${W}" height="${H}" fill="url(#sk${uid})"/><circle cx="${W * .3}" cy="${hz - 40}" r="30" fill="#fff3d6"/>
+            <path d="M0 ${hz - 30} Q${W * .25} ${hz - 90} ${W * .5} ${hz - 40} T${W} ${hz - 60} V${H} H0Z" fill="#8a9a6a"/>
+            <path d="M0 ${hz} Q${W * .3} ${hz - 40} ${W * .6} ${hz - 6} T${W} ${hz - 20} V${H} H0Z" fill="#5d7a48"/>
+            <path d="M${W * .45} ${H} Q${W * .5} ${hz + 20} ${W * .62} ${hz}" stroke="#d9c49a" stroke-width="18" fill="none"/>`;
+          case "beach": return `<defs><linearGradient id="sk${uid}" x2="0" y2="1"><stop offset="0" stop-color="#9fd8ff"/><stop offset="1" stop-color="#ffe3f0"/></linearGradient></defs>
+            <rect width="${W}" height="${H}" fill="url(#sk${uid})"/><circle cx="${W * .8}" cy="${hz - 60}" r="24" fill="#fff6c9"/>
+            <rect y="${hz - 30}" width="${W}" height="40" fill="#3aa0d8"/><rect y="${hz + 8}" width="${W}" height="${H}" fill="#f2dcb3"/>
+            <rect x="${W * .05}" y="${hz + 30}" width="120" height="16" rx="8" fill="#ff8fb8" transform="rotate(-6 ${W * .1} ${hz})"/>`;
+          case "studio": return `<rect width="${W}" height="${H}" fill="#efe7f7"/>
+            ${[0.1, 0.4, 0.7].map(f => `<rect x="${W * f}" y="${H * .08}" width="${W * .22}" height="${H * .4}" fill="#fffaf0"/><rect x="${W * f + W * .105}" y="${H * .08}" width="5" height="${H * .4}" fill="#dccdea"/>`).join("")}
+            <rect y="${hz + 6}" width="${W}" height="${H}" fill="#c9a77f"/>
+            ${[0, 1, 2, 3].map(i => `<rect x="${i * W / 4 + 8}" y="${hz + 40}" width="${W / 4 - 18}" height="22" rx="4" fill="${["#b9a3ff", "#ff9ec4", "#7bd3c4", "#ffd88a"][i]}"/>`).join("")}`;
+          default: return `<defs><radialGradient id="sk${uid}" cx=".5" cy="0" r="1"><stop offset="0" stop-color="#6b6b78"/><stop offset="1" stop-color="#18181c"/></radialGradient></defs>
+            <rect width="${W}" height="${H}" fill="url(#sk${uid})"/>
+            <rect x="${W * .06}" y="${H * .12}" width="8" height="${hz - H * .12}" fill="#444"/><rect x="${W * .3}" y="${H * .12}" width="8" height="${hz - H * .12}" fill="#444"/>
+            <rect x="${W * .04}" y="${H * .3}" width="${W * .3}" height="6" fill="#999"/>
+            ${[0, 1, 2, 3].map(i => `<circle cx="${W * .62 + i * 34}" cy="${H * .3}" r="${18 - i * 2}" fill="none" stroke="#7a1fe0" stroke-width="8"/>`).join("")}
+            <rect y="${hz}" width="${W}" height="${H}" fill="#2a2a30"/>`;
+        }
+      }
+
+      function hex(c) { return [1, 3, 5].map(i => (parseInt(c.slice(i, i + 2), 16) / 255).toFixed(3)); }
+
+      function draw(el) {
+        uid++;
+        const W = 400, H = 300, r = rng(+el.dataset.seed || 1), n = +el.dataset.people || 5;
+        const [d, l] = (el.dataset.duo || "#2a0f6b,#e6d9ff").split(",").map(hex);
+        let people = "";
+        const back = Math.ceil(n / 2), front = n - back;
+        for (let i = 0; i < back; i++) people += person(r, (i + .5) * W / back + (r() - .5) * 14, H * .98, 1.2);
+        for (let i = 0; i < front; i++) people += person(r, (i + .5) * W / front + (r() - .5) * 14 + W / back / 2 * (front < back ? 1 : .5) - (front < back ? 0 : 10), H * 1.28, 1.55);
+        const duo = el.dataset.tone !== "color";
+        el.insertAdjacentHTML("afterbegin", `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMax slice" role="img" aria-label="${el.dataset.alt || "GLG members together"}">
+          <defs>
+            <filter id="duo${uid}" color-interpolation-filters="sRGB"><feColorMatrix type="saturate" values="0"/><feComponentTransfer>
+              <feFuncR type="table" tableValues="${d[0]} ${l[0]}"/><feFuncG type="table" tableValues="${d[1]} ${l[1]}"/><feFuncB type="table" tableValues="${d[2]} ${l[2]}"/></feComponentTransfer></filter>
+            <filter id="gr${uid}"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
+          </defs>
+          <g ${duo ? `filter="url(#duo${uid})"` : ""}>${scene(el.dataset.scene, r, W, H)}${people}</g>
+          <rect width="${W}" height="${H}" filter="url(#gr${uid})" opacity=".09"/>
+        </svg>`);
+      }
+      return { drawAll: (root = document) => root.querySelectorAll(".photo[data-scene]").forEach(draw), draw };
+    })();
+    Photo.drawAll();
+    // Streak heatmap: 12 weeks x 7 days, built from a fixed fictional history (27 sessions, last 3 weeks unbroken).
+    const weeks = [
+      [0,0,1,0,0,2,0],[0,0,0,0,0,0,0],[0,1,0,0,0,2,0],[0,0,2,0,0,0,1],
+      [0,0,0,0,0,0,0],[1,0,2,0,0,2,0],[0,0,1,0,0,3,0],[0,0,0,0,0,0,0],
+      [0,0,2,0,0,3,0],[0,0,1,0,0,2,1],[0,0,2,0,0,0,3],[2,0,0,0,0,0,0]
+    ];
+    const grid = document.getElementById("grid");
+    for (let day = 0; day < 7; day++) for (let w = 0; w < 12; w++) {
+      const v = weeks[w][day], i = document.createElement("i");
+      if (v) i.className = "l" + v;
+      if (w === 11 && day === 1) i.classList.add("now");
+      grid.appendChild(i);
+    }
+
+    const toast = document.getElementById("toast");
+    function say(msg) { toast.textContent = msg; toast.classList.add("show"); clearTimeout(say.t); say.t = setTimeout(() => toast.classList.remove("show"), 2400); }
+    document.querySelectorAll(".join").forEach(b => b.addEventListener("click", () => {
+      b.textContent = "You're in ✓"; b.classList.add("done"); b.disabled = true;
+      say("You're in! We've saved your spot. See you there 💪");
+    }));
+    document.querySelectorAll(".lift").forEach(h => h.addEventListener("click", () => {
+      const on = h.getAttribute("aria-pressed") !== "true";
+      h.setAttribute("aria-pressed", on);
+      h.textContent = `${on ? "Lifted 💜" : "Lift her up"} · ${+h.dataset.n + (on ? 1 : 0)}`;
+    }));
+    document.querySelectorAll(".note button:not(.lift)").forEach(b => b.addEventListener("click", () => {
+      b.textContent = "Done ✓"; b.setAttribute("aria-pressed", "true");
+    }));
+  </script>
+</body>
+</html>
