@@ -266,3 +266,15 @@
 ## v24: simpler cards
 - **Asked for:** since v24's background is the ombré glow, make the other cards simpler (white), use photos for the events, and show at most 3 faces of other people like v22 and v23. It was too cluttered.
 - **Made:** removed the seat grids (and their code) and put the illustrated group photos back on all five event cards, keeping the label top-left and instructor photo top-right. Who's going is just the 3-avatar row and short line. The psst card and event cards are plain white with a soft shadow on the glow. Joining still works from cards and from the orbit (checked by script: Boxing → "You're going ✓ · You, Mandy + 8"; Chloe → Join her → Barbell booked).
+
+## v25: Final pick (Stronger Together)
+- **Asked for:** "I like v21 and v22 the most, maybe v22 more. For v25, don't implement yet but what do you think I could do?" I suggested v22 polished with v21's best bits and v24's best idea, plus final polish. You said "sounds good", and to try the shimmer on the front of the card too (remove it if you don't like it).
+- **Made (v25 = v22 +):**
+  - Live countdowns on "You're going" ("In 4d 22h 33m", ticking from the prototype's fixed "now").
+  - A shimmer: an animated pastel gradient border on the white streak card front, plus a holographic check-in pass on the back (QR on a white tile).
+  - Tap any friend's face (who's going rows, psst stack, community posts) for a bottom sheet with her next session and "Join Chloe · HK$180", or "You're both going ✓" with something useful (Priya's taxi, run with Aisha, say hi to Hana). It's keyboard and Escape accessible, focus returns, and the scrim closes it.
+  - Small route maps inside the ⓘ details for the hike and run club.
+  - Real **Oswald + Arimo** from Google Fonts (the GLG website's fonts). This is the only external resource, approved by you with "sounds good".
+  - Accessibility polish: visible focus rings, and all animation off under prefers-reduced-motion.
+  - An empty-state preview at `v25/index.html?empty`: "Nothing booked yet" with friend chips that open the friend sheet.
+- **Gallery:** v25 is highlighted as the final pick, with a "why it won" section mapped to the brief and a one-paragraph story of the process.
