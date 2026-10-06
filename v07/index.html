@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>v07 · Doing Things — GLG Home</title>
+  <style>
+    :root {
+      --ink: #1d1a16;
+      --muted: #6f685e;
+      --paper: #fffdf8;
+      --pink: #f7c8d0;
+      --green: #c9e4c5;
+      --blue: #c7d9f5;
+      --yellow: #f9dfa8;
+      --lilac: #d7cff5;
+      --peach: #ffd3bd;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f1ece2; color: var(--ink); font: 15px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; }
+    button { font: inherit; cursor: pointer; border: 0; color: inherit; }
+    .app { max-width: 430px; margin: 0 auto; min-height: 100vh; background: var(--paper); position: relative; }
+    @media (min-width: 600px) { .app { margin: 24px auto; min-height: 0; border-radius: 28px; overflow: clip; box-shadow: 0 20px 60px rgba(60,40,10,.15); } }
+    main { padding: 16px 18px 8px; }
+
+    .top { display: flex; align-items: center; gap: 8px; }
+    .back { color: var(--muted); text-decoration: none; font-size: 13px; font-weight: 600; margin-right: auto; }
+    .chip { background: #f3efe7; border-radius: 99px; padding: 5px 10px; font-size: 12px; font-weight: 700; }
+    .avatar { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; background: var(--ink); color: var(--paper); font-weight: 700; font-size: 13px; }
+
+    h1 { font-size: 34px; line-height: 1.02; letter-spacing: -.035em; font-weight: 900; margin: 22px 0 4px; }
+    .sub { color: var(--muted); margin: 0 0 18px; font-size: 16px; }
+    h2 { font-size: 22px; font-weight: 900; letter-spacing: -.03em; margin: 28px 0 10px; display: flex; justify-content: space-between; align-items: baseline; }
+    h2 a { font-size: 13px; font-weight: 700; letter-spacing: 0; color: var(--muted); }
+
+    /* personal block */
+    .me { background: var(--ink); color: var(--paper); border-radius: 22px; padding: 16px; }
+    .me .row { display: flex; justify-content: space-between; align-items: center; font-size: 13px; opacity: .8; }
+    .me .verbs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 12px 0 10px; }
+    .me .verbs b { display: block; font-size: 22px; font-weight: 900; letter-spacing: -.02em; }
+    .me .verbs span { font-size: 12px; opacity: .7; }
+    .badge { display: inline-flex; gap: 6px; align-items: center; background: rgba(255,255,255,.1); border-radius: 99px; padding: 5px 10px; font-size: 12px; font-weight: 700; }
+
+    /* tiles */
+    .tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .tile { position: relative; border-radius: 22px; padding: 14px; min-height: 150px; display: flex; flex-direction: column; transition: transform .2s; }
+    .tile:active { transform: scale(.98); }
+    .tile.wide { grid-column: span 2; min-height: 0; }
+    .verb { font-size: 34px; font-weight: 900; letter-spacing: -.04em; line-height: 1; }
+    .tile .what { font-weight: 700; margin-top: 6px; font-size: 14px; }
+    .tile .meta { font-size: 13px; color: rgba(29,26,22,.7); }
+    .tile .act { margin-top: auto; padding-top: 12px; display: flex; align-items: center; justify-content: space-between; gap: 6px; }
+    .book { background: var(--ink); color: var(--paper); padding: 8px 14px; border-radius: 99px; font-weight: 800; font-size: 13px; }
+    .going { font-weight: 800; font-size: 13px; }
+    .sticker { position: absolute; top: -8px; right: 10px; background: #ff4d6d; color: #fff; font-weight: 900; font-size: 12px; padding: 4px 9px; border-radius: 99px; transform: rotate(6deg); box-shadow: 0 2px 0 var(--ink); }
+    .count { font-size: 12px; font-weight: 700; background: rgba(255,255,255,.55); padding: 3px 8px; border-radius: 99px; }
+
+    /* booked strip */
+    .doing { display: flex; flex-direction: column; gap: 10px; }
+    .doing .tile { min-height: 0; flex-direction: row; align-items: center; gap: 14px; }
+    .doing .verb { font-size: 30px; width: 86px; flex: none; }
+    .doing .tile > div { flex: 1; }
+
+    /* community carousel */
+    .rail { display: flex; gap: 10px; overflow-x: auto; scroll-snap-type: x mandatory; margin: 0 -18px; padding: 0 18px 6px; scrollbar-width: none; }
+    .rail::-webkit-scrollbar { display: none; }
+    .post { scroll-snap-align: start; flex: 0 0 72%; border-radius: 22px; padding: 14px; display: flex; flex-direction: column; gap: 6px; min-height: 170px; }
+    .post .verb { font-size: 26px; }
+    .post p { margin: 0; font-size: 14px; }
+    .post .by { font-size: 12px; font-weight: 700; color: rgba(29,26,22,.6); margin-top: auto; }
+    .hype { align-self: flex-start; background: var(--ink); color: var(--paper); border-radius: 99px; padding: 6px 12px; font-weight: 800; font-size: 12px; margin-top: auto; }
+    .hype[aria-pressed="true"] { background: #ff4d6d; }
+    .prog { height: 10px; border-radius: 99px; background: rgba(255,255,255,.6); overflow: hidden; }
+    .prog i { display: block; height: 100%; width: 41%; background: var(--ink); border-radius: 99px; }
+
+    /* tabs */
+    .tabs { position: sticky; bottom: 14px; margin: 16px 18px 14px; display: flex; justify-content: space-around; background: var(--ink); border-radius: 99px; padding: 12px 6px; z-index: 5; box-shadow: 0 10px 30px rgba(0,0,0,.2); }
+    .tabs a { text-decoration: none; color: #a8a29a; font-size: 12px; font-weight: 700; padding: 2px 10px; border-radius: 99px; }
+    .tabs a.on { color: var(--ink); background: var(--paper); }
+    .toast { position: fixed; left: 50%; bottom: 84px; transform: translate(-50%, 20px); background: #ff4d6d; color: #fff; font-weight: 700; padding: 12px 18px; border-radius: 16px; font-size: 14px; opacity: 0; pointer-events: none; transition: .3s; z-index: 6; max-width: 90vw; }
+    .toast.show { opacity: 1; transform: translate(-50%, 0); }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <main>
+      <div class="top">
+        <a class="back" href="../">← Gallery</a>
+        <span class="chip">📍 Hong Kong</span>
+        <div class="avatar" aria-label="Jasmine's profile">JT</div>
+      </div>
+
+      <h1>Hi Jasmine.<br>What are we doing this week?</h1>
+      <p class="sub">Two things booked, three more up for grabs.</p>
+
+      <section class="me" aria-label="Your stats">
+        <div class="row"><span>Since March 2025</span><span>🔥 3-week streak</span></div>
+        <div class="verbs">
+          <div><b>27×</b><span>moved with GLG</span></div>
+          <div><b>6×</b><span>hiked at sunrise</span></div>
+          <div><b>60 kg</b><span>squat PB</span></div>
+        </div>
+        <span class="badge">🌅 Early Riser badge</span>
+      </section>
+
+      <h2>You're doing <a href="#">Calendar</a></h2>
+      <div class="doing">
+        <div class="tile" style="background:var(--green)">
+          <span class="verb">Hike.</span>
+          <div><div class="what">Dragon's Back at sunrise</div><div class="meta">Sun 11 · 6:15am · To Tei Wan · in 5 days</div></div>
+          <span class="going">✓</span>
+        </div>
+        <div class="tile" style="background:var(--blue)">
+          <span class="verb">Run.</span>
+          <div><div class="what">Harbourfront 5K</div><div class="meta">Wed 14 · 7:30pm · Star Ferry clock tower (new spot!)</div></div>
+          <span class="going">✓</span>
+        </div>
+      </div>
+
+      <h2>Up for grabs <a href="#">All events</a></h2>
+      <div class="tiles">
+        <div class="tile" style="background:var(--pink)">
+          <span class="sticker">2 left!</span>
+          <span class="verb">Lift.</span>
+          <div class="what">Barbell Basics</div>
+          <div class="meta">Sat 10 · 8:00am<br>Kwun Tong</div>
+          <div class="act"><button class="book">Book</button><span class="count">HK$180</span></div>
+        </div>
+        <div class="tile" style="background:var(--yellow)">
+          <span class="verb">Punch.</span>
+          <div class="what">Boxing Fundamentals</div>
+          <div class="meta">Sat 17 · 10:00am<br>Sheung Wan</div>
+          <div class="act"><button class="book">Book</button><span class="count">HK$250</span></div>
+        </div>
+        <div class="tile wide" style="background:var(--lilac)">
+          <span class="verb">Paddle.</span>
+          <div class="what">Paddle &amp; Brunch, Sai Kung SUP</div>
+          <div class="meta">Sun 25 · 9:00am · board hire and brunch included · 6 / 12 taken</div>
+          <div class="act"><button class="book">Book</button><span class="count">HK$420</span></div>
+        </div>
+      </div>
+
+      <h2>Community <a href="#">See all</a></h2>
+      <div class="rail">
+        <article class="post" style="background:var(--peach)">
+          <span class="verb">Heard.</span>
+          <p>Run club now starts at the Star Ferry clock tower. Look for the pink flag!</p>
+          <span class="by">Hana Okafor · Chapter lead · 2d</span>
+        </article>
+        <article class="post" style="background:var(--pink)">
+          <span class="verb">Lifted.</span>
+          <p>Chloe Ng pulled a 100 kg deadlift PR on Saturday. 🔥</p>
+          <button class="hype" aria-pressed="false" data-n="34">🙌 Hype her · 34</button>
+        </article>
+        <article class="post" style="background:var(--blue)">
+          <span class="verb">Asked.</span>
+          <p>Priya: "Anyone splitting a taxi to To Tei Wan on Sunday? Leaving Quarry Bay 5:40am."</p>
+          <span class="by">6 replies · you're going too</span>
+        </article>
+        <article class="post" style="background:var(--yellow)">
+          <span class="verb">Lifting.</span>
+          <p><b>Lift a Million:</b> 412,000 of 1,000,000 kg. You've added 2,140 kg.</p>
+          <div class="prog"><i></i></div>
+          <span class="by">25 days left</span>
+        </article>
+        <article class="post" style="background:var(--green)">
+          <span class="verb">Together.</span>
+          <p>Global Lift Day, Sat 7 Nov: all seven chapters lift at the same hour. HK is at 5pm.</p>
+          <span class="by">GLG HQ · yesterday</span>
+        </article>
+      </div>
+    </main>
+
+    <nav class="tabs">
+      <a class="on" href="#">Home</a>
+      <a href="#">Events</a>
+      <a href="#">Community</a>
+      <a href="#">Profile</a>
+    </nav>
+  </div>
+  <div class="toast" id="toast" role="status"></div>
+
+  <script>
+    const toast = document.getElementById("toast");
+    function say(msg) { toast.textContent = msg; toast.classList.add("show"); clearTimeout(say.t); say.t = setTimeout(() => toast.classList.remove("show"), 2400); }
+
+    document.querySelectorAll(".book").forEach(b => b.addEventListener("click", () => {
+      const act = b.parentElement;
+      act.innerHTML = '<span class="going">You\'re doing this ✓</span>';
+      say("You're in! We've saved your spot. See you there 💪");
+    }));
+
+    document.querySelectorAll(".hype").forEach(h => h.addEventListener("click", () => {
+      const on = h.getAttribute("aria-pressed") !== "true";
+      h.setAttribute("aria-pressed", on);
+      h.textContent = `🙌 ${on ? "Hyped" : "Hype her"} · ${+h.dataset.n + (on ? 1 : 0)}`;
+    }));
+  </script>
+</body>
+</html>
