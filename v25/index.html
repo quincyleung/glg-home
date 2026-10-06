@@ -24,7 +24,7 @@
     * { box-sizing: border-box; }
     body { margin: 0; background: #e4ddf3; color: var(--ink); font: 15px/1.45 var(--body); }
     button { font: inherit; cursor: pointer; border: 0; color: inherit; background: none; }
-    .app { max-width: 430px; margin: 0 auto; min-height: 100vh; background: radial-gradient(120% 40% at 0% 8%, rgba(201,182,255,.55), transparent 60%), radial-gradient(90% 35% at 100% 38%, rgba(255,190,220,.45), transparent 60%), radial-gradient(110% 40% at 0% 72%, rgba(190,215,255,.45), transparent 60%), radial-gradient(90% 30% at 100% 100%, rgba(201,182,255,.5), transparent 60%), #f7f4ff; position: relative; overflow-x: clip; }
+    .app { max-width: 430px; margin: 0 auto; min-height: 100vh; background: #f5f1ff; position: relative; overflow-x: clip; }
     @media (min-width: 600px) { .app { margin: 24px auto; min-height: 0; border-radius: 28px; overflow: clip; box-shadow: 0 20px 60px rgba(40,10,90,.2); } }
     .d { font-family: var(--display); font-weight: 700; text-transform: uppercase; font-stretch: condensed; letter-spacing: .01em; }
     .photo { position: relative; overflow: hidden; background: var(--lav); }
@@ -52,7 +52,7 @@
     .flip:focus-visible { box-shadow: 0 0 0 3px var(--pink); }
     .flip.on { transform: rotateY(180deg); }
     .face { -webkit-backface-visibility: hidden; backface-visibility: hidden; border-radius: 22px; padding: 16px; }
-    .front { color: var(--ink); background: #fff; box-shadow: 0 0 0 1px #e6defa, 0 1px 2px rgba(74,31,184,.06); }
+    .front { color: var(--ink); background: #fff; box-shadow: 0 0 0 1px var(--line), 0 14px 34px rgba(74,31,184,.14); }
     .top-row { display: flex; align-items: baseline; justify-content: space-between; }
     .top-row .title { font-size: 22px; color: var(--purple); }
     .top-row small { color: var(--muted); font-size: 12px; }
@@ -132,12 +132,12 @@
     .pcard.behind { filter: saturate(.85) brightness(.985); }
     .pcard.out { transform: translateX(-115%) rotate(-7deg) !important; opacity: 0; }
     /* psst */
-    .psst { margin-top: 22px; background: var(--lav); border-radius: 20px; padding: 16px; border-left: 5px solid var(--pink); transition: opacity .35s, transform .35s, max-height .45s .2s, margin .45s .2s, padding .45s .2s; max-height: 400px; overflow: hidden; }
+    .psst { margin-top: 22px; background: #fff; border-radius: 20px; padding: 16px; border-left: 5px solid var(--pink); transition: opacity .35s, transform .35s, max-height .45s .2s, margin .45s .2s, padding .45s .2s; max-height: 400px; overflow: hidden; }
     .psst.gone { opacity: 0; transform: translateY(-6px); max-height: 0; margin-top: 0; padding-top: 0; padding-bottom: 0; }
     .psst .kick { font-size: 15px; color: var(--purple); }
     .psst .row2 { display: flex; align-items: center; gap: 12px; margin: 12px 0 14px; }
     .psst .faces { display: flex; flex: none; }
-    .psst .faces .ava { width: 48px; height: 48px; box-shadow: 0 0 0 3px var(--lav); }
+    .psst .faces .ava { width: 48px; height: 48px; box-shadow: 0 0 0 3px #fff; }
     .psst .faces .ava + .ava { margin-left: -14px; }
     .psst b { display: block; font-size: 16px; line-height: 1.3; }
     .psst small { display: block; font-size: 13px; color: var(--muted); margin-top: 2px; }
