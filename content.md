@@ -79,6 +79,8 @@ Short items for a "community" area on the home page. Mix of types so it doesn't 
 - **Chat thread:** Priya Raman: "Anyone want to split a taxi to To Tei Wan for Sunday's hike? Leaving Quarry Bay 5:40am." 6 replies.
 - **Challenge:** Lift a Million — 412,000 / 1,000,000 kg (41%), 25 days left.
 - **Buddy match:** Chloe Ng is going to Barbell Basics solo too.
+- **New members this week:** Mandy Wong, Kiko Sato, Sara Ahmed. Barbell Basics is Kiko's first session.
+- **Chapter size:** 312 members; 48 moved together this week.
 
 ## Global GLG update
 

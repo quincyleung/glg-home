@@ -89,3 +89,7 @@
 ## v12: Girly
 - **Asked for:** a "girly" theme.
 - **Made:** a pink gingham background with Snell Roundhand script headings, rounded UI type, a 🎀 and "Hi Jasmine!". The streak is a beating heart with sticker badges on a washi-taped card. Booked events are dashed "You're going ♡" invitation cards. Bookable events are tilted polaroids with "Save my spot" buttons, and the community is "Girl talk" chat bubbles with ✨ reactions and a candy-striped Lift a Million meter.
+
+## v13: Community
+- **Asked for:** a community-focused theme.
+- **Made:** teal and mustard with Gill Sans, in a "we" voice. The hero is "48 of us moved together" as a mosaic of dots with Jasmine in gold. Then: "New faces" (three new members, Wave button), a cork noticeboard with pinned notes, "Who's going" (every event shown by its people: "You, Priya + 21 others", "Join them"), "Talking about" threads with Cheer buttons, "You in the community" stats, and the global update with chapter chips. Added the new members and chapter size to `content.md`.
