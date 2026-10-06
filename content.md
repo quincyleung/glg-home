@@ -14,12 +14,12 @@ Every version (v01–v25) uses exactly this content so that differences between 
 
 ## The member
 
-- **Name:** Sofie Tran
+- **Name:** Jasmine Tran
 - **Chapter:** Hong Kong
 - **Member since:** March 2025
 - **Sessions attended:** 27
 - **Already booked:** Dragon's Back Sunrise Hike (Sun 11 Oct)
-- **Greeting (if a version uses one):** "Morning, Sofie" / "Hi Sofie"
+- **Greeting (if a version uses one):** "Morning, Jasmine" / "Hi Jasmine"
 
 ---
 
@@ -28,7 +28,7 @@ Every version (v01–v25) uses exactly this content so that differences between 
 | # | Event | Sport | When | Where | Price | Spots |
 |---|-------|-------|------|-------|-------|-------|
 | 1 | Barbell Basics: Squat & Deadlift | Strength | Sat 10 Oct, 8:00–9:30am | Iron Harbour Gym, Kwun Tong | HK$180 | **14 / 16 taken — 2 left** |
-| 2 | Dragon's Back Sunrise Hike | Hiking | Sun 11 Oct, 6:15–9:00am | Meet at To Tei Wan bus stop, Shek O Road | Free | 23 / 40 taken — *Sofie is going* |
+| 2 | Dragon's Back Sunrise Hike | Hiking | Sun 11 Oct, 6:15–9:00am | Meet at To Tei Wan bus stop, Shek O Road | Free | 23 / 40 taken — *Jasmine is going* |
 | 3 | Harbourfront 5K Run Club | Running | Wed 14 Oct, 7:30–8:30pm | Star Ferry Pier, Tsim Sha Tsui | Free | 31 / 60 taken |
 | 4 | Boxing Fundamentals Workshop | Boxing | Sat 17 Oct, 10:00–11:30am | Left Hook Studio, Sheung Wan | HK$250 | 9 / 20 taken |
 | 5 | Paddle & Brunch: Sai Kung SUP | Paddleboarding | Sun 25 Oct, 9:00am–12:30pm | Sai Kung Waterfront Pier | HK$420 (board hire + brunch) | 6 / 12 taken |
