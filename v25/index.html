@@ -248,7 +248,8 @@
     .quote .qmark { position: absolute; font: 700 64px/1 var(--display); color: var(--pink); }
     .quote .qmark:not(.end) { top: 10px; left: 16px; }
     .quote .qmark.end { bottom: -14px; right: 16px; }
-    .quote p { margin: 0; font-size: 24px; line-height: 1.1; color: var(--purple); }
+    .quote p { margin: 0; font-size: 21px; line-height: 1.15; color: var(--purple); }
+    .quote .by { display: block; margin-top: 10px; font: 700 12px var(--display); text-transform: uppercase; letter-spacing: .1em; color: var(--muted); }
   </style>
 </head>
 <body>
@@ -333,7 +334,8 @@
 
       <section class="quote" aria-label="Today's motivation">
         <span class="qmark" aria-hidden="true">“</span>
-        <p class="d" id="quote-text">Strong looks different on everyone. That's the point.</p>
+        <p class="d" id="quote-text">Pressure is a privilege.</p>
+        <span class="by" id="quote-by">Billie Jean King · tennis champion</span>
         <span class="qmark end" aria-hidden="true">”</span>
       </section>
     </main>
@@ -576,16 +578,15 @@
       Avatar.drawAll(document.querySelector(".empty-going"));
     }
 
-    // v25: one motivational quote (original lines, in GLG's voice), picked fresh each time the page opens.
+    // v25: one quote from a famous female athlete, picked fresh each time the page opens (attributions checked).
     const quotes = [
-      "Strong looks different on everyone. That's the point.",
-      "Lift heavy. Laugh loud. Bring a friend.",
-      "You don't have to be fast. You just have to show up.",
-      "Every rep is a vote for the woman you're becoming.",
-      "Sunrise hikes > snooze buttons.",
-      "Stronger together. Literally: 412,000 kg and counting."
+      { t: "I'm not the next Usain Bolt or Michael Phelps. I'm the first Simone Biles.", by: "Simone Biles · Olympic gymnast" },
+      { t: "I really think a champion is defined not by their wins but by how they can recover when they fall.", by: "Serena Williams · tennis champion" },
+      { t: "Pressure is a privilege.", by: "Billie Jean King · tennis champion" }
     ];
-    document.getElementById("quote-text").textContent = quotes[Math.floor(Math.random() * quotes.length)];
+    const q = quotes[Math.floor(Math.random() * quotes.length)];
+    document.getElementById("quote-text").textContent = q.t;
+    document.getElementById("quote-by").textContent = q.by;
     const toast = document.getElementById("toast");
     function say(msg) { toast.textContent = msg; toast.classList.add("show"); clearTimeout(say.t); say.t = setTimeout(() => toast.classList.remove("show"), 2400); }
 
