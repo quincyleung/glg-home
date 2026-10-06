@@ -68,3 +68,10 @@
 - **Asked for:** develop the Never Alone direction (Girls on the Run / Sweaty Betty: first-timer nerves, never go alone).
 - **Made:** a warm peach and espresso page headed "Never lift alone." It has a dark "Your crew" card (Priya 8×, Chloe 5×, 14 women met, streak) and a buddy-match hero ("Chloe is going to Barbell Basics solo too": Pair up / Just book). "Your plans" shows who else is going, with actions (join Priya's taxi, run with Aisha). "Try something new" uses first-timer and bring-a-friend badges, and "Cheer them on" mixes wins with Cheer buttons, chapter news, Lift a Million and the global update.
 - **Pushback:** none yet.
+
+## Round of tone changes (v06, v08, v10 restyled; v11–v15 added)
+- **Pushback:** "I like the different layouts and features. I want to vary it more based on font, mood, and tone. I feel like V6 to V10 are a bit similar." Asked to change some and add 5 more themes (strong, girly, community-focused, cool, chic…).
+- **Decision:** kept v07 (playful pastel) and v09 (clean map) as they are. Restyled v06, v08 and v10 in place, keeping each one's layout and features. Used built-in font stacks only (no Google Fonts, per the AGENTS.md rule on external resources).
+
+## v06 restyled: calm
+- **Made:** Optima headings with Avenir body text, sage, sand and clay, and hairline borders instead of shadows. The energy picker became three breathing circles (Resting / Steady / Energised), and the copy is gentler ("How does your body feel today?", "Rest is part of training", "From the circle", "Send love").

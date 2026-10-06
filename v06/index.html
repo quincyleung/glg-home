@@ -6,90 +6,96 @@
   <title>v06 · Energy Check-in — GLG Home</title>
   <style>
     :root {
-      --ink: #2b2140;
-      --muted: #7a6d96;
-      --line: #ebe5f7;
-      --card: #fff;
-      --accent: #6f4ad8;
-      --accent-soft: #efe8fd;
-      --green: #1f8a4c;
-      --green-soft: #e8f7ee;
-      --shadow: 0 2px 10px rgba(60, 30, 120, .08);
+      --ink: #2f3a2c;
+      --muted: #7d806f;
+      --line: #e4dccd;
+      --card: #fbf8f2;
+      --accent: #7d8f74;
+      --accent-soft: #e6ebdf;
+      --clay: #c98b6b;
+      --green: #5f7a52;
+      --green-soft: #e6ebdf;
+      --sand: #f4efe6;
+      --serif: Optima, Candara, "Gill Sans", "Segoe UI", sans-serif;
+      --sans: "Avenir Next", Avenir, "Segoe UI", system-ui, sans-serif;
     }
     * { box-sizing: border-box; }
-    body { margin: 0; background: #e6e0f3; color: var(--ink); font: 15px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; }
-    button { font: inherit; cursor: pointer; border: 0; }
-    .app { max-width: 430px; margin: 0 auto; min-height: 100vh; background: linear-gradient(#efe8fd, #faf8ff 340px, #faf8ff); position: relative; }
-    @media (min-width: 600px) { .app { margin: 24px auto; min-height: 0; border-radius: 28px; overflow: clip; box-shadow: 0 20px 60px rgba(60,30,120,.18); } }
-    main { padding: 16px 18px 24px; }
+    body { margin: 0; background: #e8e1d3; color: var(--ink); font: 15px/1.55 var(--sans); }
+    button { font: inherit; cursor: pointer; border: 0; color: inherit; }
+    .app { max-width: 430px; margin: 0 auto; min-height: 100vh; background: var(--sand); position: relative; }
+    @media (min-width: 600px) { .app { margin: 24px auto; min-height: 0; border-radius: 28px; overflow: clip; box-shadow: 0 20px 60px rgba(60,60,30,.12); } }
+    main { padding: 18px 22px 28px; }
 
     .top { display: flex; align-items: center; justify-content: space-between; }
-    .back { color: var(--muted); text-decoration: none; font-size: 13px; font-weight: 600; }
-    .avatar { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; background: var(--accent); color: #fff; font-weight: 700; font-size: 13px; }
-    .date { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 700; margin: 18px 0 2px; }
-    h1 { font-size: 26px; line-height: 1.15; margin: 0 0 14px; letter-spacing: -.02em; }
-    h2 { font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin: 26px 0 10px; display: flex; justify-content: space-between; align-items: baseline; }
-    h2 a { font-size: 13px; letter-spacing: 0; text-transform: none; color: var(--accent); text-decoration: none; }
+    .back { color: var(--muted); text-decoration: none; font-size: 13px; }
+    .avatar { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; background: var(--accent-soft); color: var(--ink); font-size: 12px; letter-spacing: .05em; }
+    .date { font-size: 12px; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); margin: 28px 0 6px; text-align: center; }
+    h1 { font: 400 28px/1.25 var(--serif); margin: 0 0 22px; text-align: center; letter-spacing: .01em; }
+    h1 br + * { color: var(--muted); }
+    h2 { font: 400 13px var(--sans); letter-spacing: .2em; text-transform: uppercase; color: var(--muted); margin: 34px 0 12px; display: flex; justify-content: space-between; align-items: baseline; }
+    h2 a { font-size: 13px; letter-spacing: .02em; text-transform: none; color: var(--accent); text-decoration: none; }
 
-    /* energy */
-    .seg { display: flex; background: #fff; border-radius: 99px; padding: 4px; box-shadow: var(--shadow); }
-    .seg button { flex: 1; padding: 10px 0; border-radius: 99px; background: none; color: var(--muted); font-weight: 600; transition: background .25s, color .25s; }
-    .seg button[aria-pressed="true"] { background: var(--accent); color: #fff; }
-    .mood { margin: 10px 2px 0; color: var(--muted); font-size: 14px; min-height: 20px; }
+    /* energy: three breathing circles */
+    .seg { display: flex; justify-content: center; gap: 16px; }
+    .seg button { width: 88px; height: 88px; border-radius: 50%; background: var(--card); border: 1px solid var(--line); color: var(--muted); font-size: 14px; transition: background .4s, color .4s, border-color .4s; }
+    .seg button[aria-pressed="true"] { background: radial-gradient(circle at 35% 30%, #a9b89f, var(--accent)); color: #fff; border-color: transparent; animation: breathe 5s ease-in-out infinite; }
+    @keyframes breathe { 50% { transform: scale(1.08); box-shadow: 0 0 0 10px rgba(125,143,116,.12); } }
+    .mood { margin: 18px 0 0; color: var(--muted); font: italic 16px var(--serif); text-align: center; min-height: 24px; }
 
     /* stats */
-    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 18px; }
-    .stat { background: #fff; border-radius: 16px; padding: 10px 12px; box-shadow: var(--shadow); }
-    .stat b { display: block; font-size: 18px; }
-    .stat span { font-size: 12px; color: var(--muted); }
+    .stats { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 26px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .stat { padding: 14px 6px; text-align: center; }
+    .stat + .stat { border-left: 1px solid var(--line); }
+    .stat b { display: block; font: 400 22px var(--serif); }
+    .stat span { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
 
     /* event cards */
-    .ev { background: var(--card); border-radius: 18px; padding: 14px; box-shadow: var(--shadow); display: flex; gap: 12px; align-items: center; margin-bottom: 10px; animation: rise .35s ease both; }
+    .ev { background: var(--card); border: 1px solid var(--line); border-radius: 24px; padding: 14px 16px; display: flex; gap: 14px; align-items: center; margin-bottom: 10px; animation: rise .6s ease both; }
     @keyframes rise { from { opacity: 0; transform: translateY(6px); } }
-    .ev .when { width: 46px; flex: none; text-align: center; border-radius: 12px; background: var(--accent-soft); padding: 6px 0; }
-    .ev .when b { display: block; font-size: 18px; line-height: 1.1; }
-    .ev .when span { font-size: 11px; text-transform: uppercase; font-weight: 700; color: var(--accent); }
+    .ev .when { width: 44px; flex: none; text-align: center; }
+    .ev .when b { display: block; font: 400 24px/1.1 var(--serif); }
+    .ev .when span { font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
     .ev .info { flex: 1; min-width: 0; }
-    .ev .info b { display: block; }
+    .ev .info b { display: block; font-weight: 500; }
     .ev .info small { color: var(--muted); font-size: 13px; }
-    .intensity { display: inline-flex; gap: 2px; vertical-align: 1px; margin-left: 4px; }
-    .intensity i { width: 5px; height: 9px; border-radius: 2px; background: #ddd5ef; }
+    .intensity { display: inline-flex; gap: 3px; vertical-align: 2px; margin-left: 6px; }
+    .intensity i { width: 6px; height: 6px; border-radius: 50%; background: var(--line); }
     .intensity i.on { background: var(--accent); }
-    .hot { color: #d6336c; font-weight: 700; }
-    .book { background: var(--accent); color: #fff; padding: 9px 14px; border-radius: 99px; font-weight: 700; font-size: 13px; white-space: nowrap; transition: transform .15s; }
-    .book:active { transform: scale(.95); }
-    .going { background: var(--green-soft); color: var(--green); padding: 7px 11px; border-radius: 99px; font-weight: 700; font-size: 12px; white-space: nowrap; }
-    .rest { background: #fff; border: 1.5px dashed #d8cff0; border-radius: 18px; padding: 14px; color: var(--muted); font-size: 14px; }
+    .hot { color: var(--clay); }
+    .book { background: none; border: 1px solid var(--ink); color: var(--ink); padding: 8px 16px; border-radius: 99px; font-size: 13px; white-space: nowrap; transition: background .3s, color .3s; }
+    .book:hover { background: var(--ink); color: var(--sand); }
+    .going { color: var(--green); font-size: 13px; white-space: nowrap; }
+    .rest { border: 1px dashed var(--line); border-radius: 24px; padding: 14px 16px; color: var(--muted); font: italic 15px var(--serif); text-align: center; }
 
     /* cycle toggle */
-    .cycle { display: flex; align-items: center; gap: 10px; margin-top: 4px; padding: 12px 14px; background: #fff; border-radius: 16px; box-shadow: var(--shadow); }
+    .cycle { display: flex; align-items: center; gap: 12px; margin-top: 6px; padding: 14px 16px; border-radius: 24px; background: var(--accent-soft); }
     .cycle div { flex: 1; font-size: 14px; }
     .cycle small { display: block; color: var(--muted); font-size: 12px; }
-    .switch { width: 44px; height: 26px; border-radius: 99px; background: #d9d2ea; position: relative; transition: background .2s; flex: none; }
-    .switch::after { content: ""; position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; border-radius: 50%; background: #fff; transition: transform .2s; box-shadow: 0 1px 3px rgba(0,0,0,.2); }
+    .switch { width: 44px; height: 26px; border-radius: 99px; background: #cfd4c6; position: relative; transition: background .3s; flex: none; }
+    .switch::after { content: ""; position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; border-radius: 50%; background: #fff; transition: transform .3s; }
     .switch[aria-checked="true"] { background: var(--accent); }
     .switch[aria-checked="true"]::after { transform: translateX(18px); }
-    .cycle-tip { display: none; margin-top: 8px; font-size: 13px; color: var(--muted); padding: 0 4px; }
+    .cycle-tip { display: none; margin-top: 10px; font: italic 14px var(--serif); color: var(--muted); text-align: center; }
     .cycle-tip.show { display: block; }
 
     /* community */
-    .feed { background: #fff; border-radius: 20px; box-shadow: var(--shadow); padding: 4px 14px; }
-    .item { display: flex; gap: 10px; padding: 12px 0; border-bottom: 1px solid var(--line); }
+    .feed { padding: 0 2px; }
+    .item { display: flex; gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--line); }
     .item:last-child { border-bottom: 0; }
-    .ico { width: 34px; height: 34px; flex: none; border-radius: 12px; display: grid; place-items: center; font-size: 16px; }
+    .ico { width: 8px; height: 8px; flex: none; border-radius: 50%; margin-top: 8px; background: var(--accent) !important; font-size: 0; }
     .item .txt { flex: 1; font-size: 14px; }
-    .item .kind { display: block; font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
-    .hype { margin-top: 6px; background: #ffe9ef; color: #d6336c; padding: 4px 10px; border-radius: 99px; font-weight: 700; font-size: 12px; }
-    .hype[aria-pressed="true"] { background: #d6336c; color: #fff; }
-    .bar { height: 7px; border-radius: 4px; background: var(--accent-soft); margin-top: 6px; overflow: hidden; }
-    .bar i { display: block; height: 100%; width: 41%; background: linear-gradient(90deg, #a98bf0, var(--accent)); border-radius: 4px; }
+    .item .kind { display: block; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); margin-bottom: 2px; }
+    .hype { margin-top: 8px; background: none; border: 1px solid var(--line); color: var(--ink); padding: 4px 12px; border-radius: 99px; font-size: 12px; }
+    .hype[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: #fff; }
+    .bar { height: 3px; border-radius: 2px; background: var(--line); margin-top: 8px; overflow: hidden; }
+    .bar i { display: block; height: 100%; width: 41%; background: var(--accent); }
 
     /* tabs + toast */
-    .tabs { position: sticky; bottom: 0; display: flex; justify-content: space-around; background: rgba(255,255,255,.92); backdrop-filter: blur(10px); border-top: 1px solid var(--line); padding: 8px 0 14px; }
-    .tabs a { text-decoration: none; color: #a99cc4; font-size: 11px; font-weight: 600; display: flex; flex-direction: column; align-items: center; gap: 2px; }
-    .tabs a span { font-size: 18px; line-height: 1; }
-    .tabs a.on { color: var(--accent); }
-    .toast { position: fixed; left: 50%; bottom: 90px; transform: translate(-50%, 20px); background: var(--ink); color: #fff; padding: 12px 18px; border-radius: 14px; font-size: 14px; opacity: 0; pointer-events: none; transition: .3s; max-width: 90vw; }
+    .tabs { position: sticky; bottom: 0; display: flex; justify-content: space-around; background: rgba(244,239,230,.94); backdrop-filter: blur(10px); border-top: 1px solid var(--line); padding: 10px 0 14px; }
+    .tabs a { text-decoration: none; color: var(--muted); font-size: 11px; letter-spacing: .08em; display: flex; flex-direction: column; align-items: center; gap: 2px; }
+    .tabs a span { font-size: 16px; line-height: 1; }
+    .tabs a.on { color: var(--ink); }
+    .toast { position: fixed; left: 50%; bottom: 90px; transform: translate(-50%, 20px); background: var(--ink); color: var(--sand); padding: 12px 20px; border-radius: 99px; font-size: 14px; opacity: 0; pointer-events: none; transition: .4s; max-width: 90vw; }
     .toast.show { opacity: 1; transform: translate(-50%, 0); }
   </style>
 </head>
@@ -102,22 +108,22 @@
       </div>
 
       <p class="date">Tuesday 6 October · Hong Kong</p>
-      <h1>Morning, Jasmine.<br>How's your energy today?</h1>
+      <h1>Good morning, Jasmine.<br>How does your body feel today?</h1>
 
       <div class="seg" role="group" aria-label="Energy today">
-        <button data-e="low" aria-pressed="false">😴 Low</button>
-        <button data-e="steady" aria-pressed="false">🙂 Steady</button>
-        <button data-e="high" aria-pressed="true">⚡ High</button>
+        <button data-e="low" aria-pressed="false">Resting</button>
+        <button data-e="steady" aria-pressed="false">Steady</button>
+        <button data-e="high" aria-pressed="true">Energised</button>
       </div>
       <p class="mood" id="mood"></p>
 
       <div class="stats">
-        <div class="stat"><b>🔥 3 wks</b><span>Streak</span></div>
+        <div class="stat"><b>3 weeks</b><span>Streak</span></div>
         <div class="stat"><b>27</b><span>Sessions</span></div>
         <div class="stat"><b>60 kg</b><span>Squat PB</span></div>
       </div>
 
-      <h2 id="match-title">Made for high energy</h2>
+      <h2 id="match-title">For an energised body</h2>
       <div id="matches"></div>
 
       <div class="cycle">
@@ -126,7 +132,7 @@
       </div>
       <p class="cycle-tip" id="cycle-tip">On. Log your cycle in Profile and we'll tune suggestions to each phase. It stays private to you.</p>
 
-      <h2>Your upcoming <a href="#">See all</a></h2>
+      <h2>On your calendar <a href="#">See all</a></h2>
       <div class="ev">
         <div class="when"><span>Sun</span><b>11</b></div>
         <div class="info"><b>Dragon's Back Sunrise Hike</b><small>6:15am · To Tei Wan · in 5 days</small></div>
@@ -138,7 +144,7 @@
         <span class="going">Going ✓</span>
       </div>
 
-      <h2>Community <a href="#">Open</a></h2>
+      <h2>From the circle <a href="#">Open</a></h2>
       <div class="feed">
         <div class="item">
           <div class="ico" style="background:#fff2d6">📣</div>
@@ -146,7 +152,7 @@
         </div>
         <div class="item">
           <div class="ico" style="background:#ffe9ef">🏆</div>
-          <div class="txt"><span class="kind">Member win</span>Chloe Ng hit a 100 kg deadlift PR on Saturday.<br><button class="hype" aria-pressed="false" data-n="34">🙌 Hype her · 34</button></div>
+          <div class="txt"><span class="kind">Member win</span>Chloe Ng hit a 100 kg deadlift PR on Saturday.<br><button class="hype" aria-pressed="false" data-n="34">Send love · 34</button></div>
         </div>
         <div class="item">
           <div class="ico" style="background:var(--accent-soft)">💬</div>
@@ -179,9 +185,9 @@
       paddle:  { d: "Sun", n: 25, name: "Paddle & Brunch", meta: "9:00am · Sai Kung", note: "6 / 12 taken", price: "HK$420", lvl: 1 }
     };
     const plan = {
-      high:   { title: "Made for high energy", mood: "Big energy. Here's where to spend it.", picks: ["barbell", "boxing"] },
-      steady: { title: "Good for a steady day", mood: "Nice and even. A mix of strength and fresh air.", picks: ["barbell", "paddle"] },
-      low:    { title: "Gentle picks", mood: "Low is fine. Easy movement counts too.", picks: ["paddle"], rest: true }
+      high:   { title: "For an energised body", mood: "You've got energy to spend. Spend it well.", picks: ["barbell", "boxing"] },
+      steady: { title: "For a steady day", mood: "Even and grounded. Strength or fresh air.", picks: ["barbell", "paddle"] },
+      low:    { title: "For a gentler day", mood: "Rest is part of training. Move softly, if at all.", picks: ["paddle"], rest: true }
     };
     const booked = new Set();
 
@@ -196,7 +202,7 @@
         return `<div class="ev"><div class="when"><span>${v.d}</span><b>${v.n}</b></div>
           <div class="info"><b>${v.name}<span class="intensity">${lvl}</span></b><small>${v.meta} · ${v.price} · ${v.note}</small></div>${btn}</div>`;
       }).join("");
-      if (p.rest) html += '<div class="rest">Or take a rest day. Your Sunday hike is already booked 🌅</div>';
+      if (p.rest) html += '<div class="rest">Or simply rest. Your Sunday sunrise hike is waiting.</div>';
       document.getElementById("matches").innerHTML = html;
     }
 
@@ -212,7 +218,7 @@
       const b = ev.target.closest(".book"); if (!b) return;
       booked.add(b.dataset.k);
       b.outerHTML = '<span class="going">Going ✓</span>';
-      say("You're in! We've saved your spot. See you there 💪");
+      say("You're in. We've saved your spot.");
     });
 
     document.querySelector(".switch").addEventListener("click", e => {
@@ -224,7 +230,7 @@
     document.querySelectorAll(".hype").forEach(h => h.addEventListener("click", () => {
       const on = h.getAttribute("aria-pressed") !== "true";
       h.setAttribute("aria-pressed", on);
-      h.textContent = `🙌 ${on ? "Hyped" : "Hype her"} · ${+h.dataset.n + (on ? 1 : 0)}`;
+      h.textContent = `${on ? "Sent love ♡" : "Send love"} · ${+h.dataset.n + (on ? 1 : 0)}`;
     }));
 
     render("high");
