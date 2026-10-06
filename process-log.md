@@ -132,3 +132,7 @@
 - **Made:** a cross of v8 (loud hype, story viewer) and v13 (photos, together) in a dark GLG-purple night mode. Story rings are circular photos and open a full-screen photo story with progress bars and actions ("👋 Wave", "💜 Lift her up", "Remind me"). Then "MORNING, JASMINE." in big condensed caps, a pink streak ring ("3-week streak. Make it 4."), "Locked in" as full-bleed photo cards with who's going, "Up next" as a swipeable deck of tall photo cards with Join buttons, and "The squad": a pinned update, two photo moments, Lift a Million, chapter chat and Global Lift Day.
 - **Pushback:** "please make sure you are committing and pushing changes to github as you go." v16 and v17 had been committed but not pushed. Pushed straight away, and from now on every commit is pushed in the same step.
 - Updated the gallery story text to cover v16–v18.
+
+## Renumbering: converge from v20
+- **Asked for:** start converging at v20 to leave room for more variety. Insert a few new on-brand versions between v16 and v17.
+- **Decision (you picked):** 2 new versions as v17 and v18. Lavender Drop moves from v17 to v19, and Night Session from v18 to v20. Night Session already merges v8 and v13, so it becomes the first convergence step, and convergence runs v20–v25.
