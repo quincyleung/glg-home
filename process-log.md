@@ -63,3 +63,8 @@
 - **Asked for:** develop the City Map direction (Hike Clerb / Brown Girl Surf: the city as your playground).
 - **Made:** an SVG map of Hong Kong (harbour, Kowloon, the island, Sai Kung) with event pins: green for booked, pink for open, and a pulsing pin for "2 left". Plus a "You" dot and All / Booked / Open filters. A bottom sheet holds a district-explorer stat (6 of 18 districts, 3-week streak), "Your plans" cards, "Open near you" with distances (tapping a pin highlights its card), and "Around the city" community notes tagged by place.
 - **Pushback:** none yet.
+
+## v10: Never Alone
+- **Asked for:** develop the Never Alone direction (Girls on the Run / Sweaty Betty: first-timer nerves, never go alone).
+- **Made:** a warm peach and espresso page headed "Never lift alone." It has a dark "Your crew" card (Priya 8×, Chloe 5×, 14 women met, streak) and a buddy-match hero ("Chloe is going to Barbell Basics solo too": Pair up / Just book). "Your plans" shows who else is going, with actions (join Priya's taxi, run with Aisha). "Try something new" uses first-timer and bring-a-friend badges, and "Cheer them on" mixes wins with Cheer buttons, chapter news, Lift a Million and the global update.
+- **Pushback:** none yet.

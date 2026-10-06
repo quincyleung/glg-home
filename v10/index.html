@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>v10 · Never Alone — GLG Home</title>
+  <style>
+    :root {
+      --bg: #fdf7f2;
+      --ink: #2b211b;
+      --muted: #8a7a6e;
+      --line: #f0e4d9;
+      --coral: #e8664a;
+      --peach: #ffb48a;
+      --soft: #fff0e6;
+      --green: #2f7d4f;
+      --shadow: 0 2px 10px rgba(90,50,20,.07);
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f2e6dc; color: var(--ink); font: 15px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; }
+    button { font: inherit; cursor: pointer; border: 0; }
+    .app { max-width: 430px; margin: 0 auto; min-height: 100vh; background: var(--bg); position: relative; }
+    @media (min-width: 600px) { .app { margin: 24px auto; min-height: 0; border-radius: 28px; overflow: clip; box-shadow: 0 20px 60px rgba(90,50,20,.15); } }
+    main { padding: 16px 18px 24px; }
+
+    .top { display: flex; justify-content: space-between; align-items: center; }
+    .back { color: var(--muted); text-decoration: none; font-size: 13px; font-weight: 600; }
+    .avatar, .av { border-radius: 50%; display: grid; place-items: center; color: #fff; font-weight: 800; flex: none; }
+    .avatar { width: 34px; height: 34px; background: var(--ink); font-size: 12px; }
+    .av { width: 30px; height: 30px; font-size: 11px; border: 2px solid var(--bg); }
+    .stack { display: flex; flex: none; } .stack .av + .av { margin-left: -9px; }
+
+    .hi { color: var(--muted); margin: 18px 0 0; font-weight: 600; }
+    h1 { font-size: 30px; line-height: 1.05; letter-spacing: -.03em; margin: 2px 0 16px; }
+    h2 { font-size: 18px; letter-spacing: -.01em; margin: 28px 0 10px; display: flex; justify-content: space-between; align-items: baseline; }
+    h2 a { font-size: 13px; color: var(--coral); text-decoration: none; font-weight: 700; }
+
+    /* crew */
+    .crew { background: var(--ink); color: #fff; border-radius: 22px; padding: 16px; }
+    .crew .row { display: flex; align-items: center; gap: 12px; }
+    .crew .row + .row { margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,.12); }
+    .crew .av { border-color: var(--ink); width: 38px; height: 38px; font-size: 13px; }
+    .crew b { display: block; }
+    .crew small { color: #cbbcb0; font-size: 13px; }
+    .stats { display: flex; gap: 18px; }
+    .stats div b { font-size: 20px; }
+    .stats div small { display: block; }
+
+    /* buddy match */
+    .match { margin-top: 14px; background: #fff; border-radius: 22px; padding: 16px; box-shadow: var(--shadow); border: 2px solid var(--peach); }
+    .match .tag { display: inline-block; font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--coral); background: var(--soft); padding: 3px 9px; border-radius: 99px; }
+    .match h3 { font-size: 19px; margin: 8px 0 4px; letter-spacing: -.01em; }
+    .match p { margin: 0; color: var(--muted); font-size: 14px; }
+    .pair { display: flex; align-items: center; gap: 10px; margin: 14px 0; }
+    .pair .plus { color: var(--muted); font-weight: 800; }
+    .pair .av { width: 44px; height: 44px; font-size: 14px; }
+    .actions { display: flex; gap: 8px; }
+    .btn { flex: 1; padding: 12px; border-radius: 99px; font-weight: 800; font-size: 14px; background: var(--coral); color: #fff; transition: transform .15s; }
+    .btn:active { transform: scale(.97); }
+    .btn.ghost { background: none; color: var(--ink); border: 2px solid var(--ink); }
+    .btn.done { background: #e7f5ec; color: var(--green); border-color: transparent; }
+
+    /* cards */
+    .card { background: #fff; border-radius: 20px; padding: 14px; box-shadow: var(--shadow); margin-bottom: 10px; }
+    .card .head { display: flex; gap: 12px; align-items: center; }
+    .date { width: 48px; flex: none; text-align: center; background: var(--soft); border-radius: 12px; padding: 5px 0; font-size: 11px; font-weight: 800; color: var(--coral); }
+    .date b { display: block; font-size: 19px; color: var(--ink); line-height: 1.1; }
+    .card .info { flex: 1; min-width: 0; }
+    .card .info b { display: block; }
+    .card .info small { color: var(--muted); font-size: 13px; }
+    .going { color: var(--green); font-weight: 800; font-size: 13px; }
+    .with { display: flex; align-items: center; gap: 8px; margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--line); font-size: 13px; }
+    .with span { flex: 1; }
+    .with .av { width: 28px; height: 28px; font-size: 9px; }
+    .with .stack .av + .av { margin-left: -6px; }
+    .mini { background: var(--soft); color: var(--coral); font-weight: 800; font-size: 12px; padding: 6px 11px; border-radius: 99px; }
+    .mini.done { background: #e7f5ec; color: var(--green); }
+    .book { background: var(--ink); color: #fff; padding: 8px 14px; border-radius: 99px; font-weight: 800; font-size: 13px; }
+    .badge { display: inline-block; font-size: 11px; font-weight: 800; color: var(--green); background: #e7f5ec; padding: 2px 8px; border-radius: 99px; margin-top: 4px; }
+
+    /* cheer feed */
+    .feed { background: #fff; border-radius: 20px; padding: 2px 14px; box-shadow: var(--shadow); }
+    .post { display: flex; gap: 10px; padding: 12px 0; border-bottom: 1px solid var(--line); font-size: 14px; }
+    .post:last-child { border-bottom: 0; }
+    .post small { display: block; color: var(--muted); font-size: 12px; }
+    .cheer { margin-top: 6px; background: var(--soft); color: var(--coral); padding: 4px 10px; border-radius: 99px; font-weight: 800; font-size: 12px; }
+    .cheer[aria-pressed="true"] { background: var(--coral); color: #fff; }
+    .ico { width: 30px; height: 30px; border-radius: 10px; display: grid; place-items: center; flex: none; background: var(--soft); }
+    .bar { height: 6px; border-radius: 3px; background: var(--soft); margin-top: 6px; overflow: hidden; }
+    .bar i { display: block; height: 100%; width: 41%; background: var(--coral); }
+
+    .tabs { position: sticky; bottom: 14px; margin: 0 14px 14px; display: flex; justify-content: space-around; background: #fff; border-radius: 99px; padding: 12px 6px; box-shadow: 0 6px 20px rgba(90,50,20,.15); }
+    .tabs a { color: #b5a79b; text-decoration: none; font-size: 12px; font-weight: 700; }
+    .tabs a.on { color: var(--coral); }
+    .toast { position: fixed; left: 50%; bottom: 90px; transform: translate(-50%, 20px); background: var(--ink); color: #fff; padding: 12px 18px; border-radius: 14px; font-size: 14px; opacity: 0; pointer-events: none; transition: .3s; max-width: 90vw; z-index: 10; }
+    .toast.show { opacity: 1; transform: translate(-50%, 0); }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <main>
+      <div class="top"><a class="back" href="../index.html">← Gallery</a><span class="avatar" aria-label="Jasmine's profile">JT</span></div>
+      <p class="hi">Morning, Jasmine</p>
+      <h1>Never lift alone.</h1>
+
+      <section class="crew" aria-label="Your crew">
+        <div class="row">
+          <div class="stack"><span class="av" style="background:#2a9d8f">PR</span><span class="av" style="background:#6f4ad8">CN</span><span class="av" style="background:#e8664a">+12</span></div>
+          <div><b>Your crew</b><small>You train most with Priya (8×) and Chloe (5×)</small></div>
+        </div>
+        <div class="row stats">
+          <div><b>14</b><small>women met</small></div>
+          <div><b>27</b><small>sessions</small></div>
+          <div><b>🔥 3</b><small>week streak</small></div>
+        </div>
+      </section>
+
+      <div class="match">
+        <span class="tag">Buddy match</span>
+        <h3>Chloe is going to Barbell Basics solo too.</h3>
+        <p>Saturday 8am at Iron Harbour, Kwun Tong. Only 2 spots left, and it's beginner-friendly.</p>
+        <div class="pair"><span class="av" style="background:var(--ink)">JT</span><span class="plus">+</span><span class="av" style="background:#6f4ad8">CN</span><span style="font-size:13px;color:var(--muted)">You've trained together 5×</span></div>
+        <div class="actions"><button class="btn" id="pair">Pair up · HK$180</button><button class="btn ghost" id="solo">Just book</button></div>
+      </div>
+
+      <h2>Your plans <a href="#">Calendar</a></h2>
+      <div class="card">
+        <div class="head"><div class="date">SUN<b>11</b></div><div class="info"><b>Dragon's Back Sunrise Hike</b><small>6:15am · To Tei Wan · in 5 days</small></div><span class="going">✓</span></div>
+        <div class="with"><div class="stack"><span class="av" style="background:#2a9d8f">PR</span><span class="av" style="background:#e8664a">HO</span><span class="av" style="background:#c2a14a">+21</span></div><span>Priya's splitting a taxi from Quarry Bay, 5:40am</span><button class="mini" data-msg="You've joined Priya's taxi 🚕">Join taxi</button></div>
+      </div>
+      <div class="card">
+        <div class="head"><div class="date">WED<b>14</b></div><div class="info"><b>Harbourfront 5K</b><small>7:30pm · Star Ferry clock tower (new spot)</small></div><span class="going">✓</span></div>
+        <div class="with"><div class="stack"><span class="av" style="background:#d6336c">AL</span><span class="av" style="background:#1d4e89">+30</span></div><span>Aisha's coming back after her first 5K</span><button class="mini" data-msg="We'll let Aisha know you're running with her 💪">Run with her</button></div>
+      </div>
+
+      <h2>Try something new <a href="#">All events</a></h2>
+      <div class="card"><div class="head"><div class="date">SAT<b>17</b></div><div class="info"><b>Boxing Fundamentals</b><small>10am · Sheung Wan · HK$250</small><br><span class="badge">3 first-timers going</span></div><button class="book">Book</button></div></div>
+      <div class="card"><div class="head"><div class="date">SUN<b>25</b></div><div class="info"><b>Paddle &amp; Brunch</b><small>9am · Sai Kung · HK$420</small><br><span class="badge">Bring a friend welcome</span></div><button class="book">Book</button></div></div>
+
+      <h2>Cheer them on</h2>
+      <div class="feed">
+        <div class="post"><span class="av" style="background:#d6336c">AL</span><div>Aisha Lam finished her first ever 5K at run club.<small>Last Wednesday</small><button class="cheer" aria-pressed="false" data-n="21">👏 Cheer · 21</button></div></div>
+        <div class="post"><span class="av" style="background:#6f4ad8">CN</span><div>Chloe Ng hit a 100 kg deadlift PR at Iron Harbour.<small>Saturday</small><button class="cheer" aria-pressed="false" data-n="34">👏 Cheer · 34</button></div></div>
+        <div class="post"><span class="ico">📣</span><div>Run club now starts at the Star Ferry clock tower. Look for the pink flag!<small>Hana Okafor, chapter lead · 2d</small></div></div>
+        <div class="post"><span class="ico">🏋️</span><div>Lift a Million: 412,000 / 1,000,000 kg together. You've added 2,140 kg.<div class="bar"><i></i></div></div></div>
+        <div class="post"><span class="ico">🌏</span><div>Global Lift Day, Sat 7 Nov: seven chapters, one hour. HK at 5pm.<small>GLG HQ · yesterday</small></div></div>
+      </div>
+    </main>
+
+    <nav class="tabs"><a class="on" href="#">Home</a><a href="#">Events</a><a href="#">Community</a><a href="#">Profile</a></nav>
+  </div>
+  <div class="toast" id="toast" role="status"></div>
+
+  <script>
+    const toast = document.getElementById("toast");
+    function say(msg) { toast.textContent = msg; toast.classList.add("show"); clearTimeout(say.t); say.t = setTimeout(() => toast.classList.remove("show"), 2600); }
+
+    const pair = document.getElementById("pair"), solo = document.getElementById("solo");
+    pair.addEventListener("click", () => {
+      pair.textContent = "Booked with Chloe ✓"; pair.className = "btn done"; solo.remove();
+      say("You're in! We've told Chloe you'll meet her at the door 👋");
+    });
+    solo.addEventListener("click", () => {
+      pair.remove(); solo.textContent = "You're in ✓"; solo.className = "btn done";
+      say("You're in! We've saved your spot. See you there 💪");
+    });
+    document.querySelectorAll(".mini").forEach(b => b.addEventListener("click", () => {
+      b.textContent = "Done ✓"; b.classList.add("done"); say(b.dataset.msg);
+    }));
+    document.querySelectorAll(".book").forEach(b => b.addEventListener("click", () => {
+      b.outerHTML = '<span class="going">Going ✓</span>';
+      say("You're in! We've saved your spot. See you there 💪");
+    }));
+    document.querySelectorAll(".cheer").forEach(h => h.addEventListener("click", () => {
+      const on = h.getAttribute("aria-pressed") !== "true";
+      h.setAttribute("aria-pressed", on);
+      h.textContent = `👏 ${on ? "Cheered" : "Cheer"} · ${+h.dataset.n + (on ? 1 : 0)}`;
+    }));
+  </script>
+</body>
+</html>
